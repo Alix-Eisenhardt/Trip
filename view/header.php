@@ -8,6 +8,6 @@
 <body>
 	<header>
 		<ul>
-			<a href=""><li>Accueil</li></a>
+			<a href="."><li>Accueil</li></a>
 		</ul>
 	</header>
