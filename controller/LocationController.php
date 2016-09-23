@@ -21,4 +21,13 @@ class LocationController extends Controller {
 
   	$this->render("search", Location::findAll());
   }
+
+	public function createLocation(){
+		$this->render("createLocation");
+	}
+
+	public function confirm(){
+		$list = Location::GetTypeOfColumn();
+		$this->render("confirm", $list);
+	}
 }
