@@ -11,18 +11,14 @@ class LocationController extends Controller {
   }
 
   public function search() {
-  	$locations = Location::findAll();
   	$search = [];
-  	foreach ($locations as $key => $value) {
-  		if(isset($_POST["ville"])) {
-  			if($_POST["ville"] == $value->loc_ville)
-  				$search[] = $value;
-  		} else break;
-  	}
-  	/*if(isset($_POST["date_debut"]))
+  	if(isset($_POST["ville"]))
+  		$search["ville"] = $_POST["ville"];
+  	if(isset($_POST["date_debut"]))
   		$search["date_debut"] = $_POST["date_debut"];
   	if(isset($_POST["date_fin"]))
-  		$search["date_fin"] = $_POST["date_fin"];*/
-  	$this->render("search", $search);
+  		$search["date_fin"] = $_POST["date_fin"];
+
+  	$this->render("search", Location::findAll());
   }
 }
