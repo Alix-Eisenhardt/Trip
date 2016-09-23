@@ -75,49 +75,48 @@ class Model {
 	}
 
 	public function __set($fieldName, $value) {
-		$varName = "_".$fieldName;
-		if ($value != null) {
-			if (property_exists(get_class($this), $varName)) {
-				$this->$varName = $value;
-				$class = get_class($this);
-				$table = $this->TABLE_NAME;
-				$tableId = substr($table, -3)."_id";
-				/*$id = "_id".$fieldName;
-				if (isset($value->$id)) {
-					$st = db()->prepare("update $table set id$fieldName=:val where $tableId=:id");
-					$id = substr($id, 1);
-					$st->bindValue(":val", $value->$id);
-				} else {*/
-					$st = db()->prepare("update $table set $fieldName=:val where $tableId=:id");
-					$st->bindValue(":val", $value);
-				//_}
-					$id = $tableId;
-					$st->bindValue(":id", $this->$id);
-					$st->execute();
-				} else {
-					throw new Exception("Unknown variable: ".$fieldName);
-				}
+	$varName = "_".$fieldName;
+	if ($value != null) {
+		if (property_exists(get_class($this), $varName)) {
+			$this->$varName = $value;
+			$class = get_class($this);
+			$table = $this->TABLE_NAME;
+			$tableId = substr($table, -3)."_id";
+			/*$id = "_id".$fieldName;
+			if (isset($value->$id)) {
+				$st = db()->prepare("update $table set id$fieldName=:val where $tableId=:id");
+				$id = substr($id, 1);
+				$st->bindValue(":val", $value->$id);
+			} else {*/
+				$st = db()->prepare("update $table set $fieldName=:val where $tableId=:id");
+				$st->bindValue(":val", $value);
+			//_}
+				$id = $tableId;
+				$st->bindValue(":id", $this->$id);
+				$st->execute();
+			} else {
+				throw new Exception("Unknown variable: ".$fieldName);
 			}
 		}
-
-		public function __toString() {
-			return get_class($this).": ".$this->name;
-		}
-
-		public static function getTypeOfColumn(){
-			$class = get_called_class();
-			$refClass = new ReflectionClass($class);
-			$table = $refClass->getStaticPropertyValue('TABLE_NAME');
-
-			$st = db()->prepare("SELECT column_name, udt_name
-				from INFORMATION_SCHEMA.COLUMNS
-				WHERE TABLE_NAME = :table ;");
-			$st->bindValue(":table", $table);
-			$st->execute();
-			while($row = $st->fetch(PDO::FETCH_ASSOC)){
-				$list[$row["column_name"]] = $row["udt_name"];
-			}
-			return $list;
-		}
-
 	}
+
+	public function __toString() {
+		return get_class($this).": ".$this->name;
+	}
+
+	public static function getTypeOfColumn(){
+		$class = get_called_class();
+		$refClass = new ReflectionClass($class);
+		$table = $refClass->getStaticPropertyValue('TABLE_NAME');
+
+		$st = db()->prepare("SELECT column_name, udt_name
+			from INFORMATION_SCHEMA.COLUMNS
+			WHERE TABLE_NAME = :table ;");
+		$st->bindValue(":table", $table);
+		$st->execute();
+		while($row = $st->fetch(PDO::FETCH_ASSOC)){
+			$list[$row["column_name"]] = $row["udt_name"];
+		}
+		return $list;
+	}
+}
