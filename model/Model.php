@@ -95,17 +95,19 @@ class Model {
 		public function __toString() {
 			return get_class($this).": ".$this->name;
 		}
-		
+
 		public static function getTypeOfColumn(){
+			$class = get_called_class();
 			$refClass = new ReflectionClass($class);
 			$table = $refClass->getStaticPropertyValue('TABLE_NAME');
+
 			$st = db()->prepare("SELECT column_name, udt_name
 				from INFORMATION_SCHEMA.COLUMNS
-				WHERE TABLE_NAME = :table ;")
+				WHERE TABLE_NAME = :table ;");
 			$st->bindValue(":table", $table);
 			$st->execute();
 			while($row = $st->fetch(PDO::FETCH_ASSOC)){
-				$list[$row["class_name"]] = $row["udt_name"];
+				$list[$row["column_name"]] = $row["udt_name"];
 			}
 			return $list;
 		}
