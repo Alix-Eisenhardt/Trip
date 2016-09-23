@@ -25,4 +25,13 @@ class LocationController extends Controller {
   		$search["date_fin"] = $_POST["date_fin"];*/
   	$this->render("search", $search);
   }
+
+	public function createLocation(){
+		$this->render("createLocation");
+	}
+
+	public function confirm(){
+		$list = Location::GetTypeOfColumn();
+		$this->render("confirm", $list);
+	}
 }
