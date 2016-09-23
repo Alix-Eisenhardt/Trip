@@ -54,7 +54,7 @@ class Location extends Model {
     $s .= $this->loc_cp." ".$this->loc_ville."<br>";
     if(isset($this->loc_etat))
         $s .= "etat : ".$this->loc_etat."<br>";
-    $s .= "<a href=./?r=location/index&id=".$this->loc_id.">Voir plus de détails</a>";
+    $s .= "<a href=./?r=location/showLocation&id=".$this->loc_id.">Voir plus de détails</a>";
     return $s."<br>";
   }
 

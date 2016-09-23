@@ -5,9 +5,15 @@ class LocationController extends Controller {
 
   }
 
-  public function index() {
-    $location = new Location($_GET["id"]);
-    $this->render("index", $location);
+  public function showLocation() {
+    try {
+        $location = new Location($_GET["id"]);
+    } catch(Exception $e) {
+        $location = "Erreur : location non trouvée. N'essayez pas de rentrer";
+        $location .= " des choses au hasard dans la barre d'adresse !";
+    } finally {
+        $this->render("showLocation", $location);
+    }
   }
 
   public function search() {
@@ -32,6 +38,6 @@ class LocationController extends Controller {
 	}
 
 	public function confirm(){
-		$this->render("confirm", Location::getTypeOfColumn());		
+		$this->render("confirm", Location::getTypeOfColumn());
 	}
 }
