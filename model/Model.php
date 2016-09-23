@@ -6,14 +6,16 @@
 
 class Model {
 	public function __construct($id=null) {
-		$class = get_class($this);
-		$table = $this->TABLE_NAME;
+		$class = get_called_class();
+		$table = $class::getTableName();
+		$tableId = substr($table, -3)."_id";
 		if ($id == null) {
 			$st = db()->prepare("insert into $table default values returning $tableId");
 			$st->execute();
 			$row = $st->fetch();
 			$field = substr($table, -3)."_id";
 			$this->$field = $row[$field];
+			print_r(db()->errorInfo());
 		} else {
 			$tableId = substr($table, -3)."_ID";
 			$st = db()->prepare("select * from $table where $tableId=:id");
@@ -38,10 +40,16 @@ class Model {
 		}
 	}
 
-	public static function findAll() {
+	public static function getTableName() {
 		$class = get_called_class();
 		$refClass = new ReflectionClass($class);
 		$table = $refClass->getStaticPropertyValue('TABLE_NAME');
+		return $table;
+	}
+
+	public static function findAll() {
+		$class = get_called_class();
+		$table = $class::getTableName();
 		$tableId = substr($table, -3)."_id";
 		$st = db()->prepare("select $tableId from $table");
 		$st->execute();

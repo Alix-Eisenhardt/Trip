@@ -23,11 +23,15 @@ class Abonne extends Model {
 	//Objets
 	protected $_pays;
 
-	//teste si l'attribut' passée en paramètre existe déja dans la table
-	public function exists($field,$fieldName) {
-		$st = $db()->prepare("SELECT x FROM $TABLE_NAME WHERE $fieldName = :field");
-		$st->execute(array())
-
-		$count_pseudo = $query->rowCount();
+	//teste si l'attribut passée en paramètre existe déja dans la table
+	public static function avaiable($field,$fieldName) {
+		$class = get_called_class();
+		$table = $class::getTableName();
+		$st = db()->prepare("SELECT x FROM $table WHERE $fieldName = :field");
+		$st->execute(array(
+			':field' =>$field
+			));
+		$rowsCpt = $st->rowCount();
+		return ($rowsCpt == 0);
 	}
 }
