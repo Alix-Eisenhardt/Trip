@@ -34,17 +34,28 @@ class AbonneController extends Controller {
 
 				if($verif_pseudo_dispo && $verif_mail_dispo 
 						&& $verif_pass_corresp && $verif_email_valide) {
-					$abonne = new Abonne();
+					/*$abonne = new Abonne();
 					$abonne->abo_pseudo=$_POST['pseudo'];
 					$abonne->abo_motdepasse=sha1($_POST['pass']);
 					$abonne->abo_mel=$_POST['email'];
 					$abonne->abo_nom=$_POST['nom'];
-					$abonne->abo_prenom=$_POST['prenom'];
+					$abonne->abo_prenom=$_POST['prenom'];*/
 
-					$_SESSION['ouvert'] = true;
-					$_SESSION['abonne'] = $abonne;
+					$abonne = array();
+					$abonne[] = $_POST['pseudo'];
+					$abonne[] = sha1($_POST['pass']);
+					$abonne[] = $_POST['email'];
+					$abonne[] = $_POST['nom'];
+					$abonne[] = $_POST['prenom'];
 
-					header('Location: index.php');
+					$_SESSION['inscription']=$abonne;
+
+					//
+					header('Location: index.php?r=abonne/modifierCompte');
+					//$_SESSION['ouvert'] = true;
+					//$_SESSION['abonne'] = $abonne;
+
+					//header('Location: index.php');
 					exit();
 				}
 			}
