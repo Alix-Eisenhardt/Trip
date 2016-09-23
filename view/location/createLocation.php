@@ -1,4 +1,4 @@
-<form action="" method="post">
+<form action="?r" method="post">
   <h1>Creer une Location</h1>
 
   <p>
@@ -63,7 +63,13 @@
 
   <p>
     <label for="country">Pays :</label>
-    <input type="text" id="country" name="loc_country">
+    <select>
+      <?php 
+        foreach (Pays::findAll() as $v) {
+          echo "<option value = \"$v\"> $v </option>";
+        }
+      ?>
+    </select>
   </p>
 
 
