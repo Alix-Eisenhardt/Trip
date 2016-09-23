@@ -11,15 +11,20 @@ class LocationController extends Controller {
   }
 
   public function search() {
+    $locations = Location::findAll();
   	$search = [];
-  	if(isset($_POST["ville"]))
-  		$search["ville"] = $_POST["ville"];
-  	if(isset($_POST["date_debut"]))
+  	foreach ($locations as $key => $value) {
+  		if(isset($_POST["ville"])) {
+  			if(strtolower($_POST["ville"]) == strtolower($value->loc_ville))
+  				$search[] = $value;
+  		} else break;
+  	}
+  	/*if(isset($_POST["date_debut"]))
   		$search["date_debut"] = $_POST["date_debut"];
   	if(isset($_POST["date_fin"]))
-  		$search["date_fin"] = $_POST["date_fin"];
+  		$search["date_fin"] = $_POST["date_fin"];*/
 
-  	$this->render("search", Location::findAll());
+  	$this->render("search", $search);
   }
 
 	public function createLocation(){
@@ -27,7 +32,6 @@ class LocationController extends Controller {
 	}
 
 	public function confirm(){
-		$list = Location::GetTypeOfColumn();
-		$this->render("confirm", $list);
+		$this->render("confirm", Location::getTypeOfColumn());		
 	}
 }
