@@ -30,9 +30,9 @@ class Model {
 						if ($linkedClass != get_class($this))
 							$this->$linkedField = new $linkedClass($value);
 						else
-							$this->$field = $value;*/
+						$this->$field = $value;*/
 					} else
-						$this->$field = $value;
+					$this->$field = $value;
 				}
 			}
 		}
@@ -83,16 +83,31 @@ class Model {
 					$st = db()->prepare("update $table set $fieldName=:val where $tableId=:id");
 					$st->bindValue(":val", $value);
 				//_}
-				$id = $tableId;
-				$st->bindValue(":id", $this->$id);
-				$st->execute();
-			} else {
-				throw new Exception("Unknown variable: ".$fieldName);
+					$id = $tableId;
+					$st->bindValue(":id", $this->$id);
+					$st->execute();
+				} else {
+					throw new Exception("Unknown variable: ".$fieldName);
+				}
 			}
 		}
-	}
 
-	public function __toString() {
-		return get_class($this).": ".$this->name;
+		public function __toString() {
+			return get_class($this).": ".$this->name;
+		}
+		
+		public static function getTypeOfColumn(){
+			$refClass = new ReflectionClass($class);
+			$table = $refClass->getStaticPropertyValue('TABLE_NAME');
+			$st = db()->prepare("SELECT column_name, udt_name
+				from INFORMATION_SCHEMA.COLUMNS
+				WHERE TABLE_NAME = :table ;")
+			$st->bindValue(":table", $table);
+			$st->execute();
+			while($row = $st->fetch(PDO::FETCH_ASSOC)){
+				$list[$row["class_name"]] = $row["udt_name"];
+			}
+			return $list;
+		}
+
 	}
-}

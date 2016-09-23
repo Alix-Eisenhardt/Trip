@@ -31,7 +31,7 @@ class LocationController extends Controller {
 	}
 
 	public function confirm(){
-		$list = Location::GetTypeOfColumn();
-		$this->render("confirm", $list);
+		
+		}
 	}
 }
