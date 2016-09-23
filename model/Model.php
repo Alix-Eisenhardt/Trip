@@ -8,12 +8,11 @@ class Model {
 	public function __construct($id=null) {
 		$class = get_class($this);
 		$table = $this->TABLE_NAME;
-		$classLower = strtolower($class);
 		if ($id == null) {
 			$st = db()->prepare("insert into $table default values returning $tableId");
 			$st->execute();
 			$row = $st->fetch();
-			$field = "id".$classLower;
+			$field = substr($table, -3)."_id";
 			$this->$field = $row[$field];
 		} else {
 			$tableId = substr($table, -3)."_ID";
@@ -39,14 +38,21 @@ class Model {
 		}
 	}
 
+	public static function getTableName() {
+		global $TABLE_NAME;
+		return $TABLE_NAME;
+	}
+
 	public static function findAll() {
 		$class = get_called_class();
-		$table = strtolower($class);
-		$st = db()->prepare("select id$table from $table");
+		$refClass = new ReflectionClass($class);
+		$table = $refClass->getStaticPropertyValue('TABLE_NAME');
+		$tableId = substr($table, -3)."_id";
+		$st = db()->prepare("select $tableId from $table");
 		$st->execute();
 		$list = array();
 		while($row = $st->fetch(PDO::FETCH_ASSOC)) {
-			$list[] = new $class($row["id".$table]);
+			$list[] = new $class($row[$tableId]);
 		}
 		return $list;
 	}
@@ -54,8 +60,13 @@ class Model {
 	public function __get($fieldName) {
 		$varName = "_".$fieldName;
 		$className = get_class($this);
-		if (property_exists($className, $varName)/* || defined($this::$fieldName)*/)
+		if (property_exists($className, $varName))
 			return $this->$varName;
+		else if ($fieldName == "TABLE_NAME") {
+			$refClass = new ReflectionClass($className);
+			$table = $refClass->getStaticPropertyValue('TABLE_NAME');
+			return $table;
+		}
 		else
 			throw new Exception("Unknown variable: ".$fieldName);
 	}
@@ -67,7 +78,6 @@ class Model {
 				$this->$varName = $value;
 				$class = get_class($this);
 				$table = $this->TABLE_NAME;
-				$classLower = strtolower($class);
 				$tableId = substr($table, -3)."_id";
 				/*$id = "_id".$fieldName;
 				if (isset($value->$id)) {

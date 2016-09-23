@@ -18,6 +18,7 @@ class LocationController extends Controller {
   		$search["date_debut"] = $_POST["date_debut"];
   	if(isset($_POST["date_fin"]))
   		$search["date_fin"] = $_POST["date_fin"];
-  	$this->render("search", $search);
+
+  	$this->render("search", Location::findAll());
   }
 }

@@ -1,6 +1,6 @@
 <?php
 class Location extends Model {
-  protected $TABLE_NAME = "t_e_location_loc";
+  static $TABLE_NAME = "t_e_location_loc";
   protected $_loc_id;
   protected $_grt_id;
   protected $_loc_titre;
