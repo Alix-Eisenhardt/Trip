@@ -3,6 +3,11 @@ class AbonneController extends Controller {
 	public function inscription() {
 		$this->render("inscription");
 	}
+
+	public function modifierCompte() {
+		$this->render("modifierCompte");
+	}
+
 	public function inscrire() {
 		if (isset($_POST['inscription']) && $_POST['inscription'] == 'Inscription') {
 			if ((isset($_POST['nom']) && !empty($_POST['nom'])) && (isset($_POST['prenom']) && !empty($_POST['prenom'])) && (isset($_POST['pseudo']) && !empty($_POST['pseudo'])) && (isset($_POST['pass']) && !empty($_POST['pass'])) && (isset($_POST['pass_confirm']) && !empty($_POST['pass_confirm'])) && (isset($_POST['email'])) && !empty($_POST['email'])) {

@@ -29,21 +29,17 @@
 	<p>
 		<label for="pays">Pays</label>
 		<select id="pays" name="pay_id">
-			<?php
-				foreach(Pays::findAll() as $value) {
-					echo "<option value=\" $value\">".$value."<option>";
-				}
-			?>
+			
 		</select>
 	</p>
 	<p>
-		<label for="adresse1">Indicatif</label>
-		<input type="text" id="adresse1" name="abo_indicatif" 
+		<label for="indicatif">Indicatif</label>
+		<input type="text" id="indicatif" name="abo_indicatif" 
 			value="<?php if (isset($_POST['abo_indicatif'])) echo htmlentities(trim($_POST['abo_indicatif'])); ?>">
 	</p>
 	<p>
-		<label for="adresse1">Telephone</label>
-		<input type="text" id="adresse1" name="abo_tel"
+		<label for="telephone">Telephone</label>
+		<input type="text" id="telephone" name="abo_tel"
 			value="<?php if (isset($_POST['abo_tel'])) echo htmlentities(trim($_POST['abo_tel'])); ?>">
 	</p>
 
