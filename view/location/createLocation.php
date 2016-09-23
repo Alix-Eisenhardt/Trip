@@ -1,4 +1,4 @@
-<form action="?r" method="post">
+<form action="?r=location/confirm" method="post">
   <h1>Creer une Location</h1>
 
   <p>
@@ -65,15 +65,15 @@
     <label for="country">Pays :</label>
     <select>
       <?php 
-        foreach (Pays::findAll() as $v) {
+/*        foreach (Pays::findAll() as $v) {
           echo "<option value = \"$v\"> $v </option>";
-        }
+        }*/
       ?>
     </select>
   </p>
 
 
-  <p class="button">
+  <div class="button">
     <button type="submit">Creer la location</button>
-  </p>
+  </div>
 </form>

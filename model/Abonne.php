@@ -1,5 +1,6 @@
 <?php
 class Abonne extends Model {
+	static $TABLE_NAME = "t_e_abonne_abo";
 	//Attributs
 	protected $_abo_id;
 	protected $_abo_pseudo;
@@ -21,4 +22,12 @@ class Abonne extends Model {
 
 	//Objets
 	protected $_pays;
+
+	//teste si l'attribut' passée en paramètre existe déja dans la table
+	public function exists($field,$fieldName) {
+		$st = $db()->prepare("SELECT x FROM $TABLE_NAME WHERE $fieldName = :field");
+		$st->execute(array())
+
+		$count_pseudo = $query->rowCount();
+	}
 }
