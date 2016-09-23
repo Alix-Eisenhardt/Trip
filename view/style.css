@@ -10,7 +10,7 @@ html, body {
 
 header {
 	background:#589442;
-	height: 7%;
+	height: 100px;
 	box-shadow: 0 0 10px black;
 	position: sticky;
 	top: 0;
