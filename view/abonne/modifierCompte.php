@@ -3,23 +3,28 @@
 
 	<p>
 		<label for="adresse1">Adresse</label>
-		<input type="text" id="adresse1" name="abo_adrligne1">
+		<input type="text" id="adrligne1" name="abo_adrligne1" 
+			value="<?php if (isset($_POST['abo_adrligne1'])) echo htmlentities(trim($_POST['abo_adrligne1'])); ?>">
 	</p>
 	<p>
 		<label for="adresse2">Complement</label>
-		<input type="text" id="adresse2" name="abo_adrligne2">
+		<input type="text" id="adrligne2" name="abo_adrligne2" 
+			value="<?php if (isset($_POST['abo_adrligne2'])) echo htmlentities(trim($_POST['abo_adrligne2'])); ?>">
 	</p>
 	<p>
 		<label for="cp">Code postal</label>
-		<input type="text" id="cp" name="abo_cp">
+		<input type="text" id="cp" name="abo_cp" 
+			value="<?php if (isset($_POST['abo_cp'])) echo htmlentities(trim($_POST['abo_cp'])); ?>">
 	</p>
 	<p>
 		<label for="ville">Ville</label>
-		<input type="text" id="ville" name="abo_ville">
+		<input type="text" id="ville" name="abo_ville" 
+			value="<?php if (isset($_POST['abo_ville'])) echo htmlentities(trim($_POST['abo_ville'])); ?>">
 	</p>
 	<p>
 		<label for="etat">Etat</label>
-		<input type="text" id="etat" name="abo_etat">
+		<input type="text" id="etat" name="abo_etat" 
+			value="<?php if (isset($_POST['abo_etat'])) echo htmlentities(trim($_POST['abo_etat'])); ?>">
 	</p>
 	<p>
 		<label for="pays">Pays</label>
@@ -29,11 +34,13 @@
 	</p>
 	<p>
 		<label for="adresse1">Indicatif</label>
-		<input type="text" id="adresse1" name="abo_indicatif">
+		<input type="text" id="adresse1" name="abo_indicatif" 
+			value="<?php if (isset($_POST['abo_indicatif'])) echo htmlentities(trim($_POST['abo_indicatif'])); ?>">
 	</p>
 	<p>
 		<label for="adresse1">Telephone</label>
-		<input type="text" id="adresse1" name="abo_tel">
+		<input type="text" id="adresse1" name="abo_tel"
+			value="<?php if (isset($_POST['abo_tel'])) echo htmlentities(trim($_POST['abo_tel'])); ?>">
 	</p>
 
 	<p class="button">
