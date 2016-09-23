@@ -8,5 +8,25 @@ html, body {
 }
 
 header {
-	background:#22ffff;
+	/*background:#00ff00;*/
+}
+
+header h1 {
+	color:green;
+	margin: 3px;
+	text-align: center;
+}
+
+header ul {
+	display: flex;
+	justify-content:space-around;
+	margin:0;
+}
+header ul a {
+	text-decoration: none;
+	color: green;
+}
+
+header ul li {
+	list-style-type: none;
 }
