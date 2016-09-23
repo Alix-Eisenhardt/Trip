@@ -38,11 +38,6 @@ class Model {
 		}
 	}
 
-	public static function getTableName() {
-		global $TABLE_NAME;
-		return $TABLE_NAME;
-	}
-
 	public static function findAll() {
 		$class = get_called_class();
 		$refClass = new ReflectionClass($class);
