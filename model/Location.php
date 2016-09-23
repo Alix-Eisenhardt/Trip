@@ -21,10 +21,40 @@ class Location extends Model {
   protected $_loc_longitude;
 
   public function __toString() {
-    $s = "";
-    foreach (get_object_vars($this) as $key => $value) {
-      $s .= $key." = ".$value."<br>";
-    }
+    $s = "<h3>".$this->loc_titre."</h3>";
+    $s .= "Type : ".$this->loc_type."<br>";
+    $s .= "Description : ".$this->loc_description."<br>";
+    $s .= $this->loc_nbchambres." chambres, ";
+    $s .= $this->loc_nbcouchages." couchages, ";
+    $s .= $this->loc_nbsallesbain." salle(s) de bain, ";
+    $s .= $this->loc_nboccupants." occupants.<br>";
+    if(isset($this->loc_codereservationtrip))
+        $s .= "codereservationtrip : ".$this->loc_codereservationtrip."<br>";
+    $s .= "Adresse : ".$this->loc_adrligne1."<br>";
+    if(isset($this->loc_adrligne2))
+        $s .= $this->loc_adrligne2."<br>";
+    $s .= $this->loc_cp." ".$this->loc_ville."<br>";
+    if(isset($this->loc_etat))
+        $s .= "etat : ".$this->loc_etat."<br>";
+    return $s."<br>";
+  }
+
+  public function shortVersion() {
+    $s = "<h3>".$this->loc_titre."</h3>";
+    $s .= "Type : ".$this->loc_type."<br>";
+    $s .= $this->loc_nbchambres." chambres, ";
+    $s .= $this->loc_nbcouchages." couchages, ";
+    $s .= $this->loc_nbsallesbain." salle(s) de bain, ";
+    $s .= $this->loc_nboccupants." occupants.<br>";
+    if(isset($this->loc_codereservationtrip))
+        $s .= "codereservationtrip : ".$this->loc_codereservationtrip."<br>";
+    $s .= "Adresse : ".$this->loc_adrligne1."<br>";
+    if(isset($this->loc_adrligne2))
+        $s .= $this->loc_adrligne2."<br>";
+    $s .= $this->loc_cp." ".$this->loc_ville."<br>";
+    if(isset($this->loc_etat))
+        $s .= "etat : ".$this->loc_etat."<br>";
+    $s .= "<a href=./?r=location/index&id=".$this->loc_id.">Voir plus de détails</a>";
     return $s."<br>";
   }
 

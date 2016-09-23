@@ -6,7 +6,7 @@ if($data == null) {
 	<h1>Locations près de <?php echo $data[0]->loc_ville ?></h1>
 	<?php
 	foreach ($data as $key => $value) {
-		echo $value;
+		echo $value->shortVersion();
 	};
 }
 ?>

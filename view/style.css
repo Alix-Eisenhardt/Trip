@@ -5,6 +5,8 @@ html, body {
 
 html, body {
 		height:100%;
+		padding-left: 5px;
+		padding-right: 5px;
 }
 
 header {
