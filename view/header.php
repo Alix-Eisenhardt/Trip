@@ -10,6 +10,7 @@
 		<ul>
 			<a href="."><li>Accueil</li></a>
 			<a href="index.php?r=abonne/inscription"><li>Inscription</li></a>
+			<a href="index.php?r=abonne/modifierCompte"><li>Mon compte</li></a>
 			<a href="index.php?r=location/createLocation"><li>Add Loc</li></a>
 		</ul>
 	</header>

@@ -29,7 +29,11 @@
 	<p>
 		<label for="pays">Pays</label>
 		<select id="pays" name="pay_id">
-			
+			<?php
+				foreach(Pays::findAll() as $value) {
+					echo "<option value=\" $value\">".$value."<option>";
+				}
+			?>
 		</select>
 	</p>
 	<p>
