@@ -15,7 +15,7 @@ class LocationController extends Controller {
   	$search = [];
   	foreach ($locations as $key => $value) {
   		if(isset($_POST["ville"])) {
-  			if($_POST["ville"] == $value->loc_ville)
+  			if(strtolower($_POST["ville"]) == strtolower($value->loc_ville))
   				$search[] = $value;
   		} else break;
   	}
