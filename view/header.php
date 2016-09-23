@@ -9,5 +9,6 @@
 	<header>
 		<ul>
 			<a href="."><li>Accueil</li></a>
+			<a href="index.php?r=abonne/inscription"><li>Inscription</li></a>
 		</ul>
 	</header>
