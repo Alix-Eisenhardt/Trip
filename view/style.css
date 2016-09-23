@@ -5,17 +5,22 @@ html, body {
 
 html, body {
 		height:100%;
-		padding-left: 5px;
-		padding-right: 5px;
+		margin-top: -3px;
 }
 
 header {
-	/*background:#00ff00;*/
+	background:#589442;
+	height: 7%;
+	box-shadow: 0 0 10px black;
+	position: sticky;
+	top: 0;
 }
 
 header h1 {
-	color:green;
-	margin: 3px;
+	color:white;
+	font-family: sans-serif;
+	padding: 15px;
+	margin: 0;
 	text-align: center;
 }
 
@@ -26,9 +31,19 @@ header ul {
 }
 header ul a {
 	text-decoration: none;
-	color: green;
+	color: white;
+	font-family: sans-serif;
+	padding-bottom:15px;
 }
 
 header ul li {
 	list-style-type: none;
+}
+
+#main {
+	margin: auto;
+	margin-top: 20px;
+	width: 1200px;
+	height: 85%;
+	/*text-align:center;*/
 }

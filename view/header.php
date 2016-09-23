@@ -14,3 +14,4 @@
 			<a href="./?r=location/createLocation"><li>Ajouter location</li></a>
 		</ul>
 </header>
+<div id="main">
