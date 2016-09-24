@@ -27,7 +27,6 @@ class Location extends Model {
   public function __toString() {
     $s = "<h3>".$this->loc_titre."</h3>";
     $s .= "Type : ".$this->loc_type."<br>";
-    $s .= "Gérant : ".$this->grt_obj."<br>";
     $s .= "Description : ".$this->loc_description."<br>";
     $s .= $this->loc_nbchambres." chambres, ";
     $s .= $this->loc_nbcouchages." couchages, ";
@@ -35,13 +34,15 @@ class Location extends Model {
     $s .= $this->loc_nboccupants." occupants.<br>";
     if(isset($this->loc_codereservationtrip))
         $s .= "codereservationtrip : ".$this->loc_codereservationtrip."<br>";
-    $s .= "Adresse : ".$this->loc_adrligne1."<br>";
+    $s .= "<div class=\"adresse\">Adresse : ".$this->loc_adrligne1."<br>";
     if(isset($this->loc_adrligne2))
         $s .= $this->loc_adrligne2."<br>";
     $s .= $this->loc_cp." ".$this->loc_ville."<br>";
     if(isset($this->loc_etat))
         $s .= "etat : ".$this->loc_etat."<br>";
-    $s .= $this->pay_obj;
+    $s .= $this->pay_obj."</div>";
+    $s .= "<div class=\"gerant\"><p>À propos du propriétaire, ".$this->grt_obj->grt_nom." :<br>";
+    $s .= $this->grt_obj."</p></div>";
     return $s."<br>";
   }
 
