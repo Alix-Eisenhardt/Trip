@@ -13,8 +13,7 @@ class Model {
 			$st = db()->prepare("insert into $table default values returning $tableId");
 			$st->execute();
 			$row = $st->fetch();
-			$field = substr($table, -3)."_id";
-			$this->$field = $row[$field];
+			$this->$tableId = $row[$tableId];
 			print_r(db()->errorInfo());
 		} else {
 			$tableId = substr($table, -3)."_ID";
@@ -26,15 +25,18 @@ class Model {
 			} else {
 				$row = $st->fetch(PDO::FETCH_ASSOC);
 				foreach($row as $field=>$value) {
-					if (substr($field, 0,2) == "id") {
-						/*$linkedField = substr($field, 2);
-						$linkedClass = ucfirst($linkedField);
-						if ($linkedClass != get_class($this))
-							$this->$linkedField = new $linkedClass($value);
-						else
-						$this->$field = $value;*/
-					} else
-					$this->$field = $value;
+					if (substr($field, -2,2) == "id") {
+						$linkedField = substr($field, 0,3);
+						$linkedClass = $this->externalClasses[$linkedField];
+						if ($linkedClass != get_class($this)) {
+							$linkedObj = $linkedField."_obj";
+							$this->$linkedObj = new $linkedClass($value);
+						} else {
+							$this->$field = $value;
+						}
+					} else {
+						$this->$field = $value;
+					}
 				}
 			}
 		}
@@ -70,7 +72,7 @@ class Model {
 			$table = $refClass->getStaticPropertyValue('TABLE_NAME');
 			return $table;
 		}
-		else
+		else if ($fieldName != "externalClasses")
 			throw new Exception("Unknown variable: ".$fieldName);
 	}
 
@@ -101,7 +103,7 @@ class Model {
 	}
 
 	public function __toString() {
-		return get_class($this).": ".$this->name;
+		return get_class($this);
 	}
 
 	public static function getTypeOfColumn(){
