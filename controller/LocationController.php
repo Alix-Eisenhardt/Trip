@@ -38,6 +38,27 @@ class LocationController extends Controller {
 	}
 
 	public function confirm(){
-		$this->render("confirm", Location::getTypeOfColumn());
+    $list = Location::getTypeOfColumn();
+    foreach ($list as $key => $value) {
+      if(isset($_POST["$key"]) && !empty($_POST["$key"]))
+        if(!pgTypeToPHPTestType($value,$_POST["$key"])){
+          $flag = false;
+          $erreur = $key;
+          break;
+          }
+    }
+    if(!$flag)
+      echo "<div>Le champ $erreur est mal renseigné</div>";
+    else{
+      $loc = new Location();
+      $classvars = get_class_vars("Location");
+      foreach ($classvars as $v) {
+          $attribute = substr($v,1);
+        if(isset($_POST["$v"]))
+          $loc->"_$v" = $_POST["$v"];
+      }
+      $this->render("confirm", print_r($loc);
+    }
+
 	}
 }
