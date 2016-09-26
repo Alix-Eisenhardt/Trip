@@ -65,12 +65,9 @@ class AbonneController extends Controller {
 						"abo_tel" => $_POST['tel'],
 						"abo_aeroport" => $_POST['aeroport'] 
 						);
-
 					$abonne = new Abonne($param);
-
 					$_SESSION['ouvert'] = true;
-					$_SESSION['abonne'] = $abonne;
-
+					//$_SESSION['abonne'] = $abonne->abo_id;
 					header('Location: index.php');
 					exit();
 				}

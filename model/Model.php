@@ -21,17 +21,19 @@ class Model {
 				if($c != count($param))
 					$sql = $sql.",";
 			}
-			$sql = $sql.")";
-			echo ("sql : ".$sql."|");
+			$sql = $sql.") RETURNING $tableId";
 
-//INSERT INTO table VALUES ('value1','value2',....) RETURNING tableid
+			//INSERT INTO table VALUES ('value1','value2',....) RETURNING tableid
 
 			$st = db()->prepare($sql);
 			$st->execute();
 			$row = $st->fetch();
 
-//			$this = $class($row[$tableId]);
-		 	print_r(db()->errorInfo());
+			$this->$tableId = $row[$tableId];
+			foreach ($param as $key => $value) {
+				$this->$key = $value;
+			}
+		 	//print_r(db()->errorInfo());
 		} else {
 			$id = $param;
 			$tableId = substr($table, -3)."_ID";
