@@ -5,17 +5,34 @@
 // ToDo : modèle hiérarchique
 
 class Model {
-	public function __construct($id=null) {
+	//attend une variable : Soit l'id pour instancier un objet
+	// soit un tableau de paramètres pour l'insert dans la base
+	public function __construct($param) {
 		$class = get_called_class();
 		$table = $class::getTableName();
 		$tableId = substr($table, -3)."_id";
-		if ($id == null) {
-			$st = db()->prepare("insert into $table default values returning $tableId");
+
+		if (is_array($param)) {
+			$sql = "INSERT INTO $table VALUES (";
+			$c=0;
+			foreach ($param as $key => $value) {
+				$sql += '$value';
+				$c++;
+				if($c != count($param))
+					$sql +=',';
+			}
+			$sql+=") RETURNING $tableId";
+
+//INSERT INTO table VALUES ('value1','value2',....) RETURNING tableid
+
+			$st = db()->prepare($sql);
 			$st->execute();
 			$row = $st->fetch();
-			$this->$tableId = $row[$tableId];
-			print_r(db()->errorInfo());
+
+			$this- = $class($row[$tableId]);
+			//print_r(db()->errorInfo());
 		} else {
+			$id = $param;
 			$tableId = substr($table, -3)."_ID";
 			$st = db()->prepare("select * from $table where $tableId=:id");
 			$st->bindValue(":id", $id);

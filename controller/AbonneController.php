@@ -39,28 +39,51 @@ class AbonneController extends Controller {
 
 				if($verif_pseudo_dispo && $verif_mail_dispo 
 						&& $verif_pass_corresp && $verif_email_valide) {
-					/*$abonne = new Abonne();
-					$abonne->abo_pseudo=$_POST['pseudo'];
-					$abonne->abo_motdepasse=sha1($_POST['pass']);
-					$abonne->abo_mel=$_POST['email'];
-					$abonne->abo_nom=$_POST['nom'];
-					$abonne->abo_prenom=$_POST['prenom'];*/
 
-					$abonne = array();
-					$abonne[] = $_POST['pseudo'];
-					$abonne[] = sha1($_POST['pass']);
-					$abonne[] = $_POST['email'];
-					$abonne[] = $_POST['nom'];
-					$abonne[] = $_POST['prenom'];
+					$param = array(
+						"abo_id"=> "default",
+						"abo_pseudo"=> $_POST['pseudo'],
+						"abo_motdepasse"=> sha1($_POST['pass']),
+						"abo_mel" => $_POST['email'],
+						"abo_nom" => $_POST['nom'],
+						"abo_prenom" => $_POST['prenom'],
+						"abo_adrligne1" => $_POST[''],
+						"abo_adrligne2" => $_POST[''],
+						"abo_cp" => $_POST[''],
+						"abo_ville" => $_POST[''],
+						"abo_etat" => $_POST[''],
+						"pay_id" => $_POST[''],
+						"abo_latitude" => $_POST[''],
+						"abo_indicatif" => $_POST[''],
+						"abo_tel" => $_POST[''],
+						"abo_aeroport" => $_POST[''] 
+						);
 
-					$_SESSION['inscription']=$abonne;
+/*ABO_ID               SERIAL               not null,
+   ABO_PSEUDO           VARCHAR(20)          not null,
+   ABO_MOTPASSE         VARCHAR(128)         not null,
+   ABO_MEL              VARCHAR(80)          not null,
+   ABO_NOM              VARCHAR(50)          not null,
+   ABO_PRENOM           VARCHAR(50)          not null,
+   ABO_ADRLIGNE1        VARCHAR(100)         not null,
+   ABO_ADRLIGNE2        VARCHAR(100)         null,
+   ABO_CP               VARCHAR(10)          not null,
+   ABO_VILLE            VARCHAR(50)          not null,
+   ABO_ETAT             VARCHAR(50)          null,
+   PAY_ID               INT4                 not null,
+   ABO_LATITUDE         FLOAT8               not null,
+   ABO_LONGITUDE        FLOAT8               not null,
+   ABO_INDICATIF        NUMERIC(4)           not null,
+   ABO_TEL              VARCHAR(15)          not null,
+   ABO_AEROPORT         VARCHAR(50)          null,*/
 
-					//
-					header('Location: index.php?r=abonne/modifierCompte');
-					//$_SESSION['ouvert'] = true;
-					//$_SESSION['abonne'] = $abonne;
 
-					//header('Location: index.php');
+					$abonne = new Abonne($param);
+
+					$_SESSION['ouvert'] = true;
+					$_SESSION['abonne'] = $abonne;
+
+					header('Location: index.php');
 					exit();
 				}
 			}
