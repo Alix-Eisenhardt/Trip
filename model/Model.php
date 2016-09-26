@@ -29,7 +29,7 @@ class Model {
 			$st->execute();
 			$row = $st->fetch();
 
-			$this- = $class($row[$tableId]);
+//			$this = $class($row[$tableId]);
 			//print_r(db()->errorInfo());
 		} else {
 			$id = $param;
