@@ -1,49 +1,42 @@
- <form action="?r" method="post">
+ <form action="index.php?r=abonne/modifier" method="post">
 	<h1>Mon compte</h1>
 
 	<p>
-		<label for="adresse1">Adresse</label>
-		<input type="text" id="adrligne1" name="abo_adrligne1" 
-			value="<?php if (isset($_POST['abo_adrligne1'])) echo htmlentities(trim($_POST['abo_adrligne1'])); ?>">
+		<label for="abo_adresse1">Adresse</label>
+		<input type="text" id="abo_adrligne1" name="abo_adrligne1" value="<?php echo $this->abo_adrligne1; ?>">
 	</p>
 	<p>
-		<label for="adresse2">Complement</label>
-		<input type="text" id="adrligne2" name="abo_adrligne2" 
-			value="<?php if (isset($_POST['abo_adrligne2'])) echo htmlentities(trim($_POST['abo_adrligne2'])); ?>">
+		<label for="abo_adresse2">Complement</label>
+		<input type="text" id="abo_adrligne2" name="abo_adrligne2" value="<?php echo $this->abo_adrligne2; ?>">
 	</p>
 	<p>
-		<label for="cp">Code postal</label>
-		<input type="text" id="cp" name="abo_cp" 
-			value="<?php if (isset($_POST['abo_cp'])) echo htmlentities(trim($_POST['abo_cp'])); ?>">
+		<label for="abo_cp">Code postal</label>
+		<input type="text" id="abo_cp" name="abo_cp" value="<?php echo $this->abo_cp; ?>">
 	</p>
 	<p>
-		<label for="ville">Ville</label>
-		<input type="text" id="ville" name="abo_ville" 
-			value="<?php if (isset($_POST['abo_ville'])) echo htmlentities(trim($_POST['abo_ville'])); ?>">
+		<label for="abo_ville">Ville</label>
+		<input type="text" id="abo_ville" name="abo_ville" value="<?php echo $this->abo_ville; ?>">
 	</p>
 	<p>
-		<label for="etat">Etat</label>
-		<input type="text" id="etat" name="abo_etat" 
-			value="<?php if (isset($_POST['abo_etat'])) echo htmlentities(trim($_POST['abo_etat'])); ?>">
+		<label for="abo_etat">Etat</label>
+		<input type="text" id="abo_etat" name="abo_etat" value="<?php echo $this->abo_etat; ?>">
 	</p>
 	<p>
-		<label for="pays">Pays</label>
-		<select id="pays" name="pay_id">
+		<label for="abo_pays">Pays</label>
+		<select id="abo_pays" name="pay_id">
 			
 		</select>
 	</p>
 	<p>
-		<label for="indicatif">Indicatif</label>
-		<input type="text" id="indicatif" name="abo_indicatif" 
-			value="<?php if (isset($_POST['abo_indicatif'])) echo htmlentities(trim($_POST['abo_indicatif'])); ?>">
+		<label for="abo_indicatif">Indicatif</label>
+		<input type="text" id="abo_indicatif" name="abo_indicatif" value="<?php echo $this->abo_indicatif; ?>">
 	</p>
 	<p>
-		<label for="telephone">Telephone</label>
-		<input type="text" id="telephone" name="abo_tel"
-			value="<?php if (isset($_POST['abo_tel'])) echo htmlentities(trim($_POST['abo_tel'])); ?>">
+		<label for="abo_telephone">Telephone</label>
+		<input type="text" id="abo_telephone" name="abo_tel" value="<?php echo $this->abo_telephone; ?>">
 	</p>
 
 	<p class="button">
-		<button type="submit">Valider</button>
+		<button type="submit" name="modifier">Valider</button>
 	</p>
 </form>
