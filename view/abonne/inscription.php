@@ -66,6 +66,5 @@
 	<label for="aeroport">Aéroport : </label>
 	<input type="text" id="aeroport" name="aeroport" size=35 value="<?php if (isset($_POST['aeroport'])) echo htmlentities(trim($_POST['aeroport'])); ?>">
 	</p>
-
 	<input type="submit" name="inscription" value="Inscription">
 </form>

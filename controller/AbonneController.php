@@ -10,13 +10,19 @@ class AbonneController extends Controller {
 
 	public function inscrire() {
 		if (isset($_POST['inscription']) && $_POST['inscription'] == 'Inscription') {
-			if ((isset($_POST['nom']) && !empty($_POST['nom'])) 
+			if (
+					(isset($_POST['nom']) && !empty($_POST['nom'])) 
 					&& (isset($_POST['prenom']) && !empty($_POST['prenom'])) 
 					&& (isset($_POST['pseudo']) && !empty($_POST['pseudo'])) 
 					&& (isset($_POST['pass']) && !empty($_POST['pass'])) 
-					&& (isset($_POST['pass_confirm']) && !empty($_POST['pass_confirm'])) 
-					&& (isset($_POST['email'])) && !empty($_POST['email'])) {
-
+					&& (isset($_POST['pass_confirm']) && !empty($_POST['pass_confirm']))
+					&& (isset($_POST['adr1']) && !empty($_POST['adr1']))
+					&& (isset($_POST['cp']) && !empty($_POST['cp']))
+					&& (isset($_POST['ville']) && !empty($_POST['ville']))
+					&& (isset($_POST['pay_id']) && !empty($_POST['pay_id']))
+					&& (isset($_POST['indicatif']) && !empty($_POST['indicatif']))
+					&& (isset($_POST['tel']) && !empty($_POST['tel']))
+					) {
 				if (preg_match("#^[a-zA-Z0-9._-]+@[a-z0-9._-]{2,}\.[a-z]{2,4}$#", $_POST['email'])) {
 					$verif_email_valide =true;
 				} else {
@@ -47,43 +53,25 @@ class AbonneController extends Controller {
 						"abo_mel" => $_POST['email'],
 						"abo_nom" => $_POST['nom'],
 						"abo_prenom" => $_POST['prenom'],
-						"abo_adrligne1" => $_POST[''],
-						"abo_adrligne2" => $_POST[''],
-						"abo_cp" => $_POST[''],
-						"abo_ville" => $_POST[''],
-						"abo_etat" => $_POST[''],
-						"pay_id" => $_POST[''],
-						"abo_latitude" => $_POST[''],
-						"abo_indicatif" => $_POST[''],
-						"abo_tel" => $_POST[''],
-						"abo_aeroport" => $_POST[''] 
+						"abo_adrligne1" => $_POST['adr1'],
+						"abo_adrligne2" => $_POST['adr2'],
+						"abo_cp" => $_POST['cp'],
+						"abo_ville" => $_POST['ville'],
+						"abo_etat" => $_POST['etat'],
+						"pay_id" => $_POST['pay_id'],
+						"abo_latitude" => 2,
+						"abo_longitude" => 2,
+						"abo_indicatif" => $_POST['indicatif'],
+						"abo_tel" => $_POST['tel'],
+						"abo_aeroport" => $_POST['aeroport'] 
 						);
-
-/*ABO_ID               SERIAL               not null,
-   ABO_PSEUDO           VARCHAR(20)          not null,
-   ABO_MOTPASSE         VARCHAR(128)         not null,
-   ABO_MEL              VARCHAR(80)          not null,
-   ABO_NOM              VARCHAR(50)          not null,
-   ABO_PRENOM           VARCHAR(50)          not null,
-   ABO_ADRLIGNE1        VARCHAR(100)         not null,
-   ABO_ADRLIGNE2        VARCHAR(100)         null,
-   ABO_CP               VARCHAR(10)          not null,
-   ABO_VILLE            VARCHAR(50)          not null,
-   ABO_ETAT             VARCHAR(50)          null,
-   PAY_ID               INT4                 not null,
-   ABO_LATITUDE         FLOAT8               not null,
-   ABO_LONGITUDE        FLOAT8               not null,
-   ABO_INDICATIF        NUMERIC(4)           not null,
-   ABO_TEL              VARCHAR(15)          not null,
-   ABO_AEROPORT         VARCHAR(50)          null,*/
-
 
 					$abonne = new Abonne($param);
 
 					$_SESSION['ouvert'] = true;
 					$_SESSION['abonne'] = $abonne;
 
-					header('Location: index.php');
+					//header('Location: index.php');
 					exit();
 				}
 			}
