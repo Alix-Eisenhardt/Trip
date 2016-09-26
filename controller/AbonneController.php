@@ -14,40 +14,40 @@ class AbonneController extends Controller {
 					(isset($_POST['nom']) && !empty($_POST['nom'])) 
 					&& (isset($_POST['prenom']) && !empty($_POST['prenom'])) 
 					&& (isset($_POST['pseudo']) && !empty($_POST['pseudo'])) 
-					&& (isset($_POST['pass']) && !empty($_POST['pass'])) 
+					&& (isset($_POST['pass']) && !empty($_POST['pass']))
+					&& (isset($_POST['email']) && !empty($_POST['email']))  
 					&& (isset($_POST['pass_confirm']) && !empty($_POST['pass_confirm']))
 					&& (isset($_POST['adr1']) && !empty($_POST['adr1']))
 					&& (isset($_POST['cp']) && !empty($_POST['cp']))
 					&& (isset($_POST['ville']) && !empty($_POST['ville']))
 					&& (isset($_POST['pay_id']) && !empty($_POST['pay_id']))
 					&& (isset($_POST['indicatif']) && !empty($_POST['indicatif']))
-					&& (isset($_POST['tel']) && !empty($_POST['tel']))
-					) {
+					&& (isset($_POST['tel']) && !empty($_POST['tel']))) {
+				echo "pop";
 				if (preg_match("#^[a-zA-Z0-9._-]+@[a-z0-9._-]{2,}\.[a-z]{2,4}$#", $_POST['email'])) {
 					$verif_email_valide =true;
 				} else {
 					$verif_email_valide= false;
-					$erreur = 'l\'adresse mail n\'est pas valide';
+					$_SESSION['erreur'] = 'l\'adresse mail n\'est pas valide';
 				}
 				if ($_POST['pass'] == $_POST['pass_confirm']) {
 					$verif_pass_corresp = true;
 				} else {
 					$verif_pass_corresp = false;
-					$erreur = 'Les 2 mots de passe sont différents.';
+					$_SESSION['erreur'] = 'Les 2 mots de passe sont différents.';
 				}
 				$verif_mail_dispo = Abonne::avaiable($_POST['email'],"ABO_Mel");
 				$verif_pseudo_dispo = Abonne::avaiable($_POST['pseudo'],"ABO_Pseudo");
 
 				if(!$verif_mail_dispo)
-					$erreur = 'Cette adresse email est déjà prise';
+					$_SESSION['erreur'] = 'Cette adresse email est déjà prise';
 				if(!$verif_pseudo_dispo)
-					$erreur = 'Ce pseudo est déjà pris';
+					$_SESSION['erreur'] = 'Ce pseudo est déjà pris';
 
 				if($verif_pseudo_dispo && $verif_mail_dispo 
 						&& $verif_pass_corresp && $verif_email_valide) {
 
 					$param = array(
-						"abo_id"=> "default",
 						"abo_pseudo"=> $_POST['pseudo'],
 						"abo_motdepasse"=> sha1($_POST['pass']),
 						"abo_mel" => $_POST['email'],
@@ -71,12 +71,11 @@ class AbonneController extends Controller {
 					$_SESSION['ouvert'] = true;
 					$_SESSION['abonne'] = $abonne;
 
-					//header('Location: index.php');
+					header('Location: index.php');
 					exit();
 				}
-			}
-			else {
-				$erreur = 'l\'un des champs n\'est pas renseigné';
+			} else {
+				$_SESSION['erreur'] = "l'un des champs n'est pas renseigné";
 			}
 		}
 	}

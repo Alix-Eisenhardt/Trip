@@ -13,10 +13,10 @@ class Model {
 		$tableId = substr($table, -3)."_id";
 
 		if (is_array($param)) {
-			$sql = "INSERT INTO $table VALUES (";
+			$sql = "INSERT INTO $table VALUES (DEFAULT,";
 			$c=0;
 			foreach ($param as $key => $value) {
-				$sql = $sql.$value;
+				$sql = $sql.'\''.$value.'\'';
 				$c++;
 				if($c != count($param))
 					$sql = $sql.",";
