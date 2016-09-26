@@ -10,10 +10,12 @@
 		<h1>TripAdvisor</h1>
 		<ul>
 			<a href="."><li>Accueil</li></a>
-			<a href="index.php?r=abonne/inscription"><li>Inscription</li></a>
-			<a href="index.php?r=abonne/modifierCompte"><li>Mon compte</li></a>
-			<a href="index.php?r=location/createLocation"><li>Add Loc</li></a>
-			<a href="./?r=abonne/inscription"><li>Inscription</li></a>
+			<?php
+			if(isset($_SESSION['ouvert']))
+				echo "<a href=\"./?r=abonne/modifierCompte\"><li>Mon compte</li></a>";
+			else
+				echo "<a href=\"./?r=abonne/inscription\"><li>Inscription</li></a>";
+			?>
 			<a href="./?r=location/createLocation"><li>Ajouter location</li></a>
 		</ul>
 </header>

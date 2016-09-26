@@ -83,37 +83,46 @@ class AbonneController extends Controller {
 
 	public function modifier() {
 		if (isset($_POST['modifier'])) {
-			if ((isset($_POST['abo_adrligne1']) && !empty($_POST['abo_adrligne1']))  
-					&& (isset($_POST['abo_cp']) && !empty($_POST['abo_cp'])) 
-					&& (isset($_POST['abo_ville']) && !empty($_POST['abo_ville'])) 
-					&& (isset($_POST['abo_pays']) && !empty($_POST['abo_pays'])) 
-					&& (isset($_POST['abo_indicatif']) && !empty($_POST['abo_indicatif']))
-					&& (isset($_POST['abo_telephone'])) && !empty($_POST['abo_telephone'])) {
-
+			if (isset($_POST['abo_adrligne1']) && isset($_POST['abo_cp'])
+					&& isset($_POST['abo_ville']) && isset($_POST['pay_id'])
+					&& isset($_POST['abo_indicatif']) && isset($_POST['abo_tel'])) {
+/*
 				if (preg_match("#^[1-9]{4}$#", $_POST['abo_indicatif'])) {
 					$verif_indicatif = true;
 				} else {
 					$verif_indicatif = false;
 					$erreur = 'l\'indicatif n\'est pas valide';
+					echo $erreur;
 				}
-
+*/
+/*
 				if($verif_indicatif) {
 
 					foreach ($_POST as $key => $value) {
-						if ($this->$key != $_POST[$key]) {
-							$this->$key = $_POST[$key];
+						if ($key != "modifier") {
+							if ($->$key != $_POST[$key])
+								$->$key = $_POST[$key];
 						}
-					}
-
+					}*/
+					echo "coucou";
+					print_r($_POST);
 					//$_SESSION['abonne'] = $this;
 
-					header('Location: index.php');
-					exit();
-				}
+					//header('Location: index.php');
+					//exit();
+				//}
 			}
 			else {
 				$erreur = 'l\'un des champs n\'est pas renseigné';
-				header('Location: index.php?r=abonne/modifierCompte');
+				//header('Location: index.php?r=abonne/modifierCompte');
+				echo $erreur."</br>";
+				echo isset($_POST['abo_adrligne1']).$_POST['abo_adrligne1']."</br>";
+				echo isset($_POST['abo_cp']).$_POST['abo_cp']."</br>";
+				echo isset($_POST['abo_ville']).$_POST['abo_ville']."</br>";
+				echo isset($_POST['pay_id']).$_POST['pay_id']."</br>";
+				echo isset($_POST['abo_indicatif']).$_POST['abo_indicatif']."</br>";
+				echo isset($_POST['abo_tel']).$_POST['abo_tel']."</br>";
+				
 			}
 		}
 	}
