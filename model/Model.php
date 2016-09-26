@@ -13,27 +13,23 @@ class Model {
 		$tableId = substr($table, -3)."_id";
 
 		if (is_array($param)) {
-			$sql = "INSERT INTO $table ('".$tableId."'";
+			$sql = "INSERT INTO $table (".$tableId;
 			foreach ($param as $key => $value) {
-				$sql .= ",'".$key."'";
+				$sql .= ",".$key;
 			}
-			$sql .= ")VALUES (DEFAULT";
+			$sql .= ") VALUES (DEFAULT";
 			foreach ($param as $key => $value) {
 				$sql .= ",'".$value."'";
 			}
 			$sql .= ") RETURNING $tableId";
-
-			//INSERT INTO table VALUES ('value1','value2',....) RETURNING tableid
-
 			$st = db()->prepare($sql);
 			$st->execute();
 			$row = $st->fetch();
-
 			$this->$tableId = $row[$tableId];
 			foreach ($param as $key => $value) {
 				$this->$key = $value;
 			}
-		 	print_r(db()->errorInfo());
+		 	//print_r(db()->errorInfo());
 		} else {
 			$id = $param;
 			$tableId = substr($table, -3)."_ID";
