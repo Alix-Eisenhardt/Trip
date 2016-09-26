@@ -21,7 +21,10 @@ class Abonne extends Model {
 	protected $_abo_aeroport;
 
 	//Objets
-	protected $_pays;
+	protected $_pay_obj;
+
+	protected $externalClasses = array("abo" => "Abonne","pay"=>"Pays");
+
 
 	//teste si l'attribut passée en paramètre existe déja dans la table
 	public static function avaiable($field,$fieldName) {
@@ -34,4 +37,6 @@ class Abonne extends Model {
 		$rowsCpt = $st->rowCount();
 		return ($rowsCpt == 0);
 	}
+
+
 }
