@@ -6,6 +6,7 @@ html, body {
 html, body {
 		height:100%;
 		margin-top: -3px;
+		background-color: #f1f1f1;
 }
 
 header {
