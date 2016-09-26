@@ -16,12 +16,13 @@ class Model {
 			$sql = "INSERT INTO $table VALUES (";
 			$c=0;
 			foreach ($param as $key => $value) {
-				$sql += '$value';
+				$sql = $sql.$value;
 				$c++;
 				if($c != count($param))
-					$sql +=',';
+					$sql = $sql.",";
 			}
-			$sql+=") RETURNING $tableId";
+			$sql = $sql.")";
+			echo ("sql : ".$sql."|");
 
 //INSERT INTO table VALUES ('value1','value2',....) RETURNING tableid
 
@@ -30,7 +31,7 @@ class Model {
 			$row = $st->fetch();
 
 //			$this = $class($row[$tableId]);
-			//print_r(db()->errorInfo());
+		 	print_r(db()->errorInfo());
 		} else {
 			$id = $param;
 			$tableId = substr($table, -3)."_ID";
