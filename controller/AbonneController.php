@@ -125,6 +125,7 @@ class AbonneController extends Controller {
 			}
 			else {
 				$erreur = 'l\'un des champs n\'est pas renseigné';
+				header('Location: index.php?r=abonne/modifierCompte');
 			}
 		}
 	}
