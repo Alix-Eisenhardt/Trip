@@ -55,7 +55,7 @@
 
   <p>
     <label for="city">Ville</label>
-    <input type="text" id="addr" name="loc_ville" value ="<?php if (isset ($_POST['loc_ville'])) echo htmlentities(trim($_POST['loc_ville'])); ?>">
+    <input type="text" id="addr" name="loc_ville" value ="<?php if (isset ($_POST['loc_ville'])) echo htmlentities(trim($_POST['loc_ville'])); ?>"/>
   </p>
 
   <p>
