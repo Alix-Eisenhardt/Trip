@@ -53,11 +53,12 @@ class LocationController extends Controller {
       $loc = new Location();
       $classvars = get_class_vars("Location");
       foreach ($classvars as $v) {
+      		$vAttrib = "_".$v;
           $attribute = substr($v,1);
         if(isset($_POST["$v"]))
-          $loc->"_$v" = $_POST["$v"];
+          $loc->$vAttrib = $_POST["$v"];
       }
-      $this->render("confirm", print_r($loc);
+      $this->render("confirm", print_r($loc));
     }
 
 	}
