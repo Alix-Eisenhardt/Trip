@@ -23,7 +23,6 @@ class AbonneController extends Controller {
 					&& (isset($_POST['pay_id']) && !empty($_POST['pay_id']))
 					&& (isset($_POST['indicatif']) && !empty($_POST['indicatif']))
 					&& (isset($_POST['tel']) && !empty($_POST['tel']))) {
-				echo "pop";
 				if (preg_match("#^[a-zA-Z0-9._-]+@[a-z0-9._-]{2,}\.[a-z]{2,4}$#", $_POST['email'])) {
 					$verif_email_valide =true;
 				} else {
@@ -49,7 +48,7 @@ class AbonneController extends Controller {
 
 					$param = array(
 						"abo_pseudo"=> $_POST['pseudo'],
-						"abo_motdepasse"=> sha1($_POST['pass']),
+						"abo_motpasse"=> sha1($_POST['pass']),
 						"abo_mel" => $_POST['email'],
 						"abo_nom" => $_POST['nom'],
 						"abo_prenom" => $_POST['prenom'],

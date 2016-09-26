@@ -4,7 +4,7 @@ class Abonne extends Model {
 	//Attributs
 	protected $_abo_id;
 	protected $_abo_pseudo;
-	protected $_abo_motdepasse;
+	protected $_abo_motpasse;
 	protected $_abo_mel;
 	protected $_abo_nom;
 	protected $_abo_prenom;
