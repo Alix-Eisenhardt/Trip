@@ -48,8 +48,9 @@
     <label for="country">Pays* :</label>
     <select id="pays" name="pay_id">
       <?php
-       foreach (Pays::findAll() as $v) {
-          echo "<option value = \"$v\"> $v </option>";
+       foreach (Pays::findAll() as $k => $v) {
+       		$id = $v->pay_id;
+          echo "<option value = \"$id\"> $v </option>";
         }
       ?>
     </select>

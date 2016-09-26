@@ -30,7 +30,7 @@ class Abonne extends Model {
 	public static function avaiable($field,$fieldName) {
 		$class = get_called_class();
 		$table = $class::getTableName();
-		$st = db()->prepare("SELECT x FROM $table WHERE $fieldName = :field");
+		$st = db()->prepare("SELECT * FROM $table WHERE $fieldName = :field");
 		$st->execute(array(
 			':field' =>$field
 			));
