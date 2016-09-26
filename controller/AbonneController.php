@@ -89,8 +89,8 @@ class AbonneController extends Controller {
 				if($verif_indicatif) {
 
 					foreach ($_POST as $key => $value) {
-						if ($this->$key != $_POST[$key]) {
-							$this->$key = $_POST[$key]
+						if ($_SESSION['abonne']->$key != $_POST[$key]) {
+							$_SESSION['abonne']->$key = $_POST[$key];
 						}
 					}
 
