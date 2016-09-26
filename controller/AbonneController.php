@@ -89,12 +89,12 @@ class AbonneController extends Controller {
 				if($verif_indicatif) {
 
 					foreach ($_POST as $key => $value) {
-						if ($_SESSION['abonne']->$key != $_POST[$key]) {
-							$_SESSION['abonne']->$key = $_POST[$key];
+						if ($this->$key != $_POST[$key]) {
+							$this->$key = $_POST[$key];
 						}
 					}
 
-					$_SESSION['abonne'] = $this;
+					//$_SESSION['abonne'] = $this;
 
 					header('Location: index.php');
 					exit();
