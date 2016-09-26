@@ -29,7 +29,7 @@ class Model {
 			$st->execute();
 			$row = $st->fetch();
 
-			$this- = $class($row[$tableId]);
+			//$this = $class($row[$tableId]);
 			//print_r(db()->errorInfo());
 		} else {
 			$id = $param;
@@ -70,7 +70,7 @@ class Model {
 		$class = get_called_class();
 		$table = $class::getTableName();
 		$tableId = substr($table, -3)."_id";
-		$st = db()->prepare("select $tableId from $table");
+		$st = db()->prepare("select $tableId from $table order by $tableId");
 		$st->execute();
 		$list = array();
 		while($row = $st->fetch(PDO::FETCH_ASSOC)) {
