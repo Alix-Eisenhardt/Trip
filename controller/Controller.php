@@ -5,7 +5,6 @@ $data = NULL;
 class Controller {
 		public function __construct() {
 		}
-
 		public function render($view, $d=null) {
 				global $data;
 				include_once "view/header.php";

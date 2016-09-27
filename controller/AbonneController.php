@@ -5,7 +5,6 @@ class AbonneController extends Controller {
 	}
 
 	public function inscription() {
-		$this->render("inscription");
 		if (isset($_POST['inscription']) && $_POST['inscription'] == 'Inscription') {
 			if (
 					(isset($_POST['nom']) && !empty($_POST['nom'])) 
@@ -63,10 +62,8 @@ class AbonneController extends Controller {
 						);
 					$abonne = new Abonne($param);
 					$_SESSION['ouvert'] = true;
-					echo "pop";
-					header('Location: index.php');
-					exit();
-					//$_SESSION['abonne'] = $abonne->abo_id;
+					$_SESSION['abonne'] = $abonne;
+					header("Location: index.php");
 				}
 			} else {
 				$erreur = "l'un des champs n'est pas renseigné";
@@ -76,6 +73,8 @@ class AbonneController extends Controller {
 			echo $erreur;
 			unset($erreur);
 		}
+		//Faire le rendering du formulaire APRES le process, sinon le header Location ne peut pas fonctionner.
+		$this->render("inscription");
 	}
 
 	public function modifier() {
