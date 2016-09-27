@@ -1,12 +1,10 @@
  <form action="index.php?r=abonne/connecter" method="post">
 	<h1>Connexion</h1>
-	<?php
-		echo $_SESSION['abo']->pay_id;
-		print_r($_SESSION['abo']);
-	?>
+
 	<p>
 		<label for="login">Adresse mail</label>
-		<input type="text" id="login" name="login" required>
+		<input type="text" id="login" name="login" required 
+			value="<?php if(isset($_POST['login'])) echo $_POST['login']; ?>">
 	</p>
 	<p>
 		<label for="password">Mot de passe</label>
