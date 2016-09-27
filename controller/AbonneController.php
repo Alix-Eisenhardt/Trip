@@ -72,8 +72,8 @@ class AbonneController extends Controller {
 						);
 					$abonne = new Abonne($param);
 					$_SESSION['ouvert'] = true;
-					$_SESSION['abonne'] = $abonne;
-					header("Location: index.php");
+					$_SESSION['abo'] = $abonne;
+					header("Location: .");
 				}
 			} else {
 				$erreur = "l'un des champs n'est pas renseigné";
