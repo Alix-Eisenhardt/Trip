@@ -121,7 +121,8 @@ class AbonneController extends Controller {
 			$st->execute();
 			$row = $st->fetch(PDO::FETCH_ASSOC);
 
-			if($row['abo_motpasse'] == $_POST['password']) {
+			if(($row['abo_motpasse'] == $_POST['password'])
+					||($row['abo_motpasse'] == sha1($_POST['password']))) {
 				$_SESSION['abo'] = new Abonne($row['abo_id']);
 				header("Location: index.php");
 			}
@@ -131,5 +132,10 @@ class AbonneController extends Controller {
 			}
 		}
 		$this->render("connexion");
+	}
+
+	public function deconnexion() {
+		unset($_SESSION['abo']);
+		header("Location: index.php");
 	}
 }
