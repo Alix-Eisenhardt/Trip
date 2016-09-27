@@ -1,10 +1,6 @@
 <?php
 class AbonneController extends Controller {
 
-	public function connexion() {
-		$this->render("connexion");
-	}
-
 	public function inscription() {
 		if (isset($_POST['inscription']) && $_POST['inscription'] == 'Inscription') {
 			if (
@@ -118,20 +114,28 @@ class AbonneController extends Controller {
 	}
 
 	public function connecter() {
+		$result = "";
 		if (isset($_POST['connecter'])) {
 			$login = $_POST['login'];
-			$class = get_called_class();
-			$table = $class::getTableName();
-			$tableMel = substr($table, -3)."_mel";
-			$tablePass = substr($table, -3)."_motpasse";
-			$st = db()->prepare("SELECT $tablePass from $table where $login = $tableMel");
+			$st = db()->prepare("SELECT * FROM t_e_abonne_abo WHERE abo_mel = '$login'");
 			$st->execute();
-			while($row = $st->fetch(PDO::FETCH_ASSOC)) {
-				if (sha1($_POST['password']) == $row[$tablePass])
-					echo "c'est bon";
-				else
-					echo "c'est pas bon...";
+			$row = $st->fetch(PDO::FETCH_ASSOC);
+
+			if(($row['abo_motpasse'] == $_POST['password'])
+					||($row['abo_motpasse'] == sha1($_POST['password']))) {
+				$_SESSION['abo'] = new Abonne($row['abo_id']);
+				header("Location: index.php");
+			}
+			else {
+				$this->render("connexion");
+				echo "Identifiant ou mot de passe incorrect.";
 			}
 		}
+		$this->render("connexion");
+	}
+
+	public function deconnexion() {
+		unset($_SESSION['abo']);
+		header("Location: index.php");
 	}
 }
