@@ -10,8 +10,9 @@
 		<h1>TripAdvisor</h1>
 		<ul>
 			<a href="."><li>Accueil</li></a>
-			<a href="index.php?r=abonne/inscription"><li>Inscription</li></a>
-			<a href="index.php?r=abonne/modifierCompte"><li>Mon compte</li></a>
+			<a href="./?r=abonne/modifier"><li>Mon compte</li></a>
+			<a href="./?r=abonne/inscription"><li>Inscription</li></a>
+			<a href="./?r=abonne/connexion"><li>Connexion</li></a>		
 			<a href="./?r=location/createLocation"><li>Ajouter location</li></a>
 		</ul>
 </header>

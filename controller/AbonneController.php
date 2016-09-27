@@ -1,7 +1,8 @@
 <?php
 class AbonneController extends Controller {
-	public function modifierCompte() {
-		$this->render("modifierCompte");
+
+	public function connexion() {
+		$this->render("connexion");
 	}
 
 	public function inscription() {
@@ -88,37 +89,48 @@ class AbonneController extends Controller {
 	}
 
 	public function modifier() {
+		$erreur_indicatif = 'L\'indicatif n\'est pas valide';
 		if (isset($_POST['modifier'])) {
-			if ((isset($_POST['abo_adrligne1']) && !empty($_POST['abo_adrligne1']))  
-					&& (isset($_POST['abo_cp']) && !empty($_POST['abo_cp'])) 
-					&& (isset($_POST['abo_ville']) && !empty($_POST['abo_ville'])) 
-					&& (isset($_POST['abo_pays']) && !empty($_POST['abo_pays'])) 
-					&& (isset($_POST['abo_indicatif']) && !empty($_POST['abo_indicatif']))
-					&& (isset($_POST['abo_telephone'])) && !empty($_POST['abo_telephone'])) {
+			if (preg_match("#^[1-9]{1,3}$#", $_POST['abo_indicatif'])) {
+				$verif_indicatif = true;
+			} else {
+				$verif_indicatif = false;
+			}
 
-				if (preg_match("#^[1-9]{4}$#", $_POST['abo_indicatif'])) {
-					$verif_indicatif = true;
-				} else {
-					$verif_indicatif = false;
-					$erreur = 'l\'indicatif n\'est pas valide';
-				}
+			if($verif_indicatif) {
 
-				if($verif_indicatif) {
-
-					foreach ($_POST as $key => $value) {
-						if ($_SESSION['abonne']->$key != $_POST[$key]) {
-							$_SESSION['abonne']->$key = $_POST[$key];
+				foreach ($_POST as $key => $value) {
+					if($key != 'modifier') {
+						if ($_SESSION['abo']->$key != $_POST[$key]) {
+							$_SESSION['abo']->$key = $_POST[$key];
 						}
 					}
-
-					$_SESSION['abonne'] = $this;
-
-					header('Location: index.php');
-					exit();
 				}
 			}
-			else {
-				$erreur = 'l\'un des champs n\'est pas renseigné';
+		}
+		$this->render("modifierCompte");
+		if(isset($verif_indicatif)) {
+			if($verif_indicatif)
+				echo "Modifications validées !";
+			else
+				echo $erreur_indicatif;
+		}	
+	}
+
+	public function connecter() {
+		if (isset($_POST['connecter'])) {
+			$login = $_POST['login'];
+			$class = get_called_class();
+			$table = $class::getTableName();
+			$tableMel = substr($table, -3)."_mel";
+			$tablePass = substr($table, -3)."_motpasse";
+			$st = db()->prepare("SELECT $tablePass from $table where $login = $tableMel");
+			$st->execute();
+			while($row = $st->fetch(PDO::FETCH_ASSOC)) {
+				if (sha1($_POST['password']) == $row[$tablePass])
+					echo "c'est bon";
+				else
+					echo "c'est pas bon...";
 			}
 		}
 	}
