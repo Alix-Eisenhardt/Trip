@@ -25,15 +25,19 @@ class LocationController extends Controller {
 
   public function search() {
     $locations = Location::findAll();
-  	$search = [];
+  	$search = [$_POST["ville"]];
   	foreach ($locations as $key => $value) {
 			if(strtolower($_POST["ville"]) == strtolower($value->loc_ville))
-				$search[] = $value;
+				$search[1][] = $value;
   	}
-  	/*if(isset($_POST["date_debut"]))
-  		$search["date_debut"] = $_POST["date_debut"];
-  	if(isset($_POST["date_fin"]))
-  		$search["date_fin"] = $_POST["date_fin"];*/
+  	if(isset($_POST["date_debut"])) {
+  		$ids = PlanningLocation::findNonAvailable($_POST["date_debut"], $_POST["date_fin"]);
+      $bool = true;
+      foreach ($search[1] as $key => $value) {
+        if(in_array($value->loc_id, $ids))
+          unset($search[1][$key]);
+      }
+    }
 
   	$this->render("search", $search);
   }

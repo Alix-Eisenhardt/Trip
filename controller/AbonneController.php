@@ -36,8 +36,18 @@ class AbonneController extends Controller {
 				if(!$verif_pseudo_dispo)
 					$erreur = 'Ce pseudo est déjà pris';
 
-				if($verif_pseudo_dispo && $verif_mail_dispo 
-						&& $verif_pass_corresp && $verif_email_valide) {
+				if($verif_pseudo_dispo && $verif_mail_dispo && $verif_pass_corresp 
+					&& $verif_email_valide) {
+
+					//contruction de l'addresse postale : adresse, ville, pays
+					$p = new Pays($_POST['pay_id']);
+					$postalAddress = $_POST['adr1'];
+					if (isset($_POST['adr2']) && !empty($_POST['adr2']))
+						$postalAddress .= " ".$_POST['adr2'];
+					$postalAddress .= ", ".$_POST['ville'].", ".$p->pay_nom;
+
+					$coord = getCoord($postalAddress);
+					list($latitude, $longitude) = explode("/",$coord);
 
 					$param = array(
 						"abo_pseudo"=> $_POST['pseudo'],
@@ -51,16 +61,16 @@ class AbonneController extends Controller {
 						"abo_ville" => $_POST['ville'],
 						"abo_etat" => $_POST['etat'],
 						"pay_id" => $_POST['pay_id'],
-						"abo_latitude" => 2,
-						"abo_longitude" => 2,
+						"abo_latitude" => $latitude,
+						"abo_longitude" => $longitude,
 						"abo_indicatif" => $_POST['indicatif'],
 						"abo_tel" => $_POST['tel'],
 						"abo_aeroport" => $_POST['aeroport'] 
 						);
 					$abonne = new Abonne($param);
 					$_SESSION['ouvert'] = true;
-					$_SESSION['abonne'] = $abonne;
-					header("Location: index.php");
+					$_SESSION['abo'] = $abonne;
+					header("Location: .");
 				}
 			} else {
 				$erreur = "l'un des champs n'est pas renseigné";
