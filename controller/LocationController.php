@@ -27,10 +27,8 @@ class LocationController extends Controller {
     $locations = Location::findAll();
   	$search = [];
   	foreach ($locations as $key => $value) {
-  		if(isset($_POST["ville"])) {
-  			if(strtolower($_POST["ville"]) == strtolower($value->loc_ville))
-  				$search[] = $value;
-  		} else break;
+			if(strtolower($_POST["ville"]) == strtolower($value->loc_ville))
+				$search[] = $value;
   	}
   	/*if(isset($_POST["date_debut"]))
   		$search["date_debut"] = $_POST["date_debut"];
