@@ -37,6 +37,4 @@ class Abonne extends Model {
 		$rowsCpt = $st->rowCount();
 		return ($rowsCpt == 0);
 	}
-
-
 }
