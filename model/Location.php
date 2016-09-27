@@ -43,7 +43,7 @@ class Location extends Model {
     $s .= $this->pay_obj."</div>";
     $s .= "<div class=\"gerant\"><p>À propos du propriétaire, ".$this->grt_obj->grt_nom." :<br>";
     $s .= $this->grt_obj."</p></div>";
-    return $s."<br>";
+    return $s;
   }
 
   public function shortVersion() {
