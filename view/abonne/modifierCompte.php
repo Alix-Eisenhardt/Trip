@@ -41,7 +41,7 @@
 	<p>
 		<label for="abo_tel">Telephone</label>
 		<input type="text" id="abo_tel" name="abo_tel" required>
-
+	</p>
 	<p class="button">
 		<button type="submit" name="modifier" value="modifier">Valider</button>
 	</p>
