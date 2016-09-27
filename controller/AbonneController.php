@@ -1,8 +1,5 @@
 <?php
 class AbonneController extends Controller {
-	public function modifierCompte() {
-		$this->render("modifierCompte");
-	}
 
 	public function connexion() {
 		$this->render("connexion");
@@ -82,35 +79,32 @@ class AbonneController extends Controller {
 	}
 
 	public function modifier() {
+		$erreur_indicatif = 'L\'indicatif n\'est pas valide';
 		if (isset($_POST['modifier'])) {
-			if (isset($_POST['abo_adrligne1']) && isset($_POST['abo_cp'])
-					&& isset($_POST['abo_ville']) && isset($_POST['abo_pays'])
-					&& isset($_POST['abo_indicatif']) && isset($_POST['abo_tel'])) {
+			if (preg_match("#^[1-9]{1,3}$#", $_POST['abo_indicatif'])) {
+				$verif_indicatif = true;
+			} else {
+				$verif_indicatif = false;
+			}
 
-				if (preg_match("#^[1-9]{1-3}$#", $_POST['abo_indicatif'])) {
-					$verif_indicatif = true;
-				} else {
-					$verif_indicatif = false;
-					$erreur = 'l\'indicatif n\'est pas valide';
-					echo $erreur;
-				}
+			if($verif_indicatif) {
 
-				if($verif_indicatif) {
-
-					foreach ($_POST as $key => $value) {
-						if ($_SESSION['abonne']->$key != $_POST[$key]) {
-							$_SESSION['abonne']->$key = $_POST[$key];
+				foreach ($_POST as $key => $value) {
+					if($key != 'modifier') {
+						if ($_SESSION['abo']->$key != $_POST[$key]) {
+							$_SESSION['abo']->$key = $_POST[$key];
 						}
 					}
-
-					header('Location: index.php');
-					exit();
 				}
 			}
-			else {
-				$erreur = 'l\'un des champs n\'est pas renseigné';
-			}
 		}
+		$this->render("modifierCompte");
+		if(isset($verif_indicatif)) {
+			if($verif_indicatif)
+				echo "Modifications validées !";
+			else
+				echo $erreur_indicatif;
+		}	
 	}
 
 	public function connecter() {

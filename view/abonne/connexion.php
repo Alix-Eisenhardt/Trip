@@ -1,6 +1,7 @@
  <form action="index.php?r=abonne/connecter" method="post">
 	<h1>Connexion</h1>
 	<?php
+		echo $_SESSION['abo']->pay_id;
 		print_r($_SESSION['abo']);
 	?>
 	<p>
