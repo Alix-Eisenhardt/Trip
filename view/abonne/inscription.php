@@ -45,7 +45,7 @@
 	<input type="text" id="etat" name="etat" size=35 value="<?php if (isset($_POST['etat'])) echo htmlentities(trim($_POST['etat'])); ?>">
 	</p>
 	<p>
-    <label for="country">Pays* :</label>
+    <label for="pays">Pays* :</label>
     <select required id="pays" name="pay_id">
       <?php
        foreach (Pays::findAll() as $k => $v) {
@@ -69,11 +69,3 @@
 	</p>
 	<input type="submit" name="inscription" value="Inscription">
 </form>
-
-
-<?php
-if(isset($_SESSION['erreur'])) {
-	echo($_SESSION['erreur']);
-	unset($_SESSION['erreur']);	
-}
-?>
