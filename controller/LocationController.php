@@ -8,11 +8,18 @@ class LocationController extends Controller {
   public function showLocation() {
     try {
         $location = new Location($_GET["id"]);
+        $listeAvis = Avis::findAll();
+        $avisPourLocation = [];
+        foreach ($listeAvis as $avis) {
+          if($avis->loc_obj == $location)
+            $avisPourLocation[] = $avis;
+        }
+        $data = array($location, $avisPourLocation);
     } catch(Exception $e) {
-        $location = "Erreur : location non trouvée. N'essayez pas de rentrer";
-        $location .= " des choses au hasard dans la barre d'adresse !";
+        $data = "Erreur : location non trouvée. N'essayez pas de rentrer";
+        $data .= " des choses au hasard dans la barre d'adresse !";
     } finally {
-        $this->render("showLocation", $location);
+        $this->render("showLocation", $data);
     }
   }
 
