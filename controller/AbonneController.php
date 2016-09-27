@@ -1,18 +1,18 @@
 <?php
 class AbonneController extends Controller {
-	public function inscription() {
-		$this->render("inscription");
-	}
-
 	public function modifierCompte() {
 		$this->render("modifierCompte");
 	}
 
+<<<<<<< HEAD
 	public function connexion() {
 		$this->render("connexion");
 	}
 
 	public function inscrire() {
+=======
+	public function inscription() {
+>>>>>>> ce3b664e663cf6aef1d5b1ccb83f1b1029337913
 		if (isset($_POST['inscription']) && $_POST['inscription'] == 'Inscription') {
 			if (
 					(isset($_POST['nom']) && !empty($_POST['nom'])) 
@@ -27,33 +27,32 @@ class AbonneController extends Controller {
 					&& (isset($_POST['pay_id']) && !empty($_POST['pay_id']))
 					&& (isset($_POST['indicatif']) && !empty($_POST['indicatif']))
 					&& (isset($_POST['tel']) && !empty($_POST['tel']))) {
-				echo "pop";
 				if (preg_match("#^[a-zA-Z0-9._-]+@[a-z0-9._-]{2,}\.[a-z]{2,4}$#", $_POST['email'])) {
 					$verif_email_valide =true;
 				} else {
 					$verif_email_valide= false;
-					$_SESSION['erreur'] = 'l\'adresse mail n\'est pas valide';
+					$erreur = 'l\'adresse mail n\'est pas valide';
 				}
 				if ($_POST['pass'] == $_POST['pass_confirm']) {
 					$verif_pass_corresp = true;
 				} else {
 					$verif_pass_corresp = false;
-					$_SESSION['erreur'] = 'Les 2 mots de passe sont différents.';
+					$erreur = 'Les 2 mots de passe sont différents.';
 				}
 				$verif_mail_dispo = Abonne::avaiable($_POST['email'],"ABO_Mel");
 				$verif_pseudo_dispo = Abonne::avaiable($_POST['pseudo'],"ABO_Pseudo");
 
 				if(!$verif_mail_dispo)
-					$_SESSION['erreur'] = 'Cette adresse email est déjà prise';
+					$erreur = 'Cette adresse email est déjà prise';
 				if(!$verif_pseudo_dispo)
-					$_SESSION['erreur'] = 'Ce pseudo est déjà pris';
+					$erreur = 'Ce pseudo est déjà pris';
 
 				if($verif_pseudo_dispo && $verif_mail_dispo 
 						&& $verif_pass_corresp && $verif_email_valide) {
 
 					$param = array(
 						"abo_pseudo"=> $_POST['pseudo'],
-						"abo_motdepasse"=> sha1($_POST['pass']),
+						"abo_motpasse"=> sha1($_POST['pass']),
 						"abo_mel" => $_POST['email'],
 						"abo_nom" => $_POST['nom'],
 						"abo_prenom" => $_POST['prenom'],
@@ -71,14 +70,19 @@ class AbonneController extends Controller {
 						);
 					$abonne = new Abonne($param);
 					$_SESSION['ouvert'] = true;
-					//$_SESSION['abonne'] = $abonne->abo_id;
-					header('Location: index.php');
-					exit();
+					$_SESSION['abonne'] = $abonne;
+					header("Location: index.php");
 				}
 			} else {
-				$_SESSION['erreur'] = "l'un des champs n'est pas renseigné";
+				$erreur = "l'un des champs n'est pas renseigné";
 			}
 		}
+		if(isset($erreur)) {
+			echo $erreur;
+			unset($erreur);
+		}
+		//Faire le rendering du formulaire APRES le process, sinon le header Location ne peut pas fonctionner.
+		$this->render("inscription");
 	}
 
 	public function modifier() {
