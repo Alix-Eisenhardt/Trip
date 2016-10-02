@@ -48,26 +48,19 @@ class LocationController extends Controller {
 	}
 
 	public function confirm(){
+    $attribute = array();
+    $url = 'https://nominatim.openstreetmap.org/?format=xml&addressdetails=1&q='.$_POST["loc_adrligne1"]." ".$_POST["loc_ville"];
+    $xml = simplexml_load_file($url);
+
+    $_POST["loc_latitude"] =  $xml->place[0]['lat'];
+    $_POST["loc_longitude"] =  $xml->place[0]['lon'];
+
     $list = Location::getTypeOfColumn();
-    foreach ($list as $key => $value) {
+    foreach ($list as $key => $v) {
       if(isset($_POST["$key"]) && !empty($_POST["$key"]))
-        if(!pgTypeToPHPTestType($value,$_POST["$key"])){
-          $flag = false;
-          $erreur = $key;
-          break;
-          }
+        $attribute["$key"] = $_POST["$key"];
     }
-    if(!$flag)
-      echo "<div>Le champ $erreur est mal renseigné</div>";
-    else{
-      $loc = new Location();
-      $classvars = get_class_vars("Location");
-      foreach ($classvars as $v) {
-      		$vAttrib = "_".$v;
-          $attribute = substr($v,1);
-        if(isset($_POST["$v"]))
-          $loc->$vAttrib = $_POST["$v"];
-      }
+      $loc = new Location($attribute);
       $this->render("confirm", print_r($loc));
     }
 
