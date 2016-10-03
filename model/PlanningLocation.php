@@ -11,11 +11,15 @@ class PlanningLocation extends Model {
 		"loc" => "Location"
 	);
 
-	public static function findNonAvailable($dateDebut, $dateFin) {
-		$st = db()->prepare("select loc_id 
-			from t_j_planninglocation_plo 
-			where plo_disponibilite = false and 
-			plo_datelocation between '$dateDebut' and '$dateFin'");
+	public static function findAvailable($dateDebut, $dateFin) {
+		$st = db()->prepare("select distinct(loc_id) 
+			from t_j_planninglocation_plo
+			where plo_datelocation between '$dateDebut' and '$dateFin'
+			and loc_id not in (
+				select distinct(loc_id) from t_j_planninglocation_plo
+				where plo_disponibilite = false and 
+				plo_datelocation between '$dateDebut' and '$dateFin'
+			);");
 		$st->execute();
 		$list = array();
 		while($row = $st->fetch(PDO::FETCH_ASSOC)) {
