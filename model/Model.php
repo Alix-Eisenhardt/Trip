@@ -29,7 +29,7 @@ class Model {
 			foreach ($param as $key => $value) {
 				$this->$key = $value;
 			}
-		 	//print_r(db()->errorInfo());
+		 	print_r(db()->errorInfo());
 		} else {
 			$id = $param;
 			$tableId = substr($table, -3)."_ID";

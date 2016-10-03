@@ -63,6 +63,4 @@ class LocationController extends Controller {
       $loc = new Location($attribute);
       $this->render("confirm", print_r($loc));
     }
-
-	}
 }
