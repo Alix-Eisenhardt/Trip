@@ -54,15 +54,18 @@ class LocationController extends Controller {
 
     $_POST["loc_latitude"] =  $xml->place[0]['lat'];
     $_POST["loc_longitude"] =  $xml->place[0]['lon'];
+    $_POST["grt_id"] = 1;
+    $_POST["loc_codereservationtrip"] = 1;
 
     $list = Location::getTypeOfColumn();
     foreach ($list as $key => $v) {
       if(isset($_POST["$key"]) && !empty($_POST["$key"]))
         $attribute["$key"] = $_POST["$key"];
     }
+    
       $loc = new Location($attribute);
-      $this->render("confirm", print_r($loc));
+      $this->render("showLocation", $loc);
     }
 
-	}
+	
 }

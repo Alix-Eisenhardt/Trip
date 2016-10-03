@@ -14,9 +14,10 @@
 
   <p>
     <label for="type">Type de la location *</label>
-    <input type="text" id="type" name="loc_type"
-    value ="<?php if (isset ($_POST['loc_type'])) echo htmlentities(trim($_POST['loc_type'])); ?>"
-    onblur="verifChampText(this)">
+    <select name="loc_type" id="type">
+      <option value="Logement">Logement</option>
+      <option value="Appartement">Appartement</option>
+    </select>
   </p>
 
   <p>
@@ -88,8 +89,9 @@
     <label for="country">Pays :</label>
     <select id="pays" name="pay_id">
       <?php
-       foreach (Pays::findAll() as $v) {
-          echo "<option value = \"$v\"> $v </option>";
+       foreach (Pays::findAll() as $k => $v) {
+          $id = $v->pay_id;
+          echo "<option value = \"$id\"> $v </option>";
         }
       ?>
     </select>
