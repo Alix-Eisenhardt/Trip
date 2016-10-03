@@ -12,9 +12,12 @@
 			<a href="."><li>Accueil</li></a>
 			<?php
 				if(isset($_SESSION['abo'])) {
-					echo "<a href=\"./?r=location/createLocation\"><li>Ajouter location</li></a>";
 					echo "<a href=\"./?r=abonne/modifier\"><li>Mon compte</li></a>";
 					echo "<a href=\"./?r=abonne/deconnexion\"><li>Deconnexion</li></a>";
+				}
+				elseif(isset($_SESSION['gerant'])){
+					echo "<a href=\"./?r=location/createLocation\"><li>Ajouter location</li></a>";
+					echo "<a href=\"./?r=gerant/deconnexion\"><li>Deconnexion</li></a>";
 				}
 				else {
 					echo "<a href=\"./?r=abonne/inscription\"><li>Inscription</li></a>";
