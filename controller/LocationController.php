@@ -60,9 +60,7 @@ class LocationController extends Controller {
       if(isset($_POST["$key"]) && !empty($_POST["$key"]))
         $attribute["$key"] = $_POST["$key"];
     }
-      $loc = new Location($attribute);
-      $this->render("confirm", print_r($loc));
-    }
-
-	}
+    $loc = new Location($attribute);
+    $this->render("confirm", print_r($loc));
+  }
 }
