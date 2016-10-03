@@ -114,7 +114,6 @@ class AbonneController extends Controller {
 	}
 
 	public function connecter() {
-		$result = "";
 		if (isset($_POST['connecter'])) {
 			$login = $_POST['login'];
 			$st = db()->prepare("SELECT * FROM t_e_abonne_abo WHERE abo_mel = '$login'");
