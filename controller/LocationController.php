@@ -41,10 +41,9 @@ class LocationController extends Controller {
           unset($search[1][$key]);
       }
     }
+    
+    $this->render("search", $search);
   }
-
-  $this->render("search", $search);
-}
 
 public function createLocation(){
   $this->render("createLocation");
