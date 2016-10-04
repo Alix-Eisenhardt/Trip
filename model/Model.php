@@ -98,7 +98,7 @@ class Model {
 	}
 
 	public function __set($fieldName, $value) {
-		echo "_set_".$fieldName."<br/>";
+		//echo "_set_".$fieldName."<br/>";
 		$varName = "_".$fieldName;
 		if ($value != null) {
 			if (property_exists(get_class($this), $varName)) {
