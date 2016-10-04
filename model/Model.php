@@ -14,22 +14,26 @@ class Model {
 
 		if (is_array($param)) {
 			$sql = "INSERT INTO $table (".$tableId;
+
 			foreach ($param as $key => $value) {
 				$sql .= ",".$key;
 			}
+
 			$sql .= ") VALUES (DEFAULT";
+
 			foreach ($param as $key => $value) {
 				$sql .= ",'".$value."'";
 			}
+
 			$sql .= ") RETURNING $tableId";
 			$st = db()->prepare($sql);
 			$st->execute();
 			$row = $st->fetch();
 			$this->$tableId = $row[$tableId];
+
 			foreach ($param as $key => $value) {
 				$this->$key = $value;
 			}
-		 	//print_r(db()->errorInfo());
 		} else {
 			$id = $param;
 			$tableId = substr($table, -3)."_ID";
@@ -45,12 +49,14 @@ class Model {
 						$linkedField = substr($field, 0,3);
 						$linkedClass = $this->externalClasses[$linkedField];
 						if ($linkedClass != get_class($this)) {
-							$linkedObj = $linkedField."_obj";
+							$linkedObj = "_".$linkedField."_obj";
 							$this->$linkedObj = new $linkedClass($value);
 						} else {
+							$field = "_".$field;
 							$this->$field = $value;
 						}
 					} else {
+						$field = "_".$field;
 						$this->$field = $value;
 					}
 				}
@@ -93,22 +99,23 @@ class Model {
 	}
 
 	public function __set($fieldName, $value) {
-	$varName = "_".$fieldName;
-	if ($value != null) {
-		if (property_exists(get_class($this), $varName)) {
-			$this->$varName = $value;
-			$class = get_class($this);
-			$table = $this->TABLE_NAME;
-			$tableId = substr($table, -3)."_id";
-			/*$id = "_id".$fieldName;
-			if (isset($value->$id)) {
-				$st = db()->prepare("update $table set id$fieldName=:val where $tableId=:id");
-				$id = substr($id, 1);
-				$st->bindValue(":val", $value->$id);
-			} else {*/
+		echo "_set_".$fieldName."<br/>";
+		$varName = "_".$fieldName;
+		if ($value != null) {
+			if (property_exists(get_class($this), $varName)) {
+				$this->$varName = $value;
+				$class = get_class($this);
+				$table = $this->TABLE_NAME;
+				$tableId = substr($table, -3)."_id";
+				/*$id = "_id".$fieldName;
+				if (isset($value->$id)) {
+					$st = db()->prepare("update $table set id$fieldName=:val where $tableId=:id");
+					$id = substr($id, 1);
+					$st->bindValue(":val", $value->$id);
+				} else {*/
 				$st = db()->prepare("update $table set $fieldName=:val where $tableId=:id");
 				$st->bindValue(":val", $value);
-			//_}
+				//_}
 				$id = $tableId;
 				$st->bindValue(":id", $this->$id);
 				$st->execute();
