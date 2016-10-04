@@ -115,8 +115,8 @@ class AbonneController extends Controller {
 
 	public function connecter() {
 		if (isset($_POST['connecter'])) {
-			$login = $_POST['login'];
-			$st = db()->prepare("SELECT * FROM t_e_abonne_abo WHERE abo_mel = '$login'");
+			$login = strtolower($_POST['login']);
+			$st = db()->prepare("SELECT * FROM t_e_abonne_abo WHERE LOWER(abo_mel) = '$login'");
 			$st->execute();
 			$row = $st->fetch(PDO::FETCH_ASSOC);
 
@@ -137,4 +137,10 @@ class AbonneController extends Controller {
 		unset($_SESSION['abo']);
 		header("Location: index.php");
 	}
+
+	public function showAbonne() {
+        $abonne = new Abonne($_GET["id"]);
+        $data = $abonne;
+        $this->render("showAbonne", $data);
+    }
 }
