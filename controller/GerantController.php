@@ -24,4 +24,16 @@ class GerantController extends Controller {
 		unset($_SESSION['gerant']);
 		header("Location: index.php");
 	}
+
+	public function mesLocations() {
+    // C'est pas propre :(
+    $locations = Location::findAll();
+
+  	$search = [$_SESSION['gerant']->grt_id];
+  	foreach ($locations as $key => $value) {
+			if(strtolower($_SESSION['gerant']->grt_id) == strtolower($value->grt_id))
+				$search[1][] = $value;
+  	}
+    $this->render("mesLocations", $search);
+  }
 }

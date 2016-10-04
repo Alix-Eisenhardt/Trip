@@ -19,10 +19,24 @@ $(document).ready(function() {
 	$('#avis').prepend(tri);
 	$('#avis').prepend(langue);
 
-	tri.click(function() {
-		console.log(tri.val());
+	triSelect.click(function() {
+		if(triSelect.val() == "Date (du + vieux au + récent)") {
+			$.makeArray($(".date"));
+		}
+		console.log(triSelect.val());
 	});
-	langue.click(function() {
-		console.log(langue.val());
+
+	langueSelect.click(function() {
+		if(langueSelect.val() === "Les deux") {
+			$(".avis").each(function() {
+				$(this).show();
+			});
+		} else {
+			$(".avis").each(function() {
+				if($(this).hasClass(langueSelect.val()))
+					$(this).show();
+				else $(this).hide();
+			});
+		}
 	});
 });
