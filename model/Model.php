@@ -50,10 +50,10 @@ class Model {
 						if ($linkedClass != get_class($this)) {
 							$linkedObj = "_".$linkedField."_obj";
 							$this->$linkedObj = new $linkedClass($value);
-						} else {
-							$field = "_".$field;
-							$this->$field = $value;
 						}
+						$field = "_".$field;
+						$this->$field = $value;
+						
 					} else {
 						$field = "_".$field;
 						$this->$field = $value;
