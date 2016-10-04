@@ -1,6 +1,6 @@
 <?php
 global $data;
-if($data[1] == null) {
+if(!isset($data[1]) || $data[1] == null) {
 	echo "Aucune location trouvée pour ces critères de recherche.";
 } else {?>
 	<h1>Locations près de <?php echo $data[0] ?></h1>
