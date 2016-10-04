@@ -32,9 +32,10 @@ class Avis extends Model {
 	);
 
 	public function __toString() {
-		$s = "<div class=\"avis\"><h3>".$this->avi_titre."</h3><p>";
+		$s = "<div class=\"avis ".$this->lng_obj."\"><h3>".$this->avi_titre."</h3>";
+		$s .= "<p>Note : <span class='note'>".$this->avi_noteglobale."</span>/5<br>";
 		$s .= $this->avi_detail."<br>";
-		$s .= "Le ".$this->avi_date." par <a href=./?r=abonne/showAbonne&id=".$this->abo_obj->abo_id.">";
+		$s .= "Le <span class='date'>".$this->avi_date."</span> par <a href=./?r=abonne/showAbonne&id=".$this->abo_obj->abo_id.">";
 		$s .= $this->abo_obj->abo_pseudo."</a><br></p></div>";
 
 		return $s;
