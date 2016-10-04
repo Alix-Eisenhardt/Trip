@@ -7,25 +7,26 @@ class LocationController extends Controller {
 
   public function showLocation() {
     try {
-        $location = new Location($_GET["id"]);
-        $listeAvis = Avis::findAll();
-        $avisPourLocation = [];
-        foreach ($listeAvis as $avis) {
-          if($avis->loc_obj == $location)
-            $avisPourLocation[] = $avis;
-        }
-        $data = array($location, $avisPourLocation);
+      $location = new Location($_GET["id"]);
+      $listeAvis = Avis::findAll();
+      $avisPourLocation = [];
+      foreach ($listeAvis as $avis) {
+        if($avis->loc_obj == $location)
+          $avisPourLocation[] = $avis;
+      }
+      $data = array($location, $avisPourLocation);
     } catch(Exception $e) {
-        $data = "Erreur : location non trouvée. N'essayez pas de rentrer";
-        $data .= " des choses au hasard dans la barre d'adresse !";
+      $data = "Erreur : location non trouvée. N'essayez pas de rentrer";
+      $data .= " des choses au hasard dans la barre d'adresse !";
     } finally {
-        $this->render("showLocation", $data);
+      $this->render("showLocation", $data);
     }
   }
 
   public function search() {
     // C'est pas propre :(
     $locations = Location::findAll();
+
   	$search = [$_POST["ville"]];
   	foreach ($locations as $key => $value) {
 			if(strtolower($_POST["ville"]) == strtolower($value->loc_ville))
@@ -40,31 +41,40 @@ class LocationController extends Controller {
           unset($search[1][$key]);
       }
     }
-
-  	$this->render("search", $search);
   }
 
-	public function createLocation(){
-		$this->render("createLocation");
-	}
+  $this->render("search", $search);
+}
 
-	public function confirm(){
-    $attribute = array();
-    $url = 'https://nominatim.openstreetmap.org/?format=xml&addressdetails=1&q='.$_POST["loc_adrligne1"]." ".$_POST["loc_ville"];
-    $xml = simplexml_load_file($url);
+public function createLocation(){
+  $this->render("createLocation");
+}
 
-    $_POST["loc_latitude"] =  $xml->place[0]['lat'];
-    $_POST["loc_longitude"] =  $xml->place[0]['lon'];
-    $_POST["grt_id"] = 1;
-    $_POST["loc_codereservationtrip"] = 1;
+public function confirm(){
 
-    $list = Location::getTypeOfColumn();
-    foreach ($list as $key => $v) {
-      if(isset($_POST["$key"]) && !empty($_POST["$key"]))
-        $attribute["$key"] = $_POST["$key"];
-    }
-   
-    $loc = new Location($attribute);
-    $this->render("confirm", print_r($loc));
+  $p = new Pays($_POST['pay_id']);
+  $postalAddress = $_POST['loc_adrligne1'];
+  if (isset($_POST['loc_adrligne2']) && !empty($_POST['loc_adrligne2']))
+    $postalAddress .= " ".$_POST['loc_adrligne2'];
+
+  $postalAddress .= ", ".$_POST['loc_ville'].", ".$p->pay_nom;
+
+  $coord = getCoord($postalAddress);
+  list($latitude, $longitude) = explode("/",$coord);
+
+  $_POST["loc_latitude"] =  $latitude;
+  $_POST["loc_longitude"] =  $longitude;
+  if(isset($_SESSION['gerant']))
+    $_POST["grt_id"]=$_SESSION['gerant']->grt_id;
+  $_POST["loc_codereservationtrip"] = 1;
+
+  $list = Location::getTypeOfColumn();
+  foreach ($list as $key => $v) {
+    if(isset($_POST["$key"]) && !empty($_POST["$key"]))
+      $attribute["$key"] = $_POST["$key"];
   }
+
+  $loc = new Location($attribute);
+  $this->render("confirm", $loc->loc_id);
+}
 }
