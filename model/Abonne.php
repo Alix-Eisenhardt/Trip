@@ -39,7 +39,7 @@ class Abonne extends Model {
 	}
 
 	public function __toString() {
-		$s = "<h3>".$this->abo_pseudo."</h3>";
+		$s = "<div class=\"showAbonne\"><h3>".$this->abo_pseudo."</h3>";
 		$s .= $this->abo_nom." ";
 		$s .= $this->abo_prenom."<br/>";
 		$s .= $this->abo_mel."<br/>";
@@ -54,7 +54,7 @@ class Abonne extends Model {
 		$s .= "+".$this->abo_indicatif."";
 		$s .= $this->abo_tel."<br/>";
 		if (isset($this->abo_aeroport))
-		$s .= $this->abo_aeroport."<br/>";
+		$s .= $this->abo_aeroport."</div>";
 		return $s;
 	}
 }
