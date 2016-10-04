@@ -1,6 +1,6 @@
 <?php
 global $data;
-foreach ($data as $key => $value) {
-	echo $key." : ".$value."</br>";
-};
+
+echo "<p>Votre location à bien été ajoutée</p>";
+echo "<a href=./?r=location/showLocation&id=".$data.">Voir plus de détails</a>";
 ?>
