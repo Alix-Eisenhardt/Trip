@@ -14,15 +14,19 @@ class Model {
 
 		if (is_array($param)) {
 			$sql = "INSERT INTO $table (".$tableId;
+			$sqlCol="";
+			$sqlVal="";
 			foreach ($param as $key => $value) {
-				$sql .= ",".$key;
+				$sqlCol .= ",".$key;
+
+				$sqlVal .= ",:".$key;
 			}
-			$sql .= ") VALUES (DEFAULT";
-			foreach ($param as $key => $value) {
-				$sql .= ",'".$value."'";
-			}
-			$sql .= ") RETURNING $tableId";
+			$sql .= $sqlCol.") VALUES (DEFAULT".$sqlVal;
+			$sql .= ") RETURNING $tableId;";
 			$st = db()->prepare($sql);
+			foreach ($param as $key => $value) {
+				$st->bindValue(':'.$key,$value);
+			}
 			$st->execute();
 			$row = $st->fetch();
 			$this->$tableId = $row[$tableId];
