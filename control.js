@@ -48,7 +48,6 @@ function verifChampNum(champ)
 
 function verifForm(f){
   var nameOk = verifChampText(f.loc_titre);
-  var typeOk = verifChampText(f.loc_type);
   var descrOk = verifChampLongText(f.loc_description);
   var chambreOk = verifChampNum(f.loc_nbchambres);
   var couchagesOk = verifChampNum(f.loc_nbcouchages);
@@ -59,7 +58,7 @@ function verifForm(f){
   var villeOk = verifChampText(f.loc_ville);
 
 
-  if(nameOk && typeOk && chambreOk && descrOk && couchagesOk && sallebainOk && occupantsOk && adrOk && cpOK && villeOk){
+  if(nameOk && chambreOk && descrOk && couchagesOk && sallebainOk && occupantsOk && adrOk && cpOK && villeOk){
     return true;
   }else {
     alert("Veuillez remplir correctement les champs svp");
