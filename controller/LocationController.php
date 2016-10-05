@@ -64,3 +64,4 @@ class LocationController extends Controller {
     $this->render("confirm", $loc->loc_id);
   }
 }
+
