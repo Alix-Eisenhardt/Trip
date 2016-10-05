@@ -1,6 +1,7 @@
 html, body {
 	margin: auto;
 	padding: auto;
+	font-family: 'Open-Sans', sans-serif;
 }
 
 html, body {
@@ -56,4 +57,8 @@ a.button {
 
     text-decoration: none;
     color: initial;
+}
+.showAbonne
+{
+	text-align: center;
 }

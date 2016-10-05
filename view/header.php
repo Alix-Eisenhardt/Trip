@@ -4,6 +4,7 @@
 	<meta charset="UTF-8" />
 	<title>Trip Advisor</title>
 	<link rel="stylesheet" href="view/style.css" />
+	<script type="text/javascript" src="https://code.jquery.com/jquery-3.1.1.js"></script>
 </head>
 <body>
 	<header>
@@ -17,6 +18,7 @@
 				}
 				elseif(isset($_SESSION['gerant'])){
 					echo "<a href=\"./?r=location/createLocation\"><li>Ajouter location</li></a>";
+					echo "<a href=\"./?r=gerant/mesLocations\"><li>Mes location</li></a>";
 					echo "<a href=\"./?r=gerant/deconnexion\"><li>Deconnexion</li></a>";
 				}
 				else {

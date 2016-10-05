@@ -37,4 +37,24 @@ class Abonne extends Model {
 		$rowsCpt = $st->rowCount();
 		return ($rowsCpt == 0);
 	}
+
+	public function __toString() {
+		$s = "<div class=\"showAbonne\"><h3>".$this->abo_pseudo."</h3>";
+		$s .= $this->abo_nom." ";
+		$s .= $this->abo_prenom."<br/>";
+		$s .= $this->abo_mel."<br/>";
+		$s .= $this->abo_adrligne1."<br/>";
+		if (isset($this->abo_adrligne2))
+			$s .= $this->abo_adrligne2."<br/>";
+		$s .= $this->abo_cp." ";
+		$s .= $this->abo_ville."<br/>";
+		if (isset($this->abo_etat))
+		$s .= $this->abo_etat."<br/>";
+		$s .= $this->pay_obj."<br/>";
+		$s .= "+".$this->abo_indicatif."";
+		$s .= $this->abo_tel."<br/>";
+		if (isset($this->abo_aeroport))
+		$s .= $this->abo_aeroport."</div>";
+		return $s;
+	}
 }
