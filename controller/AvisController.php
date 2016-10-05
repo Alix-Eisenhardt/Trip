@@ -35,7 +35,7 @@ class AvisController extends Controller {
 				} else 
 					$erreur = "l'un des champs n'est pas renseigné"; 
 			}
-		if(isset($_SESSION['ouvert']))
+		if(isset($_SESSION['abo']))
 			$this->render("creation");
 		else
 			$this->render("non_connecte");
