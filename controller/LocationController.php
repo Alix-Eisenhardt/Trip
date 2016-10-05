@@ -24,18 +24,19 @@ class LocationController extends Controller {
   }
 
   public function search() {
+    // C'est pas propre :(
     $locations = Location::findAll();
   	$search = [$_POST["ville"]];
   	foreach ($locations as $key => $value) {
 			if(strtolower($_POST["ville"]) == strtolower($value->loc_ville))
 				$search[1][] = $value;
   	}
-  	if(isset($_POST["date_debut"])) {
+  	if(isset($_POST["date_debut"]) && $_POST["date_debut"] != null) {
       $search[0] .= " entre le ".date("j F Y",strtotime($_POST["date_debut"]))." et le ".date("j F Y",strtotime($_POST["date_fin"]));
-  		$ids = PlanningLocation::findNonAvailable($_POST["date_debut"], $_POST["date_fin"]);
+  		$ids = PlanningLocation::findAvailable($_POST["date_debut"], $_POST["date_fin"]);
       $bool = true;
       foreach ($search[1] as $key => $value) {
-        if(in_array($value->loc_id, $ids))
+        if(!in_array($value->loc_id, $ids))
           unset($search[1][$key]);
       }
     }
@@ -54,13 +55,22 @@ class LocationController extends Controller {
 
     $_POST["loc_latitude"] =  $xml->place[0]['lat'];
     $_POST["loc_longitude"] =  $xml->place[0]['lon'];
+    $_POST["grt_id"] = 1;
+    $_POST["loc_codereservationtrip"] = 1;
 
     $list = Location::getTypeOfColumn();
     foreach ($list as $key => $v) {
       if(isset($_POST["$key"]) && !empty($_POST["$key"]))
         $attribute["$key"] = $_POST["$key"];
     }
+<<<<<<< HEAD
       $loc = new Location($attribute);
       $this->render("confirm", print_r($loc));
     }
+=======
+   
+    $loc = new Location($attribute);
+    $this->render("confirm", print_r($loc));
+  }
+>>>>>>> 0ca3339cf70334175161f3fe1281ee2bab7ffe9c
 }
