@@ -31,7 +31,7 @@ class AvisController extends Controller {
 						$mail_to = $_SESSION['abo']->abo_mel;
 						melConfirm($mail_to);
 					$path = "index.php?r=location/showLocation&id=".$_GET['loc_id'];
-					//header("Location: $path");
+					header("Location: $path");
 				} else 
 					$erreur = "l'un des champs n'est pas renseigné"; 
 			}
