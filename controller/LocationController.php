@@ -56,6 +56,17 @@ public function confirm(){
   if (isset($_POST['loc_adrligne2']) && !empty($_POST['loc_adrligne2']))
     $postalAddress .= " ".$_POST['loc_adrligne2'];
 
+    $list = Location::getTypeOfColumn();
+    foreach ($list as $key => $v) {
+      if(isset($_POST["$key"]) && !empty($_POST["$key"]))
+        $attribute["$key"] = $_POST["$key"];
+    }
+      $this->render("confirm", print_r($loc));
+    }
+   
+    $loc = new Location($attribute);
+    $this->render("confirm", print_r($loc));
+  }
   $postalAddress .= ", ".$_POST['loc_ville'].", ".$p->pay_nom;
 
   $coord = getCoord($postalAddress);
