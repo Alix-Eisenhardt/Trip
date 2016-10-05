@@ -16,20 +16,20 @@ class AvisController extends Controller {
 					}
 
 					$param = array(
-							"abo_id"=> $_SESSION['abo']->abo_id,
-							"loc_id"=> $_GET['loc_id'],
-							"vil_id"=> $_POST['vil'],
-							"per_id"=> $_POST['per'],
-							"lng_id"=> $_POST['lng'],
-							"avi_nomoccupant"=> $_POST['nom_occ'],
-							"avi_titre"=> $_POST['titre'],
-							"avi_detail"=> $_POST['detail'],
-							"avi_noteglobale"=> $_POST['note_glob'],
-							"avi_recommandationami"=> $_POST['recom'],
-							);
-						$avis = new Avis($param);
-						$mail_to = $_SESSION['abo']->abo_mel;
-						melConfirm($mail_to);
+						"abo_id"=> $_SESSION['abo']->abo_id,
+						"loc_id"=> $_GET['loc_id'],
+						"vil_id"=> $_POST['vil'],
+						"per_id"=> $_POST['per'],
+						"lng_id"=> $_POST['lng'],
+						"avi_nomoccupant"=> $_POST['nom_occ'],
+						"avi_titre"=> $_POST['titre'],
+						"avi_detail"=> $_POST['detail'],
+						"avi_noteglobale"=> $_POST['note_glob'],
+						"avi_recommandationami"=> $_POST['recom'],
+					);
+					$avis = new Avis($param);
+					$mail_to = $_SESSION['abo']->abo_mel;
+					melConfirm($mail_to);
 					$path = "index.php?r=location/showLocation&id=".$_GET['loc_id'];
 					header("Location: $path");
 				} else 
