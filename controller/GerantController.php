@@ -45,7 +45,7 @@ class GerantController extends Controller {
     public function mailTo() {
     	if(isset($_POST['envoyer'])) {
     		$grt = new Gerant($_POST['grtId']);
-    		$from = "From : " . $_SESSION['abo']->abo_mel;
+    		$from = "From : " . $_POST['mel'];
     		$mail = mail($grt->grt_mel, $_POST['objet'], $_POST['message'], $from);
     		if($mail)
 				header("Location: index.php");

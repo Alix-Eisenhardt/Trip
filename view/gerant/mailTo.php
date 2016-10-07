@@ -8,12 +8,17 @@ echo "Envoyer un mail à : ".$data->grt_nom;
 	<p>
 		<label for="nom">Nom</label>
 		<input type="text" id="nom" name="nom" required
-			value="<?php echo $_SESSION['abo']->abo_nom; ?>">
+			value="<?php if(isset($_SEESION['abo'])) echo $_SESSION['abo']->abo_nom; ?>">
 	</p>
 	<p>
 		<label for="prenom">Prenom</label>
 		<input type="text" id="prenom" name="prenom" required
-			value="<?php echo $_SESSION['abo']->abo_prenom; ?>">
+			value="<?php if(isset($_SEESION['abo'])) echo $_SESSION['abo']->abo_prenom; ?>">
+	</p>
+	<p>
+		<label for="mel">Adresse mail</label>
+		<input type="text" id="mel" name="mel" required 
+			value="<?php  if(isset($_SEESION['abo'])) echo $_SESSION['abo']->abo_mel; ?>">
 	</p>
 	<p>
 		<label for="objet">Objet</label>
