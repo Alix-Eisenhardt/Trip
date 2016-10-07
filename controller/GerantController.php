@@ -26,14 +26,34 @@ class GerantController extends Controller {
 	}
 
 	public function mesLocations() {
-    // C'est pas propre :(
-    $locations = Location::findAll();
+	    $locations = Location::findAll();
 
-  	$search = [$_SESSION['gerant']->grt_id];
-  	foreach ($locations as $key => $value) {
-			if(strtolower($_SESSION['gerant']->grt_id) == strtolower($value->grt_id))
-				$search[1][] = $value;
-  	}
-    $this->render("mesLocations", $search);
-  }
+	  	$search = [$_SESSION['gerant']->grt_id];
+	  	foreach ($locations as $key => $value) {
+				if(strtolower($_SESSION['gerant']->grt_id) == strtolower($value->grt_id))
+					$search[1][] = $value;
+	  	}
+	    $this->render("mesLocations", $search);
+	}
+
+  	public function sendMail() {
+        $gerant = new Gerant($_GET["id"]);
+        $data = $gerant;
+        $this->render("mailTo", $data);
+    }
+
+    public function mailTo() {
+    	if(isset($_POST['envoyer'])) {
+    		$grt = new Gerant($_POST['grtId']);
+    		$from = "From : " . $_SESSION['abo']->abo_mel;
+    		$mail = mail($grt->grt_mel, $_POST['objet'], $_POST['message'], $from);
+    		if($mail)
+				header("Location: index.php");
+    		else {
+    			$data = $grt;
+    			$this->render('mailTo', $data);
+    			echo "Envoi échoué";
+    		}
+    	}
+    }
 }

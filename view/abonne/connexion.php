@@ -1,4 +1,4 @@
- <form action="index.php?r=abonne/connecter" method="post">
+<form action="index.php?r=abonne/connecter" method="post">
 	<h1>Connexion</h1>
 
 	<p>

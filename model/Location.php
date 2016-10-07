@@ -41,7 +41,11 @@ class Location extends Model {
     if(isset($this->loc_etat))
         $s .= "etat : ".$this->loc_etat."<br>";
     $s .= $this->pay_obj."</div>";
-    $s .= "<div class=\"gerant\"><p>À propos du propriétaire, ".$this->grt_obj->grt_nom." :<br>";
+    $s .= "<div class=\"gerant\"><p>À propos du propriétaire, ";
+    if(isset($_SESSION['abo']))
+      $s .= "<a href=./?r=gerant/sendMail&id=".$this->grt_id.">".$this->grt_obj->grt_nom."</a> :<br>";
+    else
+      $s .= $this->grt_obj->grt_nom." :<br>";
     $s .= $this->grt_obj."</p></div>";
     return $s;
   }
