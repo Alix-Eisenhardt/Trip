@@ -20,23 +20,25 @@ $(document).ready(function() {
 	$(langue).insertBefore('#avis');
 
 	triSelect.click(function() {
+		var avis = $(".avis");
 		if(triSelect.val() == "Date (du + vieux au + récent)") {
-			var avis = $.makeArray($(".avis"));
-		} else if(triSelect.val() == "Date (du + récent au plus vieux)") {
-			var avis = $.makeArray($(".avis"));
+			avis.sort(function(a, b) {
+				return new Date($(a).find(".date").text()) > new Date($(b).find(".date").text());
+			});
+		} else if(triSelect.val() == "Date (du + récent au + vieux)") {
+			avis.sort(function(a, b) {
+				return new Date($(b).find(".date").text()) > new Date($(a).find(".date").text());
+			});
 		} else if(triSelect.val() == "Avis (du moins bon au meilleur)") {
-			var avis = $(".avis");
 			avis.sort(function(a, b) {
 				return $(a).find(".note").text() - $(b).find(".note").text();
 			});
-			$("#avis").html(avis);
 		} else if(triSelect.val() == "Avis (du meilleur au moins bon)") {
-			var avis = $(".avis");
 			avis.sort(function(a, b) {
 				return $(b).find(".note").text() - $(a).find(".note").text();
 			});
-			$("#avis").html(avis);
 		}
+		$("#avis").html(avis);
 	});
 
 	langueSelect.click(function() {
