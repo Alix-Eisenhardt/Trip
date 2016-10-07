@@ -16,14 +16,29 @@ $(document).ready(function() {
 				.append("<option>Français</option>")
 				.append("<option>English</option>");
 
-	$('#avis').prepend(tri);
-	$('#avis').prepend(langue);
+	$(tri).insertBefore('#avis');
+	$(langue).insertBefore('#avis');
 
 	triSelect.click(function() {
+		var avis = $(".avis");
 		if(triSelect.val() == "Date (du + vieux au + récent)") {
-			$.makeArray($(".date"));
+			avis.sort(function(a, b) {
+				return new Date($(a).find(".date").text()) > new Date($(b).find(".date").text());
+			});
+		} else if(triSelect.val() == "Date (du + récent au + vieux)") {
+			avis.sort(function(a, b) {
+				return new Date($(b).find(".date").text()) > new Date($(a).find(".date").text());
+			});
+		} else if(triSelect.val() == "Avis (du moins bon au meilleur)") {
+			avis.sort(function(a, b) {
+				return $(a).find(".note").text() - $(b).find(".note").text();
+			});
+		} else if(triSelect.val() == "Avis (du meilleur au moins bon)") {
+			avis.sort(function(a, b) {
+				return $(b).find(".note").text() - $(a).find(".note").text();
+			});
 		}
-		console.log(triSelect.val());
+		$("#avis").html(avis);
 	});
 
 	langueSelect.click(function() {
