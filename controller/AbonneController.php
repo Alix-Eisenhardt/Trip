@@ -68,7 +68,6 @@ class AbonneController extends Controller {
 						"abo_aeroport" => $_POST['aeroport'] 
 						);
 					$abonne = new Abonne($param);
-					$_SESSION['ouvert'] = true;
 					$_SESSION['abo'] = $abonne;
 					header("Location: .");
 				}

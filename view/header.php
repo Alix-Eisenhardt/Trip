@@ -18,6 +18,7 @@
 				}
 				elseif(isset($_SESSION['gerant'])){
 					echo "<a href=\"./?r=location/createLocation\"><li>Ajouter location</li></a>";
+					echo "<a href=\"./?r=gerant/mesLocations\"><li>Mes locations</li></a>";
 					echo "<a href=\"./?r=gerant/deconnexion\"><li>Deconnexion</li></a>";
 				}
 				else {
