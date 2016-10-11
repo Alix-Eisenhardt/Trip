@@ -74,3 +74,8 @@ a.button {
 #erreur {
 	color: red;
 }
+
+img {
+	height: 200px;
+	width: auto;
+}
