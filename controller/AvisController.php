@@ -56,16 +56,16 @@ class AvisController extends Controller {
 						}
 						//redirection
 						$path = "index.php?r=location/showLocation&id=".$_GET['loc_id'];
-						header("Location: $path");
+						//header("Location: $path");
 					}
 				} else 
 					$erreur = "l'un des champs n'est pas renseigné"; 
 			}
-		if(isset($_SESSION['abo']))
-			$this->render("creation");
-		else
-			$this->render("non_connecte");
-	}
+		}
+	if(isset($_SESSION['abo']))
+		$this->render("creation");
+	else
+		$this->render("non_connecte");
 }
 
 	public function reponse() {

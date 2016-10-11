@@ -13,27 +13,50 @@ class Model {
 		$tableId = substr($table, -3)."_id";
 
 		if (is_array($param)) {
-			$sql = "INSERT INTO $table (".$tableId;
+			$sql = "INSERT INTO $table (";
 			$sqlCol="";
 			$sqlVal="";
-			foreach ($param as $key => $value) {
-				$sqlCol .= ",".$key;
-				$sqlVal .= ",:".$key;
+			//Classes de liaison : on test si l'id de la table est une propriété de la classe
+			// sinon on modifie la composition de la requète en conséquences
+			$property = "_".$tableId;
+			if (property_exists(get_class($this), $property))
+				$sqlCol .= $tableId;
+			else {
+				$flag1 = true;
+				$flag2 = true;
 			}
-			$sql .= $sqlCol.") VALUES (DEFAULT".$sqlVal;
-			$sql .= ") RETURNING $tableId;";
+			foreach ($param as $key => $value) {
+				if(isset($flag1)) {
+					$sqlCol .= $key;
+					$sqlVal .= ":".$key;
+					unset($flag1);
+				} else {
+					$sqlCol .= ",".$key;
+					$sqlVal .= ",:".$key;
+				}
+			}
+			$sql .= $sqlCol.") VALUES (";
+			if(!isset($flag2))
+				$sql .= "DEFAULT";
+			$sql .= $sqlVal.")";
+			if(!isset($flag2))
+				$sql .=" RETURNING $tableId;";
+			else
+				$sql .=";";
 			$st = db()->prepare($sql);
+
 			foreach ($param as $key => $value) {
 				$st->bindValue(':'.$key,$value);
 			}
 			$st->execute();
-			$row = $st->fetch();
-			$this->$tableId = $row[$tableId];
-
-			foreach ($param as $key => $value) {
-				$this->$key = $value;
+			if(!isset($flag2)) {
+				$row = $st->fetch();
+				$this->$tableId = $row[$tableId];
+				foreach ($param as $key => $value) {
+					$this->$key = $value;
+				}
 			}
-		 	//print_r(db()->errorInfo());
+			//print_r(db()->errorInfo());
 		} else {
 			$id = $param;
 			$tableId = substr($table, -3)."_ID";
@@ -45,21 +68,19 @@ class Model {
 			} else {
 				$row = $st->fetch(PDO::FETCH_ASSOC);
 				foreach($row as $field=>$value) {
-					if($value != NULL) {
-						if (substr($field, -2,2) == "id") {
-							$linkedField = substr($field, 0,3);
-							$linkedClass = $this->externalClasses[$linkedField];
-							if ($linkedClass != get_class($this)) {
-								$linkedObj = "_".$linkedField."_obj";
-								$this->$linkedObj = new $linkedClass($value);
-							}
-							$field = "_".$field;
-							$this->$field = $value;
-							
-						} else {
-							$field = "_".$field;
-							$this->$field = $value;
+					if (substr($field, -2,2) == "id") {
+						$linkedField = substr($field, 0,3);
+						$linkedClass = $this->externalClasses[$linkedField];
+						if ($linkedClass != get_class($this)) {
+							$linkedObj = "_".$linkedField."_obj";
+							$this->$linkedObj = new $linkedClass($value);
 						}
+						$field = "_".$field;
+						$this->$field = $value;
+						
+					} else {
+						$field = "_".$field;
+						$this->$field = $value;
 					}
 				}
 			}
@@ -119,6 +140,7 @@ class Model {
 				$st->bindValue(":val", $value);
 				//_}
 				$id = $tableId;
+				echo("05");
 				$st->bindValue(":id", $this->$id);
 				$st->execute();
 			} else {
