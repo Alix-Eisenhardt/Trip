@@ -7,6 +7,7 @@ class Controller {
 		}
 		public function render($view, $d=null) {
 				global $data;
+				global $erreur;
 				include_once "view/header.php";
 				$controller = get_class($this);
 				$model = substr($controller, 0, strpos($controller, "Controller"));

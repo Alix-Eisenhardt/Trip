@@ -75,10 +75,6 @@ class AbonneController extends Controller {
 				$erreur = "l'un des champs n'est pas renseigné";
 			}
 		}
-		if(isset($erreur)) {
-			echo $erreur;
-			unset($erreur);
-		}
 		//Faire le rendering du formulaire APRES le process, sinon le header Location ne peut pas fonctionner.
 		$this->render("inscription");
 	}
