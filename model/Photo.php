@@ -7,6 +7,9 @@ class Photo extends Model {
 	protected $_avi_id;
 	protected $_pho_url;
 
+	protected $_loc_obj;
+	protected $_avi_obj;
+
 	protected $externalClasses = array(
 		"pho" => "Photo",
 		"avi" => "Avis",
