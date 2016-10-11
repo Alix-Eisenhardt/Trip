@@ -63,5 +63,11 @@ class LocationController extends Controller {
     $loc = new Location($attribute);
     $this->render("confirm", $loc->loc_id);
   }
+
+  public function dispo(){
+    $list = array();
+    $list = PlanningLocation::findDispoLocation($_GET['loc_id']);
+    $this->render("dispoLocation", $list);
+  }
 }
 

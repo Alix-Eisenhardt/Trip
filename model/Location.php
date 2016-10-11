@@ -48,7 +48,8 @@ class Location extends Model {
   }
 
   public function shortVersion() {
-    $s = "<h3>".$this->loc_titre."</h3>";
+    $s = "<div class='location'>";
+    $s .= "<h3>".$this->loc_titre."</h3>";
     $s .= "Type : ".$this->loc_type."<br>";
     $s .= $this->loc_nbchambres." chambres, ";
     $s .= $this->loc_nbcouchages." couchages, ";
@@ -63,7 +64,7 @@ class Location extends Model {
     if(isset($this->loc_etat))
         $s .= "etat : ".$this->loc_etat."<br>";
     $s .= "<a href=./?r=location/showLocation&id=".$this->loc_id.">Voir plus de détails</a>";
-    return $s."<br>";
+    return $s."</div>";
   }
 
 }
