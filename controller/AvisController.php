@@ -66,6 +66,7 @@ class AvisController extends Controller {
 		else
 			$this->render("non_connecte");
 	}
+}
 
 	public function reponse() {
 		if(isset($_POST['envoyer'])) {
