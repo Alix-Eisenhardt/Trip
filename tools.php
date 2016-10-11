@@ -36,21 +36,21 @@ function melConfirm($mail) {
 
 	$message_txt = "Votre commentaire à bien été posté";
 	$message_html = "<html><head></head><body> $message_txt </body></html>";
-	 
+	
 	//=====Création de la boundary
 	$boundary = "-----=".md5(rand());
 	//==========
-	 
+	
 	//=====Définition du sujet.
 	$sujet = "Avis posté sur TripAdvisor";
 	//=========
-	 
+	
 	//=====Création du header de l'e-mail.
 	$header = "From: \"TripAdvisor noreply\"<confirm-noreply@TripAdvisor.com>".$passage_ligne;
 	$header.= "MIME-Version: 1.0".$passage_ligne;
 	$header.= "Content-Type: multipart/alternative;".$passage_ligne." boundary=\"$boundary\"".$passage_ligne;
 	//==========
-	 
+	
 	//=====Création du message.
 	$message = $passage_ligne."--".$boundary.$passage_ligne;
 	//=====Ajout du message au format texte.
@@ -67,9 +67,67 @@ function melConfirm($mail) {
 	$message.= $passage_ligne."--".$boundary."--".$passage_ligne;
 	$message.= $passage_ligne."--".$boundary."--".$passage_ligne;
 	//==========
-	 
+	
 	//=====Envoi de l'e-mail.
 	mail($mail,$sujet,$message,$header);
 	//==========
+}
+
+function draw_calendar($month,$year){
+
+
+	$calendar = '<table cellpadding="0" cellspacing="0" class="calendar">';
+
+	$headings = array('L  ','Ma ','Me ','J  ','V  ','S  ','D  ');
+	$calendar.= '<tr class="calendar-row"><td class="calendar-day-head">'.implode('</td><td class="calendar-day-head">',$headings).'</td></tr>';
+
+
+	$running_day = date('w',mktime(0,0,0,$month,1,$year))-1;
+	$days_in_month = date('t',mktime(0,0,0,$month,1,$year));
+	$days_in_this_week = 1;
+	$day_counter = 0;
+	$dates_array = array();
+
+	$calendar.= '<tr class="calendar-row">';
+
+	for($x = 0; $x < $running_day; $x++){
+		$calendar.= '<td class="calendar-day-np"> </td>';
+		$days_in_this_week++;
 	}
+
+	for($list_day = 1; $list_day <= $days_in_month; $list_day++){
+		$m = $month+1;
+		$id = $year."-".$m."-".$list_day;
+		$calendar.= "<td class='calendar-day' id='$id'>";
+		
+		$calendar.= '<div class="day-number">'.$list_day.'</div>';
+
+		$calendar.= str_repeat('<p> </p>',2);
+		
+		$calendar.= '</td>';
+		if($running_day == 6){
+			$calendar.= '</tr>';
+			if(($day_counter+1) != $days_in_month){
+				$calendar.= '<tr class="calendar-row">';
+			}
+			$running_day = -1;
+			$days_in_this_week = 0;
+		}
+		$days_in_this_week++; $running_day++; $day_counter++;
+	}
+
+	if($days_in_this_week < 8){
+		for($x = 1; $x <= (8 - $days_in_this_week); $x++){
+			$calendar.= '<td class="calendar-day-np"> </td>';
+		}
+	}
+
+	$calendar.= '</tr>';
+
+
+	$calendar.= '</table>';
+	
+
+	return $calendar;
+}
 ?>
