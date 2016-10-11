@@ -49,6 +49,22 @@
 			<?php if (isset($_POST['detail'])) echo htmlentities(trim($_POST['detail'])); ?>
 		</textarea>
 	</p>
+	<br><br>
+	<input type="checkbox" id="butt_q">
+	<label for="butt_q">Questions facultatives
+		<div id="questions_fac">
+		<?php
+		foreach (Question::findAll() as $k => $v) {
+		    		$id = $v->qul_id;
+		    		$name = "quest".$id;
+		    		echo('<p><label for="$name"> '.$v.'* : </label>');
+					echo('<input required type="text" id="'.$name.'" name="'.$name.'" size=55></p>');
+					if (isset($_POST['$name'])) echo htmlentities(trim($_POST['$name']));
+		    }
+		?>
+		</div>
+	</label>
+	<br><br>
 	<p>
 		Note Globale* : 
 		<label for="note_glob_1">1</label>

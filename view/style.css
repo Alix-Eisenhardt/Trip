@@ -62,3 +62,6 @@ a.button {
 {
 	text-align: center;
 }
+
+#questions_fac{display : none;}
+#questions_fac:target{display : initial;}

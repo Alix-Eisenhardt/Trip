@@ -23,11 +23,11 @@ $(document).ready(function() {
 		var avis = $(".avis");
 		if(triSelect.val() == "Date (du + vieux au + récent)") {
 			avis.sort(function(a, b) {
-				return new Date($(a).find(".date").text()) > new Date($(b).find(".date").text());
+				return new Date($(a).find(".date").text()) - new Date($(b).find(".date").text());
 			});
 		} else if(triSelect.val() == "Date (du + récent au + vieux)") {
 			avis.sort(function(a, b) {
-				return new Date($(b).find(".date").text()) > new Date($(a).find(".date").text());
+				return new Date($(b).find(".date").text()) - new Date($(a).find(".date").text());
 			});
 		} else if(triSelect.val() == "Avis (du moins bon au meilleur)") {
 			avis.sort(function(a, b) {
