@@ -45,7 +45,7 @@ class Avis extends Model {
 			$s .= "<a class='button' href='$path'>Répondre</a>";
 		}
 		else if($this->avi_reponseavis != "") {
-			$s .= "Réponse du gérant :<br />";
+			$s .= "<b>Réponse du gérant :</b><br />";
 			$s .= $this->avi_reponseavis."<br />";
 		}
 		$s .= "</div>";
