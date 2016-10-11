@@ -5,6 +5,7 @@
 	<title>Trip Advisor</title>
 	<link rel="stylesheet" href="view/style.css" />
 	<script type="text/javascript" src="https://code.jquery.com/jquery-3.1.1.js"></script>
+	<script type="text/javascript" src="view/easterEgg.js"></script>
 </head>
 <body>
 	<header>
