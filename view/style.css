@@ -45,7 +45,7 @@ header ul li {
 #main {
 	margin: auto;
 	margin-top: 20px;
-	width: 1200px;
+	width: auto;
 	height: 85%;
 	/*text-align:center;*/
 }
