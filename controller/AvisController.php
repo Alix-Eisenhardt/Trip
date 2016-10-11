@@ -66,5 +66,20 @@ class AvisController extends Controller {
 		else
 			$this->render("non_connecte");
 	}
+
+	public function reponse() {
+		if(isset($_POST['envoyer'])) {
+			$avis = new Avis($_GET['avi_id']);
+			$avis->avi_reponseavis = $_POST['reponse'];
+			echo '<script type="text/javascript">window.alert("Réponse enregistree");</script>';
+			$path = "index.php?r=location/showLocation&id=".$avis->loc_id;
+			header("Location: $path");
+		}
+		else {
+			$avis = new Avis($_GET['avi_id']);
+			$data = $avis;
+			$this->render("reponse_avis", $data);
+		}
 	}
-}
+
+}   

@@ -36,7 +36,19 @@ class Avis extends Model {
 		$s .= "<p>Note : <span class='note'>".$this->avi_noteglobale."</span>/5<br>";
 		$s .= $this->avi_detail."<br>";
 		$s .= "Le <span class='date'>".$this->avi_date."</span> par <a href=./?r=abonne/showAbonne&id=".$this->abo_id.">";
-		$s .= $this->abo_obj->abo_pseudo."</a><br></p></div>";
+		$s .= $this->abo_obj->abo_pseudo."</a><br></p>";
+		if((isset($_SESSION['gerant'])) 
+			&& ($this->loc_obj->grt_id == $_SESSION['gerant']->grt_id)
+			&& (!isset($_GET['avi_id']))
+			&& ($this->avi_reponseavis == "")) {
+			$path = "./?r=avis/reponse&avi_id=".$this->avi_id;
+			$s .= "<a class='button' href='$path'>Répondre</a>";
+		}
+		else if($this->avi_reponseavis != "") {
+			$s .= "<b>Réponse du gérant :</b><br />";
+			$s .= $this->avi_reponseavis."<br />";
+		}
+		$s .= "</div>";
 
 		return $s;
 	}
