@@ -79,3 +79,26 @@ img {
 	height: 200px;
 	width: auto;
 }
+
+table {
+    border-collapse: collapse;
+}
+
+table, th, td {
+    border: 1px solid black;
+}
+.dispo{
+	display: flex;
+	flex-wrap: wrap;
+	margin:20px;
+}
+.month{
+	margin:20px;
+}
+ td{
+ 	background-color: lightpink;
+ }
+
+ .calendar-day-head, .calendar-day-np{
+ 	background-color: white;
+ }

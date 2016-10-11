@@ -83,6 +83,8 @@ function draw_calendar($month,$year){
 
 
 	$running_day = date('w',mktime(0,0,0,$month,1,$year))-1;
+	if($running_day<0)
+		$running_day=6;
 	$days_in_month = date('t',mktime(0,0,0,$month,1,$year));
 	$days_in_this_week = 1;
 	$day_counter = 0;
@@ -96,8 +98,15 @@ function draw_calendar($month,$year){
 	}
 
 	for($list_day = 1; $list_day <= $days_in_month; $list_day++){
-		$m = $month+1;
-		$id = $year."-".$m."-".$list_day;
+		$m = $month;
+		if($m<10)
+			$id = $year."-0".$m."-";
+		else
+			$id = $year."-".$m."-";
+		if($list_day<10)
+			$id .= "0".$list_day;
+		else
+			$id .= $list_day;
 		$calendar.= "<td class='calendar-day' id='$id'>";
 		
 		$calendar.= '<div class="day-number">'.$list_day.'</div>';
