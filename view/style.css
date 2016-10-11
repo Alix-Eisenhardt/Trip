@@ -58,10 +58,19 @@ a.button {
     text-decoration: none;
     color: initial;
 }
-.showAbonne
-{
+
+.showAbonne {
 	text-align: center;
 }
 
-#questions_fac{display : none;}
-#questions_fac:target{display : initial;}
+#questions_fac {
+	display : none;
+}
+
+#butt_question:checked ~ #questions_fac{
+	display : initial;
+}
+
+#erreur {
+	color: red;
+}

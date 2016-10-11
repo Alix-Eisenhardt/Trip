@@ -5,10 +5,7 @@ class Question extends Model {
 	protected $_qul_id;
 	protected $_qul_question;
 
-	protected $externalClasses = array(
-		"avi" => "Avis",
-		"qul" => "Question"
-	);
+	protected $externalClasses = array("qul" => "Question");
 
 	function __tostring() {
 		return $this->qul_question;

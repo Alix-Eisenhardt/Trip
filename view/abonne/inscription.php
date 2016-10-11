@@ -69,3 +69,9 @@
 	</p>
 	<input type="submit" name="inscription" value="Inscription">
 </form>
+<?php
+if(isset($erreur)) {
+	echo "<span id'erreur'>".$erreur."</span>";
+	unset($erreur);
+}
+?>

@@ -50,20 +50,21 @@
 		</textarea>
 	</p>
 	<br><br>
-	<input type="checkbox" id="butt_q">
-	<label for="butt_q">Questions facultatives
+	<label for="butt_question">Questions facultatives</label><input type="checkbox" id="butt_question">
 		<div id="questions_fac">
+		<p>Attention, une fois que vous commencez à répondre, il vous faut répondre a toutes ces questions</p><br>
 		<?php
-		foreach (Question::findAll() as $k => $v) {
+		$questions = Question::findAll();
+		foreach ($questions as $k => $v) {
 		    		$id = $v->qul_id;
 		    		$name = "quest".$id;
-		    		echo('<p><label for="$name"> '.$v.'* : </label>');
-					echo('<input required type="text" id="'.$name.'" name="'.$name.'" size=55></p>');
+		    		echo('<p><label for="'.$name.'"> '.$v.'* : </label>');
+					echo('<input type="text" id="'.$name.'" name="'.$name.'" size=55></p>');
 					if (isset($_POST['$name'])) echo htmlentities(trim($_POST['$name']));
 		    }
+		echo('<input type=hidden name="count_questions" value="'.count($questions).'">');
 		?>
 		</div>
-	</label>
 	<br><br>
 	<p>
 		Note Globale* : 
@@ -84,3 +85,9 @@
 	</p>
 	<input type="submit" name="envoyer" value="Envoyer">
 </form>
+<?php 
+if(isset($erreur)) {
+		echo "<span id='erreur'>".$erreur."</span>";
+		unset($erreur);
+	}
+?>
