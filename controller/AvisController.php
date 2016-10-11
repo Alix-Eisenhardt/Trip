@@ -56,7 +56,7 @@ class AvisController extends Controller {
 						}
 						//redirection
 						$path = "index.php?r=location/showLocation&id=".$_GET['loc_id'];
-						//header("Location: $path");
+						header("Location: $path");
 					}
 				} else 
 					$erreur = "l'un des champs n'est pas renseigné"; 
