@@ -71,19 +71,22 @@ class LocationController extends Controller {
   }
 
   public function ajoutPhoto() {
+    global $erreur;
     if(isset($_SESSION['gerant']) && $_SESSION['gerant']->grt_id == $_GET['loc_id']) {
       if(isset($_POST['ajouter']) && $_POST['ajouter'] == 'Ajouter') {
+        if(!empty($_FILES['photo']['name'])) {
+          //1mo 1048576
+          //500ko = 524288
           $maxsize = 524288;
-          $nom = md5(uniqid(rand(), true));
+
           //test ext
           $extensions_valides = array( 'jpg' , 'jpeg' , 'gif' , 'png' );
           $extension_upload = strtolower(  substr(  strrchr($_FILES['photo']['name'], '.')  ,1)  );
           if ( in_array($extension_upload,$extensions_valides) ) {
             //test err
-            if ($_FILES['photo']['error'] < 1) {
+            if ($_FILES['photo']['error'] == 0) {
               //test taille
               if ($_FILES['photo']['size'] < $maxsize) {
-                
                 $uploaddir = './images/';
                 $nom = "img";
                 //on récupère le nombre de champs dans la base pour créer un identifiant unique à toutes les images
@@ -109,6 +112,7 @@ class LocationController extends Controller {
                   $erreur = "Erreur lors du transfert";
                 }
               } else {
+                echo("1");
                 $erreur = "Le fichier est trop gros, taille limite : 500ko";
               }
             } else {
@@ -117,6 +121,9 @@ class LocationController extends Controller {
           } else {
             $erreur = "Type de fichier non valide, types autorisés : .jpeg, .jpg, .gif, .png";
           }
+        } else {
+          $erreur = "Veuillez insérer une image";
+        }
       }
       $this->render("ajoutImages");
     } else {

@@ -56,6 +56,7 @@ class Model {
 					$this->$key = $value;
 				}
 			}
+			//debug
 			echo $sql;
 			print_r(db()->errorInfo());
 		} else {
