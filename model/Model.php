@@ -56,10 +56,10 @@ class Model {
 					$this->$key = $value;
 				}
 			}
-			//print_r(db()->errorInfo());
+			echo $sql;
+			print_r(db()->errorInfo());
 		} else {
 			$id = $param;
-			$tableId = substr($table, -3)."_ID";
 			$st = db()->prepare("select * from $table where $tableId=:id");
 			$st->bindValue(":id", $id);
 			$st->execute();

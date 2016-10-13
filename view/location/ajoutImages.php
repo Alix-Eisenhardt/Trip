@@ -6,10 +6,9 @@ Formulaire d'ajout d'une photo :
 <fieldset class="fdset_formimg">
 <form action="#" method="post" enctype="multipart/form-data">
 	<p>
-		formats autorisés : .jpeg ou .png<br>
+		formats autorisés : .jpeg .jpg .gif ou .png<br>
 		<input type="file" name="photo" />
 	</p>
-	<input type="hidden" name="MAX_FILE_SIZE" value="1048576" />
 	<input type="submit" name="ajouter" value="Ajouter">
 </form>
 </fieldset>

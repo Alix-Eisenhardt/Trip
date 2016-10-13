@@ -15,4 +15,13 @@ class Photo extends Model {
 		"avi" => "Avis",
 		"loc" => "Location"
 	);
+
+	public static function count() {
+			$class = get_called_class();
+			$table = $class::getTableName();
+			$tableId = substr($table, -3)."_ID";
+			$st = db()->prepare("select ".$tableId." from $table");
+			$st->execute();
+			return $st->rowCount();
+	}
 }
