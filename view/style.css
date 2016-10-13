@@ -95,10 +95,14 @@ table, th, td {
 .month{
 	margin:20px;
 }
- td{
+td{
  	background-color: lightpink;
- }
+}
 
- .calendar-day-head, .calendar-day-np{
- 	background-color: white;
+.calendar-day-head, .calendar-day-np{
+	background-color: white;
+}
+
+.fdset_formimg {
+	width: 35%;
  }

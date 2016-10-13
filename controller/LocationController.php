@@ -69,5 +69,22 @@ class LocationController extends Controller {
     $list = PlanningLocation::findDispoLocation($_GET['loc_id']);
     $this->render("dispoLocation", $list);
   }
+
+  public function ajoutPhoto() {
+    if(isset($_SESSION['gerant']) && $_SESSION['gerant']->grt_id == $_GET['loc_id']) {
+      if(isset($_POST['ajouter']) && $_POST['ajouter'] == 'Ajouter') {
+        if(isset($_POST['photo'])){
+          if ($_FILES['photo']['error'] > 0) $erreur = "Erreur lors du transfert";
+
+          $erreur = $_FILES['photo']['type'];
+        }
+      }
+    } else {
+      $erreur = "Ce n'est pas votre location";
+    }
+
+
+    $this->render("ajoutImages");
+  }
 }
 
