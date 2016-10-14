@@ -7,8 +7,19 @@
 	<label for="date_debut">Date début : </label>
 	<input type="date" id="date_debut" name="date_debut"/>
 	</p>
+	<p>
 	<label for="date_fin">Date fin : </label>
 	<input type="date" id="date_fin" name="date_fin"/>
+	</p>
+	<div id="equipement">
+		<?php
+		foreach (Equipement::findAll() as $k => $v) {
+			$id = $v->equ_id;
+		    echo('<span class="equ_child"><label for="check"> • '.$v->equ_libelle.' : </label>');
+			echo('<input type="checkbox" id="check" name="check[]" value="'.$id.'"> </span>');
+		}
+		?>
+	</div>
 	<p>
 	<button type="submit" id="button">Chercher</button>
 	</p>

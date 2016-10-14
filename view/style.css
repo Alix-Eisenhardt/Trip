@@ -80,6 +80,12 @@ img {
 	width: auto;
 }
 
+#equipement
+{
+	display: flex;
+	flex-wrap: wrap;
+}
+
 table {
     border-collapse: collapse;
 }
@@ -105,4 +111,4 @@ td{
 
 .fdset_formimg {
 	width: 35%;
- }
+}
