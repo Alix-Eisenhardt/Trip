@@ -101,7 +101,22 @@ class AvisController extends Controller {
 		unset($_SESSION['detailavis'],$d);
 	}
 	public function ajoutImage() {
-		
+		$avi = new Avis($_GET['avi_id']);
+	    global $erreur;
+	    if(isset($_SESSION['abo']) && $_SESSION['abo']->abo_id == $avi->abo_id) {
+	      if(isset($_POST['joindre']) && $_POST['joindre'] == 'Joindre') {
+	        $retour = Photo::ajoutImage("avi_id",$avi->avi_id);
+	        if($retour == true) {
+				$path = "index.php?r=avis/detailAvis&avi_id=".$_GET['avi_id'];
+				header("Location: $path");
+	        } else {
+	        	$erreur = $retour;
+	        }
+	      }
+	      $this->render("ajoutImages");
+	    } else {
+	      $this->render("../notFound");
+	    }
 	}
 
 }   

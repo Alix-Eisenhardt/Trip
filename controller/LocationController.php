@@ -98,11 +98,17 @@ class LocationController extends Controller {
     global $erreur;
     if(isset($_SESSION['gerant']) && $_SESSION['gerant']->grt_id == $loc->grt_id) {
       if(isset($_POST['ajouter']) && $_POST['ajouter'] == 'Ajouter') {
-        $erreur = ajoutImage("loc_id",$_GET['loc_id']);
+        $retour = Photo::ajoutImage("loc_id",$_GET['loc_id']);
+        if($retour == true) {
+          $path = "index.php?r=location/showLocation&id=".$_GET['loc_id'];
+          header("Location: $path");
+        } else {
+          $erreur = $retour;
+        }
       }
       $this->render("ajoutImages");
     } else {
-      $this->render("notFound");
+      $this->render("../notFound");
     }
   }
 }

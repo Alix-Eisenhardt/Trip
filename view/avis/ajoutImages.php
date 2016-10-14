@@ -1,4 +1,9 @@
 Joindre une photo à votre avis
+<?php
+$av = new Avis($_GET['avi_id']);
+echo "<br><h4>Titre de l'avis : ".$av->avi_titre."</h4>";
+?>
+
 <fieldset class="fdset_formimg">
 <form action="#" method="post" enctype="multipart/form-data">
 	<p>
