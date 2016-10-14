@@ -13,30 +13,54 @@ class Model {
 		$tableId = substr($table, -3)."_id";
 
 		if (is_array($param)) {
-			$sql = "INSERT INTO $table (".$tableId;
+			$sql = "INSERT INTO $table (";
 			$sqlCol="";
 			$sqlVal="";
+			//Classes de liaison : on test si l'id de la table est une propriété de la classe
+			// sinon on modifie la composition de la requète en conséquences
+			$property = "_".$tableId;
+			if (property_exists(get_class($this), $property))
+				$sqlCol .= $tableId;
+			else 
+				$noIdTable = true;
 			foreach ($param as $key => $value) {
-				$sqlCol .= ",".$key;
-				$sqlVal .= ",:".$key;
+				if(isset($noIdTable) && $noIdTable == true) {
+					$sqlCol .= $key;
+					$sqlVal .= ":".$key;
+					//mis a false pour que cela n'affecte qu'une ligne du foreach
+					// mais la variable sert pour d'autres tests
+					$noIdTable = false;
+				} else {
+					$sqlCol .= ",".$key;
+					$sqlVal .= ",:".$key;
+				}
 			}
-			$sql .= $sqlCol.") VALUES (DEFAULT".$sqlVal;
-			$sql .= ") RETURNING $tableId;";
+			$sql .= $sqlCol.") VALUES (";
+			if(!isset($noIdTable))
+				$sql .= "DEFAULT";
+			$sql .= $sqlVal.")";
+			if(!isset($noIdTable))
+				$sql .=" RETURNING $tableId;";
+			else
+				$sql .=";";
 			$st = db()->prepare($sql);
+
 			foreach ($param as $key => $value) {
 				$st->bindValue(':'.$key,$value);
 			}
 			$st->execute();
-			$row = $st->fetch();
-			$this->$tableId = $row[$tableId];
-
-			foreach ($param as $key => $value) {
-				$this->$key = $value;
+			if(!isset($noIdTable)) {
+				$row = $st->fetch();
+				$this->$tableId = $row[$tableId];
+				foreach ($param as $key => $value) {
+					$this->$key = $value;
+				}
 			}
-		 	//print_r(db()->errorInfo());
+			//debug
+			//echo $sql;
+			//print_r(db()->errorInfo());
 		} else {
 			$id = $param;
-			$tableId = substr($table, -3)."_ID";
 			$st = db()->prepare("select * from $table where $tableId=:id");
 			$st->bindValue(":id", $id);
 			$st->execute();

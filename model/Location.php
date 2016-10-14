@@ -26,6 +26,10 @@ class Location extends Model {
 
   public function __toString() {
     $s = "<h3>".$this->loc_titre."</h3>";
+    if(isset($_SESSION['gerant']) && $_SESSION['gerant']->grt_id == $this->grt_id) {
+      $path = "./?r=location/ajoutPhoto&loc_id=".$this->loc_id;
+      $s .= "<a class='button' href='$path'>Ajouter une Photo</a><br><br>";
+    }
     $s .= "Type : ".$this->loc_type."<br>";
     $s .= "Description : ".$this->loc_description."<br>";
     $s .= $this->loc_nbchambres." chambres, ";

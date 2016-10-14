@@ -16,6 +16,7 @@ header {
 	box-shadow: 0 0 10px black;
 	position: sticky;
 	top: 0;
+	z-index: 10;
 }
 
 header h1 {
@@ -47,7 +48,6 @@ header ul li {
 	margin-top: 20px;
 	width: auto;
 	height: 85%;
-	/*text-align:center;*/
 }
 
 a.button {
@@ -84,4 +84,31 @@ img {
 {
 	display: flex;
 	flex-wrap: wrap;
+}
+
+table {
+    border-collapse: collapse;
+}
+
+table, th, td {
+    border: 1px solid black;
+}
+.dispo{
+	display: flex;
+	flex-wrap: wrap;
+	margin:20px;
+}
+.month{
+	margin:20px;
+}
+td{
+ 	background-color: lightpink;
+}
+
+.calendar-day-head, .calendar-day-np{
+	background-color: white;
+}
+
+.fdset_formimg {
+	width: 35%;
 }
