@@ -2,7 +2,7 @@
 class AvisController extends Controller {
 	public function creation() {
 		global $erreur;
-		if (isset($_POST['envoyer']) && $_POST['envoyer'] == 'Envoyer') {
+		if (isset($_POST['envoyer']) || isset($_POST['ajoutimg'])) {
 			if ((isset($_POST['vil']) && !empty($_POST['vil'])) 
 				&&(isset($_POST['per']) && !empty($_POST['per']))
 				&&(isset($_POST['lng']) && !empty($_POST['lng']))
@@ -16,7 +16,7 @@ class AvisController extends Controller {
 				else
 					$_POST['recom'] = "TRUE";
 
-					//tri des reponses facultatives
+				//tri des reponses facultatives
 				foreach ($_POST as $key => $value) {
 					if(preg_match('/^quest/',$key) && !empty($value))
 						$questions_facultatives[substr($key,5)] = $value;
@@ -54,7 +54,10 @@ class AvisController extends Controller {
 						}
 					}
 					//redirection
-					$path = "index.php?r=location/showLocation&id=".$_GET['loc_id'];
+					if(isset($_POST['envoyer']))
+						$path = "./?r=location/showLocation&id=".$_GET['loc_id'];
+					else if(isset($_POST['ajoutimg']))
+						$path = "./?r=avis/ajoutImage&avi_id=".$avis->avi_id;
 					header("Location: $path");
 				}
 			} else 
@@ -94,8 +97,11 @@ class AvisController extends Controller {
 			);
 
 		$this->render("detailAvis",$d);
-		
+
 		unset($_SESSION['detailavis'],$d);
+	}
+	public function ajoutImage() {
+		
 	}
 
 }   
