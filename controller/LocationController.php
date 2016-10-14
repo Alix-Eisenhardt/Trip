@@ -112,7 +112,6 @@ class LocationController extends Controller {
                   $erreur = "Erreur lors du transfert";
                 }
               } else {
-                echo("1");
                 $erreur = "Le fichier est trop gros, taille limite : 500ko";
               }
             } else {
