@@ -7,7 +7,8 @@
 class Model {
 	//attend une variable : Soit l'id pour instancier un objet
 	// soit un tableau de paramètres pour l'insert dans la base
-	public function __construct($param) {
+	//param 2 sert pour l'instanciation des objets issus des tables de liaison
+	public function __construct($param,$param2=null) {
 		$class = get_called_class();
 		$table = $class::getTableName();
 		$tableId = substr($table, -3)."_id";
@@ -61,30 +62,40 @@ class Model {
 			//print_r(db()->errorInfo());
 		} else {
 			$id = $param;
-			$st = db()->prepare("select * from $table where $tableId=:id");
-			$st->bindValue(":id", $id);
-			$st->execute();
-			if ($st->rowCount() != 1) {
-				throw new Exception("Not in table: ".$table." id: ".$id );
-			} else {
-				$row = $st->fetch(PDO::FETCH_ASSOC);
-				foreach($row as $field=>$value) {
-					if($value != NULL) {
-						if (substr($field, -2,2) == "id") {
-							$linkedField = substr($field, 0,3);
-							$linkedClass = $this->externalClasses[$linkedField];
-							if ($linkedClass != get_class($this)) {
-								$linkedObj = "_".$linkedField."_obj";
-								$this->$linkedObj = new $linkedClass($value);
+			$property = "_".$tableId;
+			if (property_exists(get_class($this), $property))
+			{
+				$st = db()->prepare("select * from $table where $tableId=:id");
+				$st->bindValue(":id", $id);
+				$st->execute();
+				if ($st->rowCount() != 1) {
+					throw new Exception("Not in table: ".$table." id: ".$id );
+				} else {
+					$row = $st->fetch(PDO::FETCH_ASSOC);
+					foreach($row as $field=>$value) {
+						if($value != NULL) {
+							if (substr($field, -2,2) == "id") {
+								$linkedField = substr($field, 0,3);
+								$linkedClass = $this->externalClasses[$linkedField];
+								if ($linkedClass != get_class($this)) {
+									$linkedObj = "_".$linkedField."_obj";
+									$this->$linkedObj = new $linkedClass($value);
+								}
+								$field = "_".$field;
+								$this->$field = $value;
+								
+							} else {
+								$field = "_".$field;
+								$this->$field = $value;
 							}
-							$field = "_".$field;
-							$this->$field = $value;
-							
-						} else {
-							$field = "_".$field;
-							$this->$field = $value;
 						}
 					}
+				}
+			} else {
+				if($param2 == null) {
+					throw new Exception("L'instanciation d'objets issus de classes de liaison nécéssite deux ids");
+				} else  {
+					
 				}
 			}
 		}
