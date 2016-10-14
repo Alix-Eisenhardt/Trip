@@ -8,3 +8,5 @@ class MaClasse extends Model {
   ...
   protected $externalClasses = array("truc" => "MaClasse", ...);
 ```
+
+Il paraît qu'Andy Davidson et Hideo Kojima se sont rencontrés.  
