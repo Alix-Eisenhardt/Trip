@@ -37,6 +37,10 @@ class Avis extends Model {
 		$s .= $this->avi_detail."<br>";
 		$s .= "Le <span class='date'>".$this->avi_date."</span> par <a href=./?r=abonne/showAbonne&id=".$this->abo_id.">";
 		$s .= $this->abo_obj->abo_pseudo."</a><br></p>";
+		if(!isset($_SESSION['detailavis'])) {
+			$path = "./?r=avis/detailAvis&avi_id=".$this->avi_id;
+			$s .= "<a class='button' href='$path'>Detail avis</a><br>";
+		}
 		if((isset($_SESSION['gerant'])) 
 			&& ($this->loc_obj->grt_id == $_SESSION['gerant']->grt_id)
 			&& (!isset($_GET['avi_id']))

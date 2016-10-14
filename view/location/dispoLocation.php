@@ -29,6 +29,26 @@ for($x=0;$x<$nb_month;$x++){
 }
 echo "</div>";
 
+?>
+<div>
+	<form action="?r=location/reserver?=loc_id" method="post" onsubmit= "return checkTxt()">
+	<p>Cliquez sur une date dans le calendrier </p>
+	<p>
+	<label for="date_debut_resa">Date début : </label>
+	<input id="date_debut_resa" name="date_debut_resa" readonly/>
+	</p>
+	<label for="date_fin_resa">Date fin : </label>
+	<input  id="date_fin_resa" name="date_fin_resa" readonly/>
+	<p>
+		<a class = 'button' id='reset'>Reset</a>
+	</p>
+	<p>
+	<button type="submit" id="button">Reserver</button>
+	</p>
+	</form>
+</div>
+<?php
+
 echo "<a class='button' href=\"javascript:history.go(-1)\">Retour</a>";
 
 ?>
