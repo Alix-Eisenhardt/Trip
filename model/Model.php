@@ -95,7 +95,7 @@ class Model {
 				if($param2 == null) {
 					throw new Exception("L'instanciation d'objets issus de classes de liaison nécéssite deux ids");
 				} else  {
-					
+
 				}
 			}
 		}
