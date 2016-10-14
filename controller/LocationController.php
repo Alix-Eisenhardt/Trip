@@ -36,7 +36,30 @@ class LocationController extends Controller {
           unset($search[1][$key]);
       }
     }
-    
+    if(isset($_POST['check'])) {
+      $equipementsLocation = EquipementLocation::findAll();
+      $data[0] = $search[0];
+      foreach($search[1] as $key => $value) {
+        $good = false;
+        $id = $value->loc_id;
+        $data[1][$id] = $value;
+        $equList = array();
+        foreach($equipementsLocation as $eql) {
+          if(($eql->loc_id == $value->loc_id)) {
+            $good = true;
+            $equList[] = $eql->equ_id;
+          }
+        }
+        foreach($_POST['check'] as $v){
+          if(!in_array($v, $equList)) {
+            $good = false;
+          }
+        }
+        if(!$good)
+          unset($data[1][$id]);
+      }
+      $search = $data;
+    }
     $this->render("search", $search);
   }
   public function createLocation(){
