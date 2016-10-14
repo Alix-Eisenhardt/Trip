@@ -94,8 +94,9 @@ class LocationController extends Controller {
   }
 
   public function ajoutPhoto() {
+    $loc = new Location($_GET['loc_id']);
     global $erreur;
-    if(isset($_SESSION['gerant']) && $_SESSION['gerant']->grt_id == $_GET['loc_id']) {
+    if(isset($_SESSION['gerant']) && $_SESSION['gerant']->grt_id == $loc->grt_id) {
       if(isset($_POST['ajouter']) && $_POST['ajouter'] == 'Ajouter') {
         if(!empty($_FILES['photo']['name'])) {
           //1mo 1048576
