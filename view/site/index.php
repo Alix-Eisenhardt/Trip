@@ -11,6 +11,7 @@
 	<label for="date_fin">Date fin : </label>
 	<input type="date" id="date_fin" name="date_fin"/>
 	</p>
+	<p>Equipements optionnels :</p>
 	<div id="equipement">
 		<?php
 		foreach (Equipement::findAll() as $k => $v) {
