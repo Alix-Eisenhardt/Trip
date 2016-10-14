@@ -82,4 +82,20 @@ class AvisController extends Controller {
 		}
 	}
 
+	public function detailAvis() {
+		$_SESSION['detailavis'] = true;
+
+		$av = new Avis($_GET['avi_id']);
+		$quest = Reponse::findReponsesBySelection($av->avi_id);
+
+		$d = array(
+			'avis'=>$av,
+			'questions' => $quest
+			);
+
+		$this->render("detailAvis",$d);
+		
+		unset($_SESSION['detailavis'],$d);
+	}
+
 }   

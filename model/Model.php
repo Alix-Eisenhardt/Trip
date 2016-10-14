@@ -7,18 +7,21 @@
 class Model {
 	//attend une variable : Soit l'id pour instancier un objet
 	// soit un tableau de paramètres pour l'insert dans la base
-	public function __construct($param) {
+	//ou l'instanciation d'un objet d'une table de liaison
+	//la différence se fait avec le boolean instance
+
+	public function __construct($param,$instance=null) {
 		$class = get_called_class();
 		$table = $class::getTableName();
 		$tableId = substr($table, -3)."_id";
+		$property = "_".$tableId;
 
-		if (is_array($param)) {
+		if (is_array($param) && is_null($instance)) {
 			$sql = "INSERT INTO $table (";
 			$sqlCol="";
 			$sqlVal="";
-			//Classes de liaison : on test si l'id de la table est une propriété de la classe
+			//Tables de liaison : on test si l'id de la table est une propriété de la classe
 			// sinon on modifie la composition de la requète en conséquences
-			$property = "_".$tableId;
 			if (property_exists(get_class($this), $property))
 				$sqlCol .= $tableId;
 			else 
@@ -27,8 +30,8 @@ class Model {
 				if(isset($noIdTable) && $noIdTable == true) {
 					$sqlCol .= $key;
 					$sqlVal .= ":".$key;
-					//mis a false pour que cela n'affecte qu'une ligne du foreach
-					// mais la variable sert pour d'autres tests
+					/*mis a false pour que cela n'affecte qu'une ligne du foreach
+					  mais la variable sert pour d'autres tests*/
 					$noIdTable = false;
 				} else {
 					$sqlCol .= ",".$key;
@@ -56,34 +59,70 @@ class Model {
 					$this->$key = $value;
 				}
 			}
-			//debug
-			//echo $sql;
-			//print_r(db()->errorInfo());
+			/*debug
+			echo $sql;
+			print_r(db()->errorInfo());*/
 		} else {
-			$id = $param;
-			$st = db()->prepare("select * from $table where $tableId=:id");
-			$st->bindValue(":id", $id);
-			$st->execute();
-			if ($st->rowCount() != 1) {
-				throw new Exception("Not in table: ".$table." id: ".$id );
+			$property = "_".$tableId;
+			//si la classe à un id propre
+			if(property_exists(get_class($this), $property)) {
+				$id = $param;
+				$st = db()->prepare("select * from $table where $tableId=:id");
+				$st->bindValue(":id", $id);
+				$st->execute();
+
+				if ($st->rowCount() != 1) {
+					throw new Exception("Not in table: ".$table." id: ".$id );
+				} else {
+					$row = $st->fetch(PDO::FETCH_ASSOC);
+					foreach($row as $field=>$value) {
+							if($value != NULL) {
+								if (substr($field, -2,2) == "id") {
+									$linkedField = substr($field, 0,3);
+									$linkedClass = $this->externalClasses[$linkedField];
+									if ($linkedClass != get_class($this)) {
+										$linkedObj = "_".$linkedField."_obj";
+										$this->$linkedObj = new $linkedClass($value);
+									}
+									$field = "_".$field;
+									$this->$field = $value;
+									
+								} else {
+									$field = "_".$field;
+									$this->$field = $value;
+								}
+						}
+					}
+				}
+				//sinon on instancie un objet de Table de liaison
+				//param doit alors contenir les composantes de la clé étrangère
 			} else {
+				$sql = "SELECT * FROM $table WHERE ";
+				$last_key = key(array_slice($param,-1,1,TRUE));
+				foreach ($param as $key => $value) {
+					$sql .= "$key = :$key ";
+					if(!($key == $last_key))
+						$sql .= "AND ";
+				}
+				$st = db()->prepare($sql);
+				$st->execute($param);
 				$row = $st->fetch(PDO::FETCH_ASSOC);
-				foreach($row as $field=>$value) {
+				foreach ($row as $field => $value) {
 					if($value != NULL) {
 						if (substr($field, -2,2) == "id") {
-							$linkedField = substr($field, 0,3);
-							$linkedClass = $this->externalClasses[$linkedField];
-							if ($linkedClass != get_class($this)) {
-								$linkedObj = "_".$linkedField."_obj";
-								$this->$linkedObj = new $linkedClass($value);
-							}
-							$field = "_".$field;
-							$this->$field = $value;
-							
-						} else {
-							$field = "_".$field;
-							$this->$field = $value;
-						}
+									$linkedField = substr($field, 0,3);
+									$linkedClass = $this->externalClasses[$linkedField];
+									if ($linkedClass != get_class($this)) {
+										$linkedObj = "_".$linkedField."_obj";
+										$this->$linkedObj = new $linkedClass($value);
+									}
+									$field = "_".$field;
+									$this->$field = $value;
+									
+								} else {
+									$field = "_".$field;
+									$this->$field = $value;
+								}
 					}
 				}
 			}
@@ -125,7 +164,6 @@ class Model {
 	}
 
 	public function __set($fieldName, $value) {
-		//echo "_set_".$fieldName."<br/>";
 		$varName = "_".$fieldName;
 		if ($value != null) {
 			if (property_exists(get_class($this), $varName)) {
@@ -133,18 +171,17 @@ class Model {
 				$class = get_class($this);
 				$table = $this->TABLE_NAME;
 				$tableId = substr($table, -3)."_id";
-				/*$id = "_id".$fieldName;
-				if (isset($value->$id)) {
-					$st = db()->prepare("update $table set id$fieldName=:val where $tableId=:id");
-					$id = substr($id, 1);
-					$st->bindValue(":val", $value->$id);
-				} else {*/
-				$st = db()->prepare("update $table set $fieldName=:val where $tableId=:id");
-				$st->bindValue(":val", $value);
-				//_}
-				$id = $tableId;
-				$st->bindValue(":id", $this->$id);
-				$st->execute();
+				$classId = "_".$tableId;
+				//Si la Table n'as pas d'id propre il s'agit d'une table de liaison
+				//on ne gere pas encore le cas ou il faudrait mettre a jour les données
+				// dans ces tables
+				if(property_exists(get_class($this), $classId)) {
+					$st = db()->prepare("update $table set $fieldName=:val where $tableId=:id");
+					$st->bindValue(":val", $value);
+					$id = $tableId;
+					$st->bindValue(":id", $this->$id);
+					$st->execute();
+				}
 			} else {
 				throw new Exception("Unknown variable: ".$fieldName);
 			}
