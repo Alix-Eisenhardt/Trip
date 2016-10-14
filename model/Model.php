@@ -21,25 +21,25 @@ class Model {
 			$property = "_".$tableId;
 			if (property_exists(get_class($this), $property))
 				$sqlCol .= $tableId;
-			else {
-				$flag1 = true;
-				$flag2 = true;
-			}
+			else 
+				$noIdTable = true;
 			foreach ($param as $key => $value) {
-				if(isset($flag1)) {
+				if(isset($noIdTable) && $noIdTable == true) {
 					$sqlCol .= $key;
 					$sqlVal .= ":".$key;
-					unset($flag1);
+					//mis a false pour que cela n'affecte qu'une ligne du foreach
+					// mais la variable sert pour d'autres tests
+					$noIdTable = false;
 				} else {
 					$sqlCol .= ",".$key;
 					$sqlVal .= ",:".$key;
 				}
 			}
 			$sql .= $sqlCol.") VALUES (";
-			if(!isset($flag2))
+			if(!isset($noIdTable))
 				$sql .= "DEFAULT";
 			$sql .= $sqlVal.")";
-			if(!isset($flag2))
+			if(!isset($noIdTable))
 				$sql .=" RETURNING $tableId;";
 			else
 				$sql .=";";
@@ -49,17 +49,18 @@ class Model {
 				$st->bindValue(':'.$key,$value);
 			}
 			$st->execute();
-			if(!isset($flag2)) {
+			if(!isset($noIdTable)) {
 				$row = $st->fetch();
 				$this->$tableId = $row[$tableId];
 				foreach ($param as $key => $value) {
 					$this->$key = $value;
 				}
 			}
+			//debug
+			//echo $sql;
 			//print_r(db()->errorInfo());
 		} else {
 			$id = $param;
-			$tableId = substr($table, -3)."_ID";
 			$st = db()->prepare("select * from $table where $tableId=:id");
 			$st->bindValue(":id", $id);
 			$st->execute();

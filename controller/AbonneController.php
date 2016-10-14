@@ -1,7 +1,7 @@
 <?php
 class AbonneController extends Controller {
-
 	public function inscription() {
+		global $erreur;
 		if (isset($_POST['inscription']) && $_POST['inscription'] == 'Inscription') {
 			if (
 					(isset($_POST['nom']) && !empty($_POST['nom'])) 

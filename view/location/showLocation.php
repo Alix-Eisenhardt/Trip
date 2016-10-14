@@ -10,7 +10,7 @@ echo "<script type=\"text/javascript\" src='view/location/showImages.js'></scrip
 foreach ($photos as $photo) {
 	if($photo->loc_id == $data[0]->loc_id) {
 		echo "<div class='photo'>";
-		echo "<img src='../upload/".$photo->pho_url."'></img>";
+		echo "<img src='".$photo->pho_url."'></img>";
 		echo "</div>";
 	}
 }
