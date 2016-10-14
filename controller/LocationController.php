@@ -36,7 +36,30 @@ class LocationController extends Controller {
           unset($search[1][$key]);
       }
     }
-    
+    if(isset($_POST['check'])) {
+      $equipementsLocation = EquipementLocation::findAll();
+      $data[0] = $search[0];
+      foreach($search[1] as $key => $value) {
+        $good = false;
+        $id = $value->loc_id;
+        $data[1][$id] = $value;
+        $equList = array();
+        foreach($equipementsLocation as $eql) {
+          if(($eql->loc_id == $value->loc_id)) {
+            $good = true;
+            $equList[] = $eql->equ_id;
+          }
+        }
+        foreach($_POST['check'] as $v){
+          if(!in_array($v, $equList)) {
+            $good = false;
+          }
+        }
+        if(!$good)
+          unset($data[1][$id]);
+      }
+      $search = $data;
+    }
     $this->render("search", $search);
   }
   public function createLocation(){
@@ -71,8 +94,9 @@ class LocationController extends Controller {
   }
 
   public function ajoutPhoto() {
+    $loc = new Location($_GET['loc_id']);
     global $erreur;
-    if(isset($_SESSION['gerant']) && $_SESSION['gerant']->grt_id == $_GET['loc_id']) {
+    if(isset($_SESSION['gerant']) && $_SESSION['gerant']->grt_id == $loc->grt_id) {
       if(isset($_POST['ajouter']) && $_POST['ajouter'] == 'Ajouter') {
         if(!empty($_FILES['photo']['name'])) {
           //1mo 1048576
@@ -112,7 +136,6 @@ class LocationController extends Controller {
                   $erreur = "Erreur lors du transfert";
                 }
               } else {
-                echo("1");
                 $erreur = "Le fichier est trop gros, taille limite : 500ko";
               }
             } else {
