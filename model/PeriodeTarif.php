@@ -1,5 +1,4 @@
 <?php
-
 class PeriodeTarif extends Model {
 	static $TABLE_NAME = "t_r_periodetarif_pet";
 	protected $_pet_id;
@@ -16,10 +15,11 @@ class PeriodeTarif extends Model {
 			return array(new PeriodeTarif(1));
 		$table = PeriodeTarif::getTableName();
 		// Il peut y avoir des résultats entre plusieurs périodes.
-		$st = db()->prepare("SELECT * FROM $table WHERE
-							(pet_datedeb < :date_deb and pet_datefin > :date_deb)
-							or (pet_datedeb < :date_fin and pet_datefin > :date_fin)
-							");
+		$st = db()->prepare(
+			"SELECT * FROM $table WHERE
+			(pet_datedeb < :date_deb and pet_datefin > :date_deb)
+			or (pet_datedeb < :date_fin and pet_datefin > :date_fin)"
+		);
 		$st->bindValue(":date_deb", $date_deb);
 		$st->bindValue(":date_fin", $date_fin);
 		$st->execute();

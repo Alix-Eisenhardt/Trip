@@ -1,5 +1,4 @@
 <?php
-
 class TypeSejour extends Model {
 	static $TABLE_NAME = "t_r_typesejour_sej";
 	protected $_sej_id;

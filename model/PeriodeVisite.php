@@ -1,5 +1,4 @@
 <?php
-
 class PeriodeVisite extends Model {
 	static $TABLE_NAME = "t_r_periodevisite_per";
 	protected $_per_id;

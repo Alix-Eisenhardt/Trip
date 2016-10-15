@@ -23,8 +23,10 @@ class Abonne extends Model {
 	//Objets
 	protected $_pay_obj;
 
-	protected $externalClasses = array("abo" => "Abonne","pay"=>"Pays");
-
+	protected $externalClasses = array(
+		"abo" => "Abonne",
+		"pay"=>"Pays"
+	);
 
 	//teste si l'attribut passée en paramètre existe déja dans la table
 	public static function avaiable($field,$fieldName) {
@@ -33,7 +35,7 @@ class Abonne extends Model {
 		$st = db()->prepare("SELECT * FROM $table WHERE $fieldName = :field");
 		$st->execute(array(
 			':field' =>$field
-			));
+		));
 		$rowsCpt = $st->rowCount();
 		return ($rowsCpt == 0);
 	}
@@ -49,12 +51,12 @@ class Abonne extends Model {
 		$s .= $this->abo_cp." ";
 		$s .= $this->abo_ville."<br/>";
 		if (isset($this->abo_etat))
-		$s .= $this->abo_etat."<br/>";
+			$s .= $this->abo_etat."<br/>";
 		$s .= $this->pay_obj."<br/>";
 		$s .= "+".$this->abo_indicatif."";
 		$s .= $this->abo_tel."<br/>";
 		if (isset($this->abo_aeroport))
-		$s .= $this->abo_aeroport."</div>";
+			$s .= $this->abo_aeroport."</div>";
 		return $s;
 	}
 }

@@ -1,7 +1,7 @@
 <?php
-
 class Avis extends Model {
 	static $TABLE_NAME = "t_e_avis_avi";
+	//Attributs
 	protected $_avi_id;
 	protected $_abo_id;
 	protected $_loc_id;
@@ -16,12 +16,13 @@ class Avis extends Model {
 	protected $_avi_recommandationami;
 	protected $_avi_reponseavis;
 
+	//Objets
 	protected $_abo_obj;
 	protected $_loc_obj;
 	protected $_vil_obj;
 	protected $_per_obj;
 	protected $_lng_obj;
-	
+
 	protected $externalClasses = array(
 		"avi" => "Avis",
 		"abo" => "Abonne",
@@ -41,10 +42,11 @@ class Avis extends Model {
 			$path = "./?r=avis/detailAvis&avi_id=".$this->avi_id;
 			$s .= "<a class='button' href='$path'>Detail avis</a><br>";
 		}
-		if((isset($_SESSION['gerant'])) 
+		if(	   (isset($_SESSION['gerant']))
 			&& ($this->loc_obj->grt_id == $_SESSION['gerant']->grt_id)
 			&& (!isset($_GET['avi_id']))
-			&& ($this->avi_reponseavis == "")) {
+			&& ($this->avi_reponseavis == "")
+		) {
 			$path = "./?r=avis/reponse&avi_id=".$this->avi_id;
 			$s .= "<a class='button' href='$path'>Répondre</a>";
 		}

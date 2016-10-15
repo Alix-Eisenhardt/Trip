@@ -1,5 +1,4 @@
 <?php
-
 class Photo extends Model {
 	static $TABLE_NAME = "t_e_photo_pho";
 	protected $_pho_id;
@@ -12,9 +11,9 @@ class Photo extends Model {
 
 	protected $externalClasses = array(
 		"pho" => "Photo",
-		"avi" => "Avis",
-		"loc" => "Location"
-		);
+		"loc" => "Location",
+		"avi" => "Avis"
+	);
 
 	public static function Photo_Seq_Nextval() {
 		$st = db()->prepare("SELECT last_value from  t_e_photo_pho_pho_id_seq");
@@ -41,34 +40,34 @@ class Photo extends Model {
 	//type ajout prend les valeurs loc_id ou avi_id
 	public static function ajoutImage($type_ajout,$val_type) {
 		if(!empty($_FILES['photo']['name'])) {
-          //1mo 1048576
-          //500ko = 524288
+			//1mo 1048576
+			//500ko = 524288
 			$maxsize = 524288;
 
-          //test ext
-			$extensions_valides = array( 'jpg' , 'jpeg' , 'gif' , 'png' );
-			$extension_upload = strtolower(  substr(  strrchr($_FILES['photo']['name'], '.')  ,1)  );
-			if ( in_array($extension_upload,$extensions_valides) ) {
-            //test err
+			//test ext
+			$extensions_valides = array('jpg', 'jpeg', 'gif', 'png');
+			$extension_upload = strtolower(substr(strrchr($_FILES['photo']['name'],'.'),1));
+			if (in_array($extension_upload,$extensions_valides)) {
+				//test err
 				if ($_FILES['photo']['error'] == 0) {
-              //test taille
+					//test taille
 					if ($_FILES['photo']['size'] < $maxsize) {
 						$uploaddir = './images/';
 						$nom = "img";
-                //on récupère le numéro suivant de la séquence de la table photo pour créer un identifiant a la photo
+						//on récupère le numéro suivant de la séquence de la table photo pour créer un identifiant a la photo
 						$id = Photo::Photo_Seq_Nextval() + 1;
 						$nom .= $id;
 						$nom .= ".".$extension_upload;
 						$uploadfile = $uploaddir . $nom;
 
-                //on déplace l'image
+						//on déplace l'image
 						$res = move_uploaded_file($_FILES['photo']['tmp_name'], $uploadfile);
-                //si ça a marché on insère en base
+						//si ça a marché on insère en base
 						if ($res) {
 							$param = array(
 								$type_ajout => $val_type,
 								"pho_url"=> substr($uploadfile,2)
-								);
+							);
 							$photo = new Photo($param);
 						} else {
 							$erreur = "Erreur lors du transfert";

@@ -1,7 +1,7 @@
 <?php
 class Reponse extends Model {
 	static $TABLE_NAME = "t_j_reponsequestionloc_rel";
-	
+
 	protected $_avi_id;
 	protected $_qul_id;
 	protected $_rel_reponse;
@@ -9,6 +9,11 @@ class Reponse extends Model {
 	protected $_qul_obj;
 	protected $_avi_obj;
 
+	protected $externalClasses = array(
+		"rel" => "Reponse",
+		"avi" => "Avis",
+		"qul" => "Question"
+	);
 
 	public static function findReponsesBySelection($avi_id) {
 		$table = Reponse::getTableName();
@@ -21,17 +26,11 @@ class Reponse extends Model {
 			$param = array(
 				'avi_id' => $avi_id,
 				'qul_id' => $row['qul_id']
-				); 
+			);
 			$list[] = new Reponse($param,true);
 		}
 		return $list;
 	}
-
-	protected $externalClasses = array(
-		"rel" => "Reponse",
-		"avi" => "Avis",
-		"qul" => "Question"
-	);
 
 	public function __toString() {
 		$s = "<div class='quest'>";

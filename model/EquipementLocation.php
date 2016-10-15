@@ -1,18 +1,19 @@
 <?php
 class EquipementLocation extends Model {
-  static $TABLE_NAME = "t_j_equipementlocation_eql";
-  protected $_loc_id;
-  protected $_equ_id;
-  protected $_eql_nombre;
+	static $TABLE_NAME = "t_j_equipementlocation_eql";
+	protected $_loc_id;
+	protected $_equ_id;
+	protected $_eql_nombre;
 
-  protected $_loc_obj;
-  protected $_equ_obj;
+	//Objets
+	protected $_loc_obj;
+	protected $_equ_obj;
 
-  protected $externalClasses = array(
-  	"eql" => "EquipementLocation", 
-  	"loc" => "Location", 
-  	"equ" => "Equipement"
-  );
+	protected $externalClasses = array(
+		"eql" => "EquipementLocation",
+		"loc" => "Location",
+		"equ" => "Equipement"
+	);
 
 
   public static function findAll() {
@@ -51,7 +52,7 @@ class EquipementLocation extends Model {
 						}
 						$field = "_".$field;
 						$this->$field = $value;
-						
+
 					} else {
 						$field = "_".$field;
 						$this->$field = $value;

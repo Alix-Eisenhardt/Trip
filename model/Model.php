@@ -24,7 +24,7 @@ class Model {
 			// sinon on modifie la composition de la requète en conséquences
 			if (property_exists(get_class($this), $property))
 				$sqlCol .= $tableId;
-			else 
+			else
 				$noIdTable = true;
 			foreach ($param as $key => $value) {
 				if(isset($noIdTable) && $noIdTable == true) {
@@ -59,9 +59,6 @@ class Model {
 					$this->$key = $value;
 				}
 			}
-			/*debug
-			echo $sql;
-			print_r(db()->errorInfo());*/
 		} else {
 			$property = "_".$tableId;
 			//si la classe à un id propre
@@ -76,21 +73,21 @@ class Model {
 				} else {
 					$row = $st->fetch(PDO::FETCH_ASSOC);
 					foreach($row as $field=>$value) {
-							if($value != NULL) {
-								if (substr($field, -2,2) == "id") {
-									$linkedField = substr($field, 0,3);
-									$linkedClass = $this->externalClasses[$linkedField];
-									if ($linkedClass != get_class($this)) {
-										$linkedObj = "_".$linkedField."_obj";
-										$this->$linkedObj = new $linkedClass($value);
-									}
-									$field = "_".$field;
-									$this->$field = $value;
-									
-								} else {
-									$field = "_".$field;
-									$this->$field = $value;
+						if($value != NULL) {
+							if (substr($field, -2,2) == "id") {
+								$linkedField = substr($field, 0,3);
+								$linkedClass = $this->externalClasses[$linkedField];
+								if ($linkedClass != get_class($this)) {
+									$linkedObj = "_".$linkedField."_obj";
+									$this->$linkedObj = new $linkedClass($value);
 								}
+								$field = "_".$field;
+								$this->$field = $value;
+
+							} else {
+								$field = "_".$field;
+								$this->$field = $value;
+							}
 						}
 					}
 				}
@@ -110,19 +107,19 @@ class Model {
 				foreach ($row as $field => $value) {
 					if($value != NULL) {
 						if (substr($field, -2,2) == "id") {
-									$linkedField = substr($field, 0,3);
-									$linkedClass = $this->externalClasses[$linkedField];
-									if ($linkedClass != get_class($this)) {
-										$linkedObj = "_".$linkedField."_obj";
-										$this->$linkedObj = new $linkedClass($value);
-									}
-									$field = "_".$field;
-									$this->$field = $value;
-									
-								} else {
-									$field = "_".$field;
-									$this->$field = $value;
-								}
+							$linkedField = substr($field, 0,3);
+							$linkedClass = $this->externalClasses[$linkedField];
+							if ($linkedClass != get_class($this)) {
+								$linkedObj = "_".$linkedField."_obj";
+								$this->$linkedObj = new $linkedClass($value);
+							}
+							$field = "_".$field;
+							$this->$field = $value;
+
+						} else {
+							$field = "_".$field;
+							$this->$field = $value;
+						}
 					}
 				}
 			}

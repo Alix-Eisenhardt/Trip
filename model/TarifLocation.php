@@ -1,5 +1,4 @@
 <?php
-
 class TarifLocation extends Model {
 	static $TABLE_NAME = "t_j_tariflocation_tar";
 	protected $_loc_id;

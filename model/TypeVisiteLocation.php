@@ -1,5 +1,4 @@
 <?php
-
 class TypeVisiteLocation extends Model {
 	static $TABLE_NAME = "t_r_typevisitelocation_vil";
 	protected $_vil_id;

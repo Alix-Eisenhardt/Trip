@@ -1,5 +1,4 @@
 <?php
-
 class Langue extends Model {
 	static $TABLE_NAME = "t_r_langue_lng";
 	protected $_lng_id;

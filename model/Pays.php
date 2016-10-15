@@ -4,7 +4,9 @@ class Pays extends Model {
 	protected $_pay_id;
 	protected $_pay_nom;
 
-	protected $externalClasses = array("pay" => "Pays");
+	protected $externalClasses = array(
+		"pay" => "Pays"
+	);
 
 	public function __toString() {
 		return $this->pay_nom;
