@@ -5,6 +5,7 @@ Architecture des classes de modèle :
 class MaClasse extends Model {
 	protected $TABLE_NAME = "t_machin_nomtable_truc";
 	protected $_truc_id;
+	protected $_bidule_id;
 	...
 
 	protected $_bidule_obj;
@@ -15,6 +16,9 @@ class MaClasse extends Model {
 		"bidule" => "AutreClasse",
 		...
 	);
+
+	...
+}
 ```
 
 Il paraît qu'Andy Davidson et Hideo Kojima se sont rencontrés.
