@@ -51,9 +51,15 @@ class Location extends Model {
     return $s;
   }
 
-  public function shortVersion() {
+  public function shortVersion($date_deb=null, $date_fin=null) {
+    // if($date_deb != null) {
+        $periode = PeriodeTarif::findBySelection($date_deb, $date_fin);
+        $prix = TarifLocation::findBySelection($this->loc_id, $periode[0]->pet_id);
+    // }
     $s = "<div class='location'>";
     $s .= "<h3>".$this->loc_titre."</h3>";
+    if(isset($prix) && $prix != null)
+        $s .= "Prix : <span class='prix'>".$prix[0]."</span>€ la nuit<br>";
     $s .= "Type : ".$this->loc_type."<br>";
     $s .= $this->loc_nbchambres." chambres, ";
     $s .= $this->loc_nbcouchages." couchages, ";

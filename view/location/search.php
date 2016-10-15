@@ -8,9 +8,15 @@ if(!isset($data[1]) || $data[1] == null) {
 	<h1>Locations près de <?php echo $data[0] ?></h1>
 	<div id='locations'>
 	<?php
-	foreach ($data[1] as $key => $value) {
-		echo $value->shortVersion();
-	};
+	if(isset($_POST["date_debut"])) {
+		foreach ($data[1] as $key => $value) {
+			echo $value->shortVersion($_POST["date_debut"],$_POST["date_fin"]);
+		};
+	} else {
+		foreach ($data[1] as $key => $value) {
+			echo $value->shortVersion();
+		};
+	}
 	echo "</div>";
 }
 ?>

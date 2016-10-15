@@ -28,7 +28,10 @@ class LocationController extends Controller {
         $search[1][] = $value;
     }
     if(isset($_POST["date_debut"]) && $_POST["date_debut"] != null) {
-      $search[0] .= " entre le ".date("j M Y",strtotime($_POST["date_debut"]))." et le ".date("j M Y",strtotime($_POST["date_fin"]));
+      $search[0] .= "<br>entre le ";
+      $search[0] .= "<span id='date_deb' class='".$_POST["date_debut"]."'>".date("j M Y",strtotime($_POST["date_debut"]))."</span>";
+      $search[0] .= " et le ";
+      $search[0] .= "<span id='date_fin' class='".$_POST["date_fin"]."'>".date("j M Y",strtotime($_POST["date_fin"]))."</span>";
       $ids = PlanningLocation::findAvailable($_POST["date_debut"], $_POST["date_fin"]);
       $bool = true;
       foreach ($search[1] as $key => $value) {
@@ -112,4 +115,3 @@ class LocationController extends Controller {
     }
   }
 }
-
