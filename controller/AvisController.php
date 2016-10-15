@@ -3,14 +3,14 @@ class AvisController extends Controller {
 	public function creation() {
 		global $erreur;
 		if (isset($_POST['envoyer']) || isset($_POST['ajoutimg'])) {
-			if ((isset($_POST['vil']) && !empty($_POST['vil'])) 
+			if (  (isset($_POST['vil']) && !empty($_POST['vil']))
 				&&(isset($_POST['per']) && !empty($_POST['per']))
 				&&(isset($_POST['lng']) && !empty($_POST['lng']))
 				&&(isset($_POST['nom_occ']) && !empty($_POST['nom_occ']))
 				&&(isset($_POST['titre']) && !empty($_POST['titre']))
 				&&(isset($_POST['detail']) && !empty($_POST['detail']))
-				&&(isset($_POST['note_glob']) && !empty($_POST['note_glob']))){
-
+				&&(isset($_POST['note_glob']) && !empty($_POST['note_glob']))
+			){
 				if(!isset($_POST['recom']))
 					$_POST['recom'] = "FALSE";
 				else
@@ -25,7 +25,7 @@ class AvisController extends Controller {
 					if(count($questions_facultatives) != $_POST['count_questions'])
 						$erreur = "Vous n'avez pas rempli toutes les questions facultatives";
 				}
-					//abonne
+				//abonne
 				if(!isset($erreur)) {
 					$param = array(
 						"abo_id"=> $_SESSION['abo']->abo_id,
@@ -38,7 +38,7 @@ class AvisController extends Controller {
 						"avi_detail"=> $_POST['detail'],
 						"avi_noteglobale"=> $_POST['note_glob'],
 						"avi_recommandationami"=> $_POST['recom'],
-						);
+					);
 					$avis = new Avis($param);
 					$mail_to = $_SESSION['abo']->abo_mel;
 					melConfirm($mail_to);
@@ -48,8 +48,8 @@ class AvisController extends Controller {
 							$param = array(
 								'avi_id' => $avis->avi_id,
 								'qul_id' => $key,
-								'rel_reponse' => $value 
-								);
+								'rel_reponse' => $value
+							);
 							$rel = new Reponse($param);
 						}
 					}
@@ -60,8 +60,8 @@ class AvisController extends Controller {
 						$path = "./?r=avis/ajoutImage&avi_id=".$avis->avi_id;
 					header("Location: $path");
 				}
-			} else 
-			$erreur = "l'un des champs n'est pas renseigné"; 
+			} else
+			$erreur = "l'un des champs n'est pas renseigné";
 		}
 		if(isset($_SESSION['abo']))
 			$this->render("creation");
@@ -94,7 +94,7 @@ class AvisController extends Controller {
 		$d = array(
 			'avis'=>$av,
 			'questions' => $quest
-			);
+		);
 
 		$this->render("detailAvis",$d);
 
@@ -102,21 +102,21 @@ class AvisController extends Controller {
 	}
 	public function ajoutImage() {
 		$avi = new Avis($_GET['avi_id']);
-	    global $erreur;
-	    if(isset($_SESSION['abo']) && $_SESSION['abo']->abo_id == $avi->abo_id) {
-	      if(isset($_POST['joindre']) && $_POST['joindre'] == 'Joindre') {
-	        $retour = Photo::ajoutImage("avi_id",$avi->avi_id);
-	        if($retour == true) {
-				$path = "index.php?r=avis/detailAvis&avi_id=".$_GET['avi_id'];
-				header("Location: $path");
-	        } else {
-	        	$erreur = $retour;
-	        }
-	      }
-	      $this->render("ajoutImages");
-	    } else {
-	      $this->render("../notFound");
-	    }
+		global $erreur;
+		if(isset($_SESSION['abo']) && $_SESSION['abo']->abo_id == $avi->abo_id) {
+			if(isset($_POST['joindre']) && $_POST['joindre'] == 'Joindre') {
+				$retour = Photo::ajoutImage("avi_id",$avi->avi_id);
+				if($retour == true) {
+					$path = "index.php?r=avis/detailAvis&avi_id=".$_GET['avi_id'];
+					header("Location: $path");
+				} else {
+					$erreur = $retour;
+				}
+			}
+			$this->render("ajoutImages");
+		} else {
+		  $this->render("../notFound");
+		}
 	}
 
-}   
+}

@@ -3,19 +3,19 @@ class AbonneController extends Controller {
 	public function inscription() {
 		global $erreur;
 		if (isset($_POST['inscription']) && $_POST['inscription'] == 'Inscription') {
-			if (
-					(isset($_POST['nom']) && !empty($_POST['nom'])) 
-					&& (isset($_POST['prenom']) && !empty($_POST['prenom'])) 
-					&& (isset($_POST['pseudo']) && !empty($_POST['pseudo'])) 
-					&& (isset($_POST['pass']) && !empty($_POST['pass']))
-					&& (isset($_POST['email']) && !empty($_POST['email']))  
-					&& (isset($_POST['pass_confirm']) && !empty($_POST['pass_confirm']))
-					&& (isset($_POST['adr1']) && !empty($_POST['adr1']))
-					&& (isset($_POST['cp']) && !empty($_POST['cp']))
-					&& (isset($_POST['ville']) && !empty($_POST['ville']))
-					&& (isset($_POST['pay_id']) && !empty($_POST['pay_id']))
-					&& (isset($_POST['indicatif']) && !empty($_POST['indicatif']))
-					&& (isset($_POST['tel']) && !empty($_POST['tel']))) {
+			if (   (isset($_POST['nom']) && !empty($_POST['nom']))
+				&& (isset($_POST['prenom']) && !empty($_POST['prenom']))
+				&& (isset($_POST['pseudo']) && !empty($_POST['pseudo']))
+				&& (isset($_POST['pass']) && !empty($_POST['pass']))
+				&& (isset($_POST['email']) && !empty($_POST['email']))
+				&& (isset($_POST['pass_confirm']) && !empty($_POST['pass_confirm']))
+				&& (isset($_POST['adr1']) && !empty($_POST['adr1']))
+				&& (isset($_POST['cp']) && !empty($_POST['cp']))
+				&& (isset($_POST['ville']) && !empty($_POST['ville']))
+				&& (isset($_POST['pay_id']) && !empty($_POST['pay_id']))
+				&& (isset($_POST['indicatif']) && !empty($_POST['indicatif']))
+				&& (isset($_POST['tel']) && !empty($_POST['tel']))
+			) {
 				if (preg_match("#^[a-zA-Z0-9._-]+@[a-z0-9._-]{2,}\.[a-z]{2,4}$#", $_POST['email'])) {
 					$verif_email_valide =true;
 				} else {
@@ -36,9 +36,11 @@ class AbonneController extends Controller {
 				if(!$verif_pseudo_dispo)
 					$erreur = 'Ce pseudo est déjà pris';
 
-				if($verif_pseudo_dispo && $verif_mail_dispo && $verif_pass_corresp 
-					&& $verif_email_valide) {
-
+				if(	$verif_pseudo_dispo
+					&& $verif_mail_dispo
+					&& $verif_pass_corresp
+					&& $verif_email_valide
+				) {
 					//contruction de l'addresse postale : adresse, ville, pays
 					$p = new Pays($_POST['pay_id']);
 					$postalAddress = $_POST['adr1'];
@@ -65,8 +67,8 @@ class AbonneController extends Controller {
 						"abo_longitude" => $longitude,
 						"abo_indicatif" => $_POST['indicatif'],
 						"abo_tel" => $_POST['tel'],
-						"abo_aeroport" => $_POST['aeroport'] 
-						);
+						"abo_aeroport" => $_POST['aeroport']
+					);
 					$abonne = new Abonne($param);
 					$_SESSION['abo'] = $abonne;
 					header("Location: .");
@@ -89,7 +91,6 @@ class AbonneController extends Controller {
 			}
 
 			if($verif_indicatif) {
-
 				foreach ($_POST as $key => $value) {
 					if($key != 'modifier') {
 						if ($_SESSION['abo']->$key != $_POST[$key]) {
@@ -105,7 +106,7 @@ class AbonneController extends Controller {
 				echo "Modifications validées !";
 			else
 				echo $erreur_indicatif;
-		}	
+		}
 	}
 
 	public function connecter() {
@@ -115,8 +116,9 @@ class AbonneController extends Controller {
 			$st->execute();
 			$row = $st->fetch(PDO::FETCH_ASSOC);
 
-			if(($row['abo_motpasse'] == $_POST['password'])
-					||($row['abo_motpasse'] == sha1($_POST['password']))) {
+			if(	$row['abo_motpasse'] == $_POST['password']
+				|| $row['abo_motpasse'] == sha1($_POST['password'])
+			) {
 				$_SESSION['abo'] = new Abonne($row['abo_id']);
 				header("Location: index.php");
 			}
@@ -134,8 +136,8 @@ class AbonneController extends Controller {
 	}
 
 	public function showAbonne() {
-        $abonne = new Abonne($_GET["id"]);
-        $data = $abonne;
-        $this->render("showAbonne", $data);
-    }
+		$abonne = new Abonne($_GET["id"]);
+		$data = $abonne;
+		$this->render("showAbonne", $data);
+	}
 }

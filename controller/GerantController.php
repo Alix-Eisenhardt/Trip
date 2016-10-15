@@ -1,6 +1,5 @@
 <?php
 class GerantController extends Controller {
-
 	public function connecter() {
 		if (isset($_POST['connecter'])) {
 			$login = strtolower($_POST['login']);
@@ -11,8 +10,7 @@ class GerantController extends Controller {
 			if(strtolower($row['grt_mel']) == $login) {
 				$_SESSION['gerant'] = new Gerant($row['grt_id']);
 				header("Location: index.php");
-			}
-			else {
+			} else {
 				$this->render("connexion");
 				echo "Identifiant incorrect.";
 			}
@@ -26,34 +24,34 @@ class GerantController extends Controller {
 	}
 
 	public function mesLocations() {
-	    $locations = Location::findAll();
+		$locations = Location::findAll();
 
-	  	$search = [$_SESSION['gerant']->grt_id];
-	  	foreach ($locations as $key => $value) {
-				if(strtolower($_SESSION['gerant']->grt_id) == strtolower($value->grt_id))
-					$search[1][] = $value;
-	  	}
-	    $this->render("mesLocations", $search);
+		$search = [$_SESSION['gerant']->grt_id];
+		foreach ($locations as $key => $value) {
+			if(strtolower($_SESSION['gerant']->grt_id) == strtolower($value->grt_id))
+				$search[1][] = $value;
+		}
+		$this->render("mesLocations", $search);
 	}
 
-  	public function sendMail() {
-        $gerant = new Gerant($_GET["id"]);
-        $data = $gerant;
-        $this->render("mailTo", $data);
-    }
+	public function sendMail() {
+		$gerant = new Gerant($_GET["id"]);
+		$data = $gerant;
+		$this->render("mailTo", $data);
+	}
 
-    public function mailTo() {
-    	if(isset($_POST['envoyer'])) {
-    		$grt = new Gerant($_POST['grtId']);
-    		$from = "From : " . $_POST['mel'];
-    		$mail = mail($grt->grt_mel, $_POST['objet'], $_POST['message'], $from);
-    		if($mail)
+	public function mailTo() {
+		if(isset($_POST['envoyer'])) {
+			$grt = new Gerant($_POST['grtId']);
+			$from = "From : " . $_POST['mel'];
+			$mail = mail($grt->grt_mel, $_POST['objet'], $_POST['message'], $from);
+			if($mail)
 				header("Location: index.php");
-    		else {
-    			$data = $grt;
-    			$this->render('mailTo', $data);
-    			echo "Envoi échoué";
-    		}
-    	}
-    }
+			else {
+				$data = $grt;
+				$this->render('mailTo', $data);
+				echo "Envoi échoué";
+			}
+		}
+	}
 }
