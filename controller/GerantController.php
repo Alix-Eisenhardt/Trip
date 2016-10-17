@@ -43,15 +43,22 @@ class GerantController extends Controller {
 	public function mailTo() {
 		if(isset($_POST['envoyer'])) {
 			$grt = new Gerant($_POST['grtId']);
-			$from = "From : " . $_POST['mel'];
-			$mail = mail($grt->grt_mel, $_POST['objet'], $_POST['message'], $from);
-			if($mail)
-				header("Location: index.php");
-			else {
+			if (preg_match("#^[a-zA-Z0-9._-]+@[a-z0-9._-]{2,}\.[a-z]{2,4}$#", $_POST['mel'])) {
+				$from = "From : " . $_POST['mel'];
+				$mail = mail($grt->grt_mel, $_POST['objet'], $_POST['message'], $from);
+				if($mail)
+					header("Location: index.php");
+				else {
+					$data = $grt;
+					$this->render('mailTo', $data);
+					echo "Envoi échoué";
+				}
+			} else {
 				$data = $grt;
 				$this->render('mailTo', $data);
-				echo "Envoi échoué";
+				echo 'l\'adresse mail n\'est pas valide';
 			}
+			
 		}
 	}
 }
