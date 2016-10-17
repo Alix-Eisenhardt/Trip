@@ -40,4 +40,9 @@ class PlanningLocation extends Model {
 		return $list;
 	}
 
+	public static function updateDispoLocation($date1, $date2, $id){
+		$st = db()->prepare("Update t_j_planninglocation_plo SET plo_disponibilite = false where loc_id= $id AND plo_datelocation between TO_DATE('$date1','DD/MM/YYYY') AND TO_DATE('$date2','DD/MM/YYYY');");
+		$st->execute();
+	}
+
 }

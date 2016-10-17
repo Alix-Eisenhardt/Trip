@@ -34,7 +34,7 @@ function verifChampLongText(champ){
 function verifChampNum(champ, valMax)
 {
    var age = parseInt(champ.value);
-   if(isNaN(age) || age < 0 || age > valMax)
+   if(isNaN(age) || age < 0 || age >= valMax)
    {
       surligne(champ, true);
       return false;

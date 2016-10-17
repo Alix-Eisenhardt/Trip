@@ -3,7 +3,6 @@
 
 <?php
  global $data;
-
  echo "<script>";
  echo "var day = [";
  foreach ($data as $key => $value) {
@@ -22,7 +21,7 @@ echo "<div class='dispo'>";
 for($x=0;$x<$nb_month;$x++){
 	$drawn_month = ($actual_month+$x)%12;
 	if($drawn_month==0)
-		$actual_year++; 
+		$actual_year++;
 	echo "<div class='month'>".$month_array[$drawn_month]." ".$actual_year;
 	echo draw_calendar($drawn_month+1,$actual_year);
 	echo "</div>";
@@ -31,7 +30,7 @@ echo "</div>";
 
 ?>
 <div>
-	<form action="?r=location/reserver?=loc_id" method="post" onsubmit= "return checkTxt()">
+	<form action="?r=location/reserver" method="post" onsubmit= "return checkTxt()">
 	<p>Cliquez sur une date dans le calendrier </p>
 	<p>
 	<label for="date_debut_resa">Date début : </label>
@@ -39,6 +38,9 @@ echo "</div>";
 	</p>
 	<label for="date_fin_resa">Date fin : </label>
 	<input  id="date_fin_resa" name="date_fin_resa" readonly/>
+	<p>
+		<input type='text' id="id_resa" name="id_resa" value="<?php echo $data['loc_id']?>" hidden>
+	</p>
 	<p>
 		<a class = 'button' id='reset'>Reset</a>
 	</p>
@@ -52,4 +54,3 @@ echo "</div>";
 echo "<a class='button' href=\"javascript:history.go(-1)\">Retour</a>";
 
 ?>
-

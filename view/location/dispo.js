@@ -40,10 +40,6 @@ $(document).ready(function(){
 	$('#reset').click(function(){
 		$("[id^=date_]").val("");
 	});
-
-	function checkTxt(){
-		return false;
-	}
 });
 
 function checkTxt(){

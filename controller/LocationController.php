@@ -96,6 +96,7 @@ class LocationController extends Controller {
 	public function dispo(){
 		$list = array();
 		$list = PlanningLocation::findDispoLocation($_GET['loc_id']);
+		$list['loc_id']=$_GET['loc_id'];
 		$this->render("dispoLocation", $list);
 	}
 
@@ -116,5 +117,13 @@ class LocationController extends Controller {
 		} else {
 			$this->render("../notFound");
 		}
+	}
+
+	public function reserver(){
+		if(isset($_POST['date_debut_resa']) && isset($_POST['date_fin_resa']) && isset($_POST['id_resa'])){
+			PlanningLocation::updateDispoLocation($_POST['date_debut_resa'], $_POST['date_fin_resa'], $_POST['id_resa']);
+			$this->render("reservationEnregistree");
+		}else
+			echo "erreur isset";
 	}
 }
