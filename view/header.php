@@ -2,14 +2,14 @@
 <html>
 <head>
 	<meta charset="UTF-8" />
-	<title>Trip Advisor</title>
+	<title>Trip'</title>
 	<link rel="stylesheet" href="view/style.css" />
 	<script type="text/javascript" src="https://code.jquery.com/jquery-3.1.1.js"></script>
 	<script type="text/javascript" src="view/easterEgg.js"></script>
 </head>
 <body>
 	<header>
-		<h1>TripAdvisor</h1>
+		<h1>Trip'</h1>
 		<ul>
 			<a href="."><li>Accueil</li></a>
 			<?php
